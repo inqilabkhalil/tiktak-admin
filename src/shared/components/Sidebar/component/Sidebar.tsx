@@ -1,4 +1,5 @@
 import { useSearchParams } from 'react-router-dom';
+import { Layout, ConfigProvider, Menu } from 'antd';
 import {
   ShoppingCartOutlined,
   NotificationOutlined,

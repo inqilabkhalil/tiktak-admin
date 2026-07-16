@@ -7,7 +7,7 @@
 .navItem {
   all: unset;
   cursor: pointer;
-  font-family: 'Roboto', sans-serif;
+  font-family: var(--font-family);
   font-size: 15px;
   font-weight: 500;
   color: #2B3043;

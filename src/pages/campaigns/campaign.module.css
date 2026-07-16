@@ -1,6 +1,6 @@
 .layout {
   display: flex;
-  align-items: flex-start;
+  align-items: stretch;
   gap: 24px;
   width: 100%;
   padding: 0 24px 24px;
@@ -8,7 +8,7 @@
 }
 
 .page {
-  font-family: 'Roboto', sans-serif;
+  font-family: var(--font-family);
   flex: 1;
   max-width: 1096px;
   min-width: 0;
@@ -177,7 +177,7 @@
 
 .actionsCell {
   display: flex;
-  gap: 16px;
+  gap: 24px;
 }
 
 .editAction {
@@ -197,7 +197,11 @@
   height: auto !important;
   font-size: 12px;
   font-weight: 400;
-  color: #ff4d4f;
+  color: rgba(255, 77, 79, 1);
+}
+
+.deleteAction:hover {
+  color: rgba(255, 77, 79, 0.75) !important;
 }
 
 .deleteAction :global(.anticon) {

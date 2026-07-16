@@ -16,6 +16,7 @@ import { DeleteConfirmModal } from '../../shared/components/DeleteConfirmModal';
 import { mockCampaigns } from '../../features/campaigns/utils/mockCampaigns';
 import type { Campaign } from '../../features/campaigns/types/campaign';
 
+import '../../App.css';
 import styles from './campaign.module.css';
 
 export const CampaignsPage = () => {
