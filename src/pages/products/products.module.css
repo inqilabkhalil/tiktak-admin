@@ -1,6 +1,6 @@
 /* products.module.css */
 .card {
-  font-family: 'Roboto', sans-serif;
+  font-family: var(--font-family);
   background: #fff;
   border-radius: 24px;
   padding: 32px;
