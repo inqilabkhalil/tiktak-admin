@@ -12,9 +12,13 @@
   "dependencies": {
     "antd": "^6.5.1",
     "axios": "^1.18.1",
+    "dayjs": "^1.11.21",
+    "formik": "^2.4.9",
+    "framer-motion": "^12.42.2",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
     "react-router-dom": "^7.18.1",
+    "yup": "^1.7.1",
     "zustand": "^5.0.14"
   },
   "devDependencies": {
