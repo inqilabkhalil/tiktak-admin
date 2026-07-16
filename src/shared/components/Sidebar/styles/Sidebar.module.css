@@ -1,0 +1,29 @@
+.nav {
+  display: flex;
+  flex-direction: column;
+  padding: 8px 0;
+}
+
+.navItem {
+  all: unset;
+  cursor: pointer;
+  font-family: 'Roboto', sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  color: #2B3043;
+  padding: 13px 4px;
+  border-bottom: 1px solid #ececf2;
+  transition: color 0.15s ease;
+}
+
+.navItem:last-child {
+  border-bottom: none;
+}
+
+.navItem:hover{
+  color: rgba(146, 216, 113, 1);
+}
+
+.navItemActive {
+  color: rgba(146, 216, 113, 1);
+}

@@ -1,0 +1,225 @@
+/* products.module.css */
+.card {
+  font-family: 'Roboto', sans-serif;
+  background: #fff;
+  border-radius: 24px;
+  padding: 32px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.headerRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 28px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.title {
+  margin: 0;
+  font-size: 26px;
+  font-weight: 700;
+  color: rgba(30, 34, 50, 1);
+}
+
+.addButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #8bc34a;
+  border: none;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 12px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.addButton:hover {
+  background-color: #7cb342;
+}
+
+/* ---------- TABLE ---------- */
+.tableWrapper {
+  overflow-x: auto;
+  width: 100%;
+}
+
+.table {
+  width: 100%;
+  min-width: 920px;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.table thead th {
+  text-align: left;
+  font-weight: 500;
+  color: rgba(43, 48, 67, 0.5);
+  padding: 0 10px 16px;
+  white-space: nowrap;
+}
+
+.thWithIcon {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.searchIcon {
+  width: 13px;
+  height: 13px;
+  opacity: 0.5;
+  flex-shrink: 0;
+}
+
+.table tbody td {
+  padding: 14px 10px;
+  color: rgba(43, 48, 67, 0.9);
+  vertical-align: middle;
+  border-top: 1px solid #f1f2f6;
+}
+
+.productImg {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  object-fit: cover;
+  display: block;
+}
+
+.colOrder {
+  width: 40px;
+  color: rgba(43, 48, 67, 0.7);
+}
+
+.colImage {
+  width: 60px;
+}
+
+.colTitle {
+  font-weight: 600;
+  min-width: 130px;
+}
+
+.colDesc {
+  max-width: 220px;
+  color: rgba(43, 48, 67, 0.55);
+  font-size: 13.5px;
+  line-height: 1.45;
+}
+
+.colPrice {
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.currency {
+  font-size: 12px;
+  margin-left: 2px;
+}
+
+.badge {
+  display: inline-block;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 500;
+  background: rgba(139, 92, 246, 0.12);
+  color: #8b5cf6;
+  white-space: nowrap;
+}
+
+.colDate {
+  color: rgba(43, 48, 67, 0.65);
+  white-space: nowrap;
+}
+
+.colAction {
+  text-align: right;
+}
+
+.actions {
+  display: flex;
+  gap: 18px;
+  justify-content: flex-end;
+  white-space: nowrap;
+}
+
+.editButton,
+.deleteButton {
+  border: none;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.editButton {
+  color: rgba(43, 48, 67, 0.85);
+}
+
+.deleteButton {
+  color: #ff4444;
+}
+
+.icon {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+/* ---------- PAGINATION ---------- */
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 14px;
+  margin-top: 24px;
+  font-size: 14px;
+  color: rgba(43, 48, 67, 0.55);
+}
+
+.pageArrow {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: rgba(43, 48, 67, 0.4);
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+}
+
+.pageArrow:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.pageNumbers {
+  display: flex;
+  gap: 8px;
+}
+
+.pageNumber {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  background: transparent;
+  cursor: pointer;
+  font-size: 14px;
+  color: rgba(43, 48, 67, 0.55);
+}
+
+.pageNumberActive {
+  border-color: #8bc34a;
+  color: #8bc34a;
+  font-weight: 600;
+}

@@ -3,6 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 import Header from './shared/components/Header';
 import { Sidebar } from './shared/components/Sidebar';
 import { CampaignsPage } from './pages/campaigns/campaign';
+import { ProductsPage } from './pages/products/products';
 import './App.css';
 
 function App() {
@@ -19,6 +20,8 @@ function App() {
     switch (page) {
       case '/campaigns':
         return <CampaignsPage />;
+      case '/products':
+        return <ProductsPage />;
       default:
         return <CampaignsPage />;
     }
