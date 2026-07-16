@@ -1,4 +1,4 @@
-function App() {
+  function App() {
   return <div>Sadə app</div>
 }
 
