@@ -1,7 +1,8 @@
-import { CampaignsPage } from './pages/campaigns/campaign';
+
+import CategoriesPage from './pages/categories/categories';
 
 function App() {
-  return <CampaignsPage />;
+  return <CategoriesPage />;
 }
 
 export default App;
