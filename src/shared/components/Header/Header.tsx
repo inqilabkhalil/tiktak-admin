@@ -1,9 +1,10 @@
-import { SearchInput } from "../../SearchInput";
-import styles from "../styles/Header.module.css";
+import { SearchInput } from "../SearchInput";
+import Title from "../Title";
+import styles from "./Header.module.css";
 const Header = () => {
   return (
     <header className={styles.header}>
-      <h1 className={styles.logo}>TIK TAK ADMİN</h1>
+      <Title/>
       <div className={styles.searchWrapper}>
         <SearchInput />
       </div>
