@@ -1,5 +1,9 @@
 :root {
   --font-family: 'Roboto', sans-serif;
+  --sidebar-width: 15.625rem;
+  --content-gap: 1.5rem;
+  --content-max-width: 68.5rem;
+  --shell-gutter: 1.25rem;
 }
 
 * {

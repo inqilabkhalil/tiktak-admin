@@ -27,7 +27,7 @@ export const Sidebar = () => {
 
   return (
     <Sider
-      width={250}
+      width={250} /* must match --sidebar-width in index.css */
       theme="light"
       style={{ background: '#fff', borderTop: '1px solid #f0f0f0', height: '100%' }}
     >
