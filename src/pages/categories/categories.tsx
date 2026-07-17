@@ -9,8 +9,6 @@ import {
   SearchOutlined,
 } from '@ant-design/icons';
 
-import Header from '../../shared/components/Header';
-import { Sidebar } from '../../shared/components/Sidebar';
 import { Button } from '../../shared/components/Button';
 import { Input } from '../../shared/components/Input';
 import { Table } from '../../shared/components/Table';
@@ -19,7 +17,6 @@ import { DeleteConfirmModal } from '../../shared/components/DeleteConfirmModal';
 import { mockCategories } from '../../features/categories/utils/mockCategories';
 import type { Category } from '../../features/categories/types/categories';
 
-import '../../App.css';
 import styles from './categories.module.css';
 
 export const CategoriesPage = () => {
@@ -138,48 +135,36 @@ export const CategoriesPage = () => {
 
   return (
     <>
-      <Header />
+      <div className={styles.headerRow}>
+        <h1 className={styles.title}>Kateqoriyalar</h1>
 
-      <div className="app-container">
-        <div className={styles.layout}>
-          <Sidebar />
-
-          <main>
-            <div className={styles.page}>
-              <div className={styles.headerRow}>
-                <h1 className={styles.title}>Kateqoriyalar</h1>
-
-                <Button
-                  type="primary"
-                  icon={<PlusOutlined />}
-                  className={styles.addButton}
-                >
-                  Yeni Kateqoriya
-                </Button>
-              </div>
-
-              <Table<Category>
-                size="small"
-                className={styles.table}
-                columns={columns}
-                dataSource={mockCategories}
-                rowKey="id"
-                pagination={{
-                  showSizeChanger: false,
-                  showTotal: (total, range) =>
-                    `${range[0]}-${range[1]} / ${total} nəticə`,
-                }}
-              />
-
-              <DeleteConfirmModal
-                open={deleteId !== null}
-                onConfirm={() => setDeleteId(null)}
-                onCancel={() => setDeleteId(null)}
-              />
-            </div>
-          </main>
-        </div>
+        <Button
+          type="primary"
+          icon={<PlusOutlined />}
+          className={styles.addButton}
+        >
+          Yeni Kateqoriya
+        </Button>
       </div>
+
+      <Table<Category>
+        size="small"
+        className={styles.table}
+        columns={columns}
+        dataSource={mockCategories}
+        rowKey="id"
+        pagination={{
+          showSizeChanger: false,
+          showTotal: (total, range) =>
+            `${range[0]}-${range[1]} / ${total} nəticə`,
+        }}
+      />
+
+      <DeleteConfirmModal
+        open={deleteId !== null}
+        onConfirm={() => setDeleteId(null)}
+        onCancel={() => setDeleteId(null)}
+      />
     </>
   );
 };
