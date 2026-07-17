@@ -1,5 +1,5 @@
-<<<<<<< Updated upstream
 import { useEffect } from 'react';
+import Orders from './pages/orders/orders';
 import { useSearchParams } from 'react-router-dom';
 import Header from './shared/components/Header';
 import { Sidebar } from './shared/components/Sidebar';
@@ -18,13 +18,16 @@ function App() {
 
   const renderPage = () => {
     switch (page) {
+      case '/users':
+        return <Orders />;
+
       case '/campaigns':
         return <CampaignsPage />;
+
       default:
         return <CampaignsPage />;
     }
   };
-
   return (
     <div className="appShell">
       <Header />
@@ -36,12 +39,6 @@ function App() {
       </div>
     </div>
   );
-=======
-import Login from './pages/auth/login';
-
-function App() {
-  return <Login />;
->>>>>>> Stashed changes
 }
 
 export default App;
