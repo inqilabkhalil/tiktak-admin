@@ -1,15 +1,32 @@
 .header {
+  width: 100%;
+  background-color: #ffffff;
+}
+
+.headerInner {
   display: flex;
   align-items: center;
-  gap: 40px;
+  gap: var(--content-gap);
   width: 100%;
-  padding: 20px 64px 20px 80px;
-  background-color: #ffffff;
+  max-width: calc(var(--sidebar-width) + var(--content-gap) + var(--content-max-width));
+  margin: 0 auto;
+  padding: 20px var(--shell-gutter);
+}
+
+.titleColumn {
+  flex: 0 0 var(--sidebar-width);
+  display: flex;
+  align-items: center;
+}
+
+.searchColumn {
+  flex: 1;
+  min-width: 0;
 }
 
 .searchWrapper {
   width: 100%;
-  max-width: 486px; 
+  max-width: 486px;
 }
 
 .searchWrapper button,

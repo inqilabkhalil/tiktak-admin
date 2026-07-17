@@ -1,4 +1,4 @@
-import { useSearchParams } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Layout, ConfigProvider, Menu } from 'antd';
 import {
   ShoppingCartOutlined,
@@ -22,14 +22,14 @@ const menuItems = [
 ];
 
 export const Sidebar = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const activeKey = searchParams.get('page') ?? '/campaigns';
+  const navigate = useNavigate();
+  const location = useLocation();
 
   return (
     <Sider
-      width={250}
+      width={250} /* must match --sidebar-width in index.css */
       theme="light"
-      style={{ background: '#fff', borderTop: '1px solid #f0f0f0' }}
+      style={{ background: '#fff', borderTop: '1px solid #f0f0f0', height: '100%' }}
     >
       <ConfigProvider
         theme={{
@@ -51,9 +51,9 @@ export const Sidebar = () => {
       >
         <Menu
           mode="inline"
-          selectedKeys={[searchParams.get('page') ?? '']}
+          selectedKeys={[location.pathname]}
           items={menuItems}
-          onClick={({ key }) => setSearchParams({ page: key })}
+          onClick={({ key }) => navigate(key)}
           style={{
             height: '100%',
             borderRight: 0,

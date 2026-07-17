@@ -1,22 +1,3 @@
-.layout {
-  display: flex;
-  align-items: stretch;
-  gap: 24px;
-  width: 100%;
-  padding: 0 24px 24px;
-  justify-content: center;
-}
-
-.page {
-  font-family: var(--font-family);
-  width: 1096px;
-  min-height: 600px;             
-  background: #ffffff;
-  border-radius: 16px;
-  padding: 32px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
-}
-
 .headerRow {
   display: flex;
   justify-content: space-between;
