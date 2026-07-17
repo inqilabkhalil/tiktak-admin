@@ -9,7 +9,6 @@ import {
   LogoutOutlined,
 } from '@ant-design/icons';
 import { COLORS } from '../../../constants/colors';
-import { FONT_FAMILY } from '../../../constants/font';
 
 const { Sider } = Layout;
 
@@ -34,7 +33,6 @@ export const Sidebar = () => {
     >
       <ConfigProvider
         theme={{
-          token: { fontFamily: FONT_FAMILY },
           components: {
             Menu: {
               itemSelectedColor: COLORS.mainGreen,
