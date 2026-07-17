@@ -1,0 +1,127 @@
+.page {
+  font-family: 'Roboto', sans-serif;
+  background: #fff;
+  border-radius: 24px;
+  padding: 32px;      
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.headerRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 28px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.title {
+  margin: 0;
+  font-size: 26px;
+  font-weight: 700;
+  color: rgba(30, 34, 50, 1);
+}
+
+.addButton {
+  background-color: #8bc34a !important;
+  border: none !important;
+  color: #ffffff !important;
+}
+
+.table {
+  max-width: 100%;
+}
+
+.image {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.imagePlaceholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  border: 1px solid #f0f0f0;
+  color: #bfbfbf;
+}
+
+.orderCell {
+  font-size: 14px;
+  font-weight: 400;
+  color: rgba(43, 48, 67, 0.7);
+}
+
+.titleCell {
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(43, 48, 67, 0.9);
+}
+
+.descriptionCell {
+  font-size: 13.5px;
+  font-weight: 400;
+  color: rgba(43, 48, 67, 0.55);
+  line-height: 1.45;
+}
+
+.dateCell {
+  font-size: 14px;
+  font-weight: 400;
+  color: rgba(43, 48, 67, 0.65);
+}
+
+.actionsCell {
+  display: flex;
+  gap: 18px;
+  justify-content: flex-end;
+}
+
+.editAction {
+  padding: 0 !important;
+  height: auto !important;
+  font-size: 14px;
+  font-weight: 400;
+  color: rgba(43, 48, 67, 0.85) !important;
+  transition: color 0.2s ease;
+}
+
+.editAction:hover {
+  color: #1677ff !important;
+}
+
+.deleteAction {
+  padding: 0 !important;
+  height: auto !important;
+  font-size: 14px;
+  font-weight: 400;
+  color: #ff4444 !important;
+  transition: color 0.2s ease;
+}
+
+.deleteAction:hover {
+  color: #1677ff !important;
+}
+
+/* Filter dropdown */
+.filterDropdown {
+  padding: 8px;
+}
+
+.filterInput {
+  margin-bottom: 8px;
+  display: block;
+}
+
+.filterButton {
+  width: 90px;
+}
+
+.filterIconActive {
+  color: #1677ff;
+}

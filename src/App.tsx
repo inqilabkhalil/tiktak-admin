@@ -5,6 +5,7 @@ import { Sidebar } from './shared/components/Sidebar';
 import { CampaignsPage } from './pages/campaigns/campaign';
 import { ProductsPage } from './pages/products/products';
 import './App.css';
+import CategoriesPage from './pages/categories/categories';
 
 function App() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -20,6 +21,8 @@ function App() {
     switch (page) {
       case '/campaigns':
         return <CampaignsPage />;
+        case '/categories':                 
+        return <CategoriesPage />;  
       case '/products':
         return <ProductsPage />;
       default:
