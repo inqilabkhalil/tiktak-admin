@@ -23,7 +23,7 @@ const menuItems = [
 
 export const Sidebar = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const activeKey = searchParams.get('page') ?? '/campaigns';
+  const activeKey = searchParams.get('page') ?? '/campaignsz';
 
   return (
     <Sider
