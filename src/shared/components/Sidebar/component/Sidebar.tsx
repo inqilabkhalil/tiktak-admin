@@ -1,5 +1,17 @@
 import { useSearchParams } from 'react-router-dom';
-import styles from '../styles/Sidebar.module.css';
+import { Layout, ConfigProvider, Menu } from 'antd';
+import {
+  ShoppingCartOutlined,
+  NotificationOutlined,
+  AppstoreOutlined,
+  ShopOutlined,
+  UserOutlined,
+  LogoutOutlined,
+} from '@ant-design/icons';
+import { COLORS } from '../../../constants/colors';
+import { FONT_FAMILY } from '../../../constants/font';
+
+const { Sider } = Layout;
 
 const menuItems = [
   { key: '/orders', label: 'Sifarişlər' },
@@ -15,19 +27,43 @@ export const Sidebar = () => {
   const activeKey = searchParams.get('page') ?? '/campaigns';
 
   return (
-    <nav className={styles.nav}>
-      {menuItems.map((item) => (
-        <button
-          key={item.key}
-          type="button"
-          className={`${styles.navItem} ${
-            activeKey === item.key ? styles.navItemActive : ''
-          }`}
-          onClick={() => setSearchParams({ page: item.key })}
-        >
-          {item.label}
-        </button>
-      ))}
-    </nav>
+    <Sider
+      width={250}
+      theme="light"
+      style={{ background: '#fff', borderTop: '1px solid #f0f0f0' }}
+    >
+      <ConfigProvider
+        theme={{
+          token: { fontFamily: FONT_FAMILY },
+          components: {
+            Menu: {
+              itemSelectedColor: COLORS.mainGreen,
+              itemSelectedBg: 'transparent',
+              itemActiveBg: 'transparent',
+              itemHoverBg: 'transparent',
+              itemHeight: 44,
+              itemMarginBlock: 20,
+              itemBorderRadius: 10,
+              colorText: '#000000',
+              fontSize: 14,
+              iconSize: 14,
+            },
+          },
+        }}
+      >
+        <Menu
+          mode="inline"
+          selectedKeys={[searchParams.get('page') ?? '']}
+          items={menuItems}
+          onClick={({ key }) => setSearchParams({ page: key })}
+          style={{
+            height: '100%',
+            borderRight: 0,
+            fontWeight: 500,
+            background: '#fff',
+          }}
+        />
+      </ConfigProvider>
+    </Sider>
   );
 };

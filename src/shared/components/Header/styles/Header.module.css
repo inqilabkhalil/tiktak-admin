@@ -9,7 +9,7 @@
 
 .logo {
   width: 400px;
-  font-family: 'Roboto', sans-serif;
+  font-family: var(--font-family);
   font-weight: 800;
   font-size: 26px;
   line-height: 100%;
