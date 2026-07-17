@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 import { useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import Header from './shared/components/Header';
@@ -35,6 +36,12 @@ function App() {
       </div>
     </div>
   );
+=======
+import Login from './pages/auth/login';
+
+function App() {
+  return <Login />;
+>>>>>>> Stashed changes
 }
 
 export default App;
