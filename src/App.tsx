@@ -1,8 +1,7 @@
-
-import CategoriesPage from './pages/categories/categories';
+import { AppRoutes } from './app/routes';
 
 function App() {
-  return <CategoriesPage />;
+  return <AppRoutes />;
 }
 
 export default App;

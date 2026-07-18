@@ -1,3 +1,5 @@
 .app-container {
-  padding: 40px 20px;
+  flex: 1;
+  display: flex;
+  padding: 40px var(--shell-gutter);
 }

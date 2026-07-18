@@ -7,8 +7,6 @@ import {
   PictureOutlined,
 } from '@ant-design/icons';
 
-import Header from '../../shared/components/Header';
-import { Sidebar } from '../../shared/components/Sidebar';
 import { Button } from '../../shared/components/Button';
 import { Table } from '../../shared/components/Table';
 import { DeleteConfirmModal } from '../../shared/components/DeleteConfirmModal';
@@ -16,7 +14,6 @@ import { DeleteConfirmModal } from '../../shared/components/DeleteConfirmModal';
 import { mockCampaigns } from '../../features/campaigns/utils/mockCampaigns';
 import type { Campaign } from '../../features/campaigns/types/campaign';
 
-import '../../App.css';
 import styles from './campaign.module.css';
 
 export const CampaignsPage = () => {
@@ -107,49 +104,37 @@ export const CampaignsPage = () => {
 
   return (
     <>
-      <Header />
+      <div className={styles.headerRow}>
+        <h1 className={styles.title}>Kampaniyalar</h1>
 
-      <div className="app-container">
-        <div className={styles.layout}>
-          <Sidebar />
-
-          <main>
-            <div className={styles.page}>
-              <div className={styles.headerRow}>
-                <h1 className={styles.title}>Kampaniyalar</h1>
-
-                <Button
-                  type="primary"
-                  icon={<PlusOutlined />}
-                  className={styles.addButton}
-                  onClick={() => console.log('new campaign')}
-                >
-                  Yeni Kampaniya
-                </Button>
-              </div>
-
-              <Table<Campaign>
-                size="small"
-                className={styles.table}
-                columns={columns}
-                dataSource={mockCampaigns}
-                rowKey="id"
-                pagination={{
-                  showSizeChanger: false,
-                  showTotal: (total, range) =>
-                    `${range[0]}-${range[1]} / ${total} nəticə`,
-                }}
-              />
-
-              <DeleteConfirmModal
-                open={deleteId !== null}
-                onConfirm={() => setDeleteId(null)}
-                onCancel={() => setDeleteId(null)}
-              />
-            </div>
-          </main>
-        </div>
+        <Button
+          type="primary"
+          icon={<PlusOutlined />}
+          className={styles.addButton}
+          onClick={() => console.log('new campaign')}
+        >
+          Yeni Kampaniya
+        </Button>
       </div>
+
+      <Table<Campaign>
+        size="small"
+        className={styles.table}
+        columns={columns}
+        dataSource={mockCampaigns}
+        rowKey="id"
+        pagination={{
+          showSizeChanger: false,
+          showTotal: (total, range) =>
+            `${range[0]}-${range[1]} / ${total} nəticə`,
+        }}
+      />
+
+      <DeleteConfirmModal
+        open={deleteId !== null}
+        onConfirm={() => setDeleteId(null)}
+        onCancel={() => setDeleteId(null)}
+      />
     </>
   );
 };
