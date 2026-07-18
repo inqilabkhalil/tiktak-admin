@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
+import type { Key } from 'react';
 import type { TableProps } from 'antd';
-import { Space } from 'antd';
+import type { FilterDropdownProps } from 'antd/es/table/interface';
+import { Space, message } from 'antd';
 import {
   EditOutlined,
   DeleteOutlined,
@@ -24,23 +26,43 @@ export const ProductsPage = () => {
   const [loading, setLoading] = useState(true);
   const [deleteId, setDeleteId] = useState<number | null>(null);
 
+  const loadProducts = async () => {
+    setLoading(true);
+    try {
+      const data = await fetchProducts();
+      setProducts(data);
+    } catch {
+      message.error('Məhsullar yüklənərkən xəta baş verdi');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    fetchProducts()
-      .then(setProducts)
-      .finally(() => setLoading(false));
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    loadProducts();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleDeleteConfirm = () => {
+  const handleDelete = async () => {
     if (deleteId === null) return;
-
-    deleteProduct(deleteId).then(() => {
-      setProducts((prev) => prev.filter((product) => product.id !== deleteId));
+    try {
+      await deleteProduct(deleteId);
+      message.success('Məhsul silindi');
       setDeleteId(null);
-    });
+      loadProducts();
+    } catch {
+      message.error('Silinmə zamanı xəta baş verdi');
+    }
   };
 
   const getColumnSearchProps = (dataIndex: keyof Product, placeholder: string) => ({
-    filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }: any) => (
+    filterDropdown: ({
+      setSelectedKeys,
+      selectedKeys,
+      confirm,
+      clearFilters,
+    }: FilterDropdownProps) => (
       <div className={styles.filterDropdown} onKeyDown={(e) => e.stopPropagation()}>
         <Input
           placeholder={`Axtar: ${placeholder}`}
@@ -75,11 +97,11 @@ export const ProductsPage = () => {
     filterIcon: (filtered: boolean) => (
       <SearchOutlined className={filtered ? styles.filterIconActive : ''} />
     ),
-    onFilter: (value: any, record: Product) =>
+    onFilter: (value: Key | boolean, record: Product) =>
       record[dataIndex]
         ?.toString()
         .toLowerCase()
-        .includes((value as string).toLowerCase()),
+        .includes(String(value).toLowerCase()),
   });
 
   const columns: TableProps<Product>['columns'] = [
@@ -138,7 +160,7 @@ export const ProductsPage = () => {
       dataIndex: 'category',
       key: 'category',
       ...getColumnSearchProps('category', 'category'),
-      render: (category: string) => <span className={styles.categoryCell}>{category}</span>,
+      render: (category: string) => <span className={styles.badge}>{category}</span>,
     },
     {
       title: 'Növ',
@@ -181,11 +203,7 @@ export const ProductsPage = () => {
       <div className={styles.headerRow}>
         <h1 className={styles.title}>Məhsullar</h1>
 
-        <Button
-          type="primary"
-          icon={<PlusOutlined />}
-          className={styles.addButton}
-        >
+        <Button type="primary" icon={<PlusOutlined />} className={styles.addButton}>
           Yeni Məhsul
         </Button>
       </div>
@@ -195,18 +213,17 @@ export const ProductsPage = () => {
         className={styles.table}
         columns={columns}
         dataSource={products}
-        loading={loading}
         rowKey="id"
+        loading={loading}
         pagination={{
           showSizeChanger: false,
-          showTotal: (total, range) =>
-            `${range[0]}-${range[1]} / ${total} nəticə`,
+          showTotal: (total, range) => `${range[0]}-${range[1]} / ${total} nəticə`,
         }}
       />
 
       <DeleteConfirmModal
         open={deleteId !== null}
-        onConfirm={handleDeleteConfirm}
+        onConfirm={handleDelete}
         onCancel={() => setDeleteId(null)}
       />
     </>
