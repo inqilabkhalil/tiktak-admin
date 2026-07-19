@@ -42,38 +42,11 @@
   color: rgba(43, 48, 67, 0.75);
   font-weight: 600;
   font-size: 13px;
-  padding: 14px 16px !important;
-}
-
-.table :global(.ant-table-tbody > tr > td) {
-  padding: 18px 16px !important;
-  border-bottom: 1px solid #f2f2f5;
-}
-
-.table :global(.ant-table-tbody > tr:last-child > td) {
-  border-bottom: none;
-}
-
-.table :global(.ant-table-tbody > tr > td:first-child) {
-  padding-left: 20px !important;
-}
-
-.table :global(.ant-table-tbody > tr > td:last-child) {
-  padding-right: 20px !important;
-}
-
-.table :global(.ant-table-tbody > tr:hover > td) {
-  background: #fafafb;
-}
-
-.table :global(.ant-pagination) {
-  margin: 24px 0 0;
-  display: flex;
-  justify-content: flex-end;
+  padding: 14px 12px !important;
 }
 
 .table :global(.ant-table-thead > tr > th .ant-table-column-title) {
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .table :global(.ant-table-tbody > tr > td) {
@@ -103,10 +76,6 @@
   justify-content: flex-end;
 }
 
-.table :global(.ant-table-thead > tr > th .ant-table-column-title) {
-  font-weight: 600;
-}
-
 .orderCell {
   font-size: 14px;
   font-weight: 400;
@@ -114,9 +83,9 @@
 }
 
 .image {
-  width: 40px;
-  height: 40px;
-  border-radius: 8px;
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
   object-fit: cover;
 }
 
@@ -124,29 +93,54 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
-  border-radius: 8px;
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
   border: 1px solid #f0f0f0;
   color: #bfbfbf;
 }
 
-.orderCell {
+.titleCell {
   font-size: 14px;
-  font-weight: 400;
+  font-weight: 600;
   color: rgba(43, 48, 67, 1);
 }
 
-.titleCell {
+.categoryCell {
   font-size: 14px;
-  font-weight: 500;
-  color: rgba(43, 48, 67, 1);
+  font-weight: 400;
+  color: rgba(43, 48, 67, 0.85);
 }
 
 .descriptionCell {
   font-size: 13px;
   font-weight: 400;
   color: rgba(43, 48, 67, 0.65);
+}
+
+.priceCell {
+  font-size: 15px;
+  font-weight: 700;
+  color: rgba(43, 48, 67, 1);
+  white-space: nowrap;
+}
+
+.currency {
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(43, 48, 67, 0.6);
+  margin-left: 2px;
+}
+
+.badge {
+  display: inline-block;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 500;
+  background: rgba(139, 92, 246, 0.12);
+  color: #8b5cf6;
+  white-space: nowrap;
 }
 
 .dateCell {
@@ -186,4 +180,24 @@
 
 .deleteAction :global(.anticon) {
   font-size: 10px;
+}
+
+/* ---------- COLUMN SEARCH DROPDOWN ---------- */
+.filterDropdown {
+  padding: 12px;
+  background: #ffffff;
+  border-radius: 10px;
+}
+
+.filterInput {
+  margin-bottom: 8px;
+  display: block;
+}
+
+.filterButton {
+  width: 90px;
+}
+
+.filterIconActive {
+  color: rgba(146, 216, 113, 1);
 }
