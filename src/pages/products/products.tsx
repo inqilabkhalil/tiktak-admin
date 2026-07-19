@@ -159,7 +159,7 @@ export const ProductsPage = () => {
       dataIndex: 'category',
       key: 'category',
       ...getColumnSearchProps('category', 'category'),
-      render: (category: string) => <span className={styles.badge}>{category}</span>,
+      render: (category: string) => <span className={styles.categoryCell}>{category}</span>,
     },
     {
       title: 'Növ',
