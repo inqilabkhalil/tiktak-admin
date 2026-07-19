@@ -1,1 +1,1 @@
-export * from './component/Input';
+export * from './Input';

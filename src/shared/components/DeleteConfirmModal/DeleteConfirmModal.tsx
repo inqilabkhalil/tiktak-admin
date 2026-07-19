@@ -1,6 +1,6 @@
-import { Modal } from '../../Modal/component/Modal';
-import { Button } from '../../Button/component/Button';
-import deleteIcon from '../../../assets/deleteicon.png';
+import { Modal } from '../Modal';
+import { Button } from '../Button';
+import deleteIcon from '../../assets/deleteicon.png';
 
 interface DeleteConfirmModalProps {
   open: boolean;

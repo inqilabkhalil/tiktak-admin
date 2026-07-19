@@ -1,5 +1,5 @@
 import styles from './login.module.css';
-import Header from '../../shared/components/Header/component/Header';
+import { Header } from '../../shared/components/Header';
 import loginImage from '../../shared/assets/images/login.png';
 import { Input } from '../../shared/components/Input';
 import { Button } from '../../shared/components/Button';

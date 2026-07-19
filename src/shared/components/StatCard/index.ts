@@ -1,1 +1,1 @@
-export * from "./component/StatCard";
+export * from "./StatCard";
