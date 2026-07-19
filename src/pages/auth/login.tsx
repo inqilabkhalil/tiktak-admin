@@ -28,7 +28,7 @@ const Login = () => {
               <Input isPassword placeholder="********" />
             </div>
 
-            <Button>Daxil ol</Button>
+            <Button className={styles.loginButton}>Daxil ol</Button>
           </div>
         </div>
       </div>
