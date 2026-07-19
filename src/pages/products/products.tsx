@@ -15,6 +15,7 @@ import { Button } from '../../shared/components/Button';
 import { Input } from '../../shared/components/Input';
 import { Table } from '../../shared/components/Table';
 import { DeleteConfirmModal } from '../../shared/components/DeleteConfirmModal';
+import { Loader } from '../../shared/components/Loader';
 
 import { deleteProduct, fetchProducts } from '../../features/products/services/productsService';
 import type { Product } from '../../features/products/types/products';
@@ -197,6 +198,10 @@ export const ProductsPage = () => {
     },
   ];
 
+  if (loading) {
+    return <Loader />;
+  }
+
   return (
     <>
       <div className={styles.headerRow}>
@@ -213,7 +218,6 @@ export const ProductsPage = () => {
         columns={columns}
         dataSource={products}
         rowKey="id"
-        loading={loading}
         pagination={{
           showSizeChanger: false,
           showTotal: (total, range) => `${range[0]}-${range[1]} / ${total} nəticə`,
