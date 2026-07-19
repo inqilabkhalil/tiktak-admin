@@ -1,44 +1,7 @@
-import { useEffect } from 'react';
-import Orders from './pages/orders/orders';
-import { useSearchParams } from 'react-router-dom';
-import Header from './shared/components/Header';
-import { Sidebar } from './shared/components/Sidebar';
-import { CampaignsPage } from './pages/campaigns/campaign';
-import './App.css';
+import { AppRoutes } from './app/routes';
 
 function App() {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const page = searchParams.get('page');
-
-  useEffect(() => {
-    if (!page) {
-      setSearchParams({ page: '/campaigns' }, { replace: true });
-    }
-  }, [page, setSearchParams]);
-
-  const renderPage = () => {
-    switch (page) {
-      case '/users':
-        return <Orders />;
-
-      case '/campaigns':
-        return <CampaignsPage />;
-
-      default:
-        return <CampaignsPage />;
-    }
-  };
-  return (
-    <div className="appShell">
-      <Header />
-      <div className="appBody">
-        <div className="sidebarCard">
-          <Sidebar />
-        </div>
-        <main className="contentCard">{renderPage()}</main>
-      </div>
-    </div>
-  );
+  return <AppRoutes />;
 }
 
 export default App;
