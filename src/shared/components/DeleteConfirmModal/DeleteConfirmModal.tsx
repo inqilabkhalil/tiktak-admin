@@ -1,4 +1,4 @@
-import { Modal } from '../Modal';
+import { Modal as AntModal } from 'antd';
 import { Button } from '../Button';
 import deleteIcon from '../../assets/deleteicon.png';
 
@@ -10,7 +10,7 @@ interface DeleteConfirmModalProps {
 
 export const DeleteConfirmModal = ({ open, onConfirm, onCancel }: DeleteConfirmModalProps) => {
   return (
-    <Modal
+    <AntModal
       open={open}
       onCancel={onCancel}
       footer={null}
@@ -51,6 +51,6 @@ export const DeleteConfirmModal = ({ open, onConfirm, onCancel }: DeleteConfirmM
           </Button>
         </div>
       </div>
-    </Modal>
+    </AntModal>
   );
 };
