@@ -42,7 +42,7 @@
   color: rgba(43, 48, 67, 0.75);
   font-weight: 600;
   font-size: 12px;
-  padding: 10px 10px !important;
+  padding: 12px 10px !important;
 }
 
 .table :global(.ant-table-thead > tr > th .ant-table-column-title) {
@@ -50,8 +50,9 @@
 }
 
 .table :global(.ant-table-tbody > tr > td) {
-  padding: 10px 10px !important;
+  padding: 16px 10px !important;
   border-bottom: 1px solid #f2f2f5;
+  vertical-align: middle;
 }
 
 .table :global(.ant-table-tbody > tr:last-child > td) {
@@ -83,18 +84,19 @@
 }
 
 .image {
-  width: 36px;
-  height: 36px;
+  width: 40px;
+  height: 40px;
   border-radius: 8px;
   object-fit: cover;
+  display: block;
 }
 
 .imagePlaceholder {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
+  width: 40px;
+  height: 40px;
   border-radius: 8px;
   border: 1px solid #f0f0f0;
   color: #bfbfbf;
@@ -116,6 +118,12 @@
   font-size: 12px;
   font-weight: 400;
   color: rgba(43, 48, 67, 0.65);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  max-width: 260px;
+  line-height: 1.4;
 }
 
 .priceCell {
@@ -147,11 +155,13 @@
   font-size: 12px;
   font-weight: 400;
   color: rgba(43, 48, 67, 0.65);
+  white-space: nowrap;
 }
 
 .actionsCell {
   display: flex;
   gap: 16px;
+  white-space: nowrap;
 }
 
 .editAction {
