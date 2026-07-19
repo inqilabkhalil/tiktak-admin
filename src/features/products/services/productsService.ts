@@ -10,6 +10,11 @@ export const fetchProducts = (): Promise<Product[]> =>
 
 export const deleteProduct = (id: number): Promise<void> =>
   new Promise((resolve) => {
-    console.log(`Fake API: deleting product ${id}`);
-    setTimeout(() => resolve(), FAKE_DELAY);
+    setTimeout(() => {
+      const index = mockProducts.findIndex((product) => product.id === id);
+      if (index !== -1) {
+        mockProducts.splice(index, 1);
+      }
+      resolve();
+    }, FAKE_DELAY);
   });

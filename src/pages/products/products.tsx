@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import type { Key } from 'react';
 import type { TableProps } from 'antd';
 import type { FilterDropdownProps } from 'antd/es/table/interface';
@@ -38,11 +38,10 @@ export const ProductsPage = () => {
     }
   };
 
-  useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
+  useState(() => {
     loadProducts();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    return null;
+  });
 
   const handleDelete = async () => {
     if (deleteId === null) return;
