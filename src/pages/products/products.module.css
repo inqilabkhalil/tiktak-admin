@@ -1,125 +1,134 @@
-/* products.module.css */
-.card {
-  font-family: var(--font-family);
-  background: #fff;
-  border-radius: 24px;
-  padding: 32px;
-  width: 100%;
-  box-sizing: border-box;
-}
-
 .headerRow {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 28px;
-  flex-wrap: wrap;
+  margin-bottom: 24px;
   gap: 16px;
 }
 
 .title {
   margin: 0;
-  font-size: 26px;
+  font-size: 28px;
   font-weight: 700;
-  color: rgba(30, 34, 50, 1);
+  color: rgba(43, 48, 67, 1);
 }
 
 .addButton {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background-color: #8bc34a;
-  border: none;
-  color: #fff;
+  background-color: rgba(146, 216, 113, 1) !important;
+  border: none !important;
+  color: #ffffff !important;
   font-size: 14px;
   font-weight: 500;
-  padding: 12px 20px;
-  border-radius: 10px;
-  cursor: pointer;
-  white-space: nowrap;
-}
-
-.addButton:hover {
-  background-color: #7cb342;
-}
-
-/* ---------- TABLE ---------- */
-.tableWrapper {
-  overflow-x: auto;
-  width: 100%;
+  padding: 12px 20px !important;
+  border-radius: 12px !important;
 }
 
 .table {
   width: 100%;
-  min-width: 920px;
-  border-collapse: collapse;
+}
+
+.table :global(.ant-table-wrapper) {
+  background: transparent;
+}
+
+.table :global(.ant-table) {
+  background: transparent;
+  border-radius: 16px;
+}
+
+.table :global(.ant-table-thead > tr > th) {
+  background: #ffffff;
+  border-bottom: 1px solid #f2f2f5;
+  color: rgba(43, 48, 67, 0.75);
+  font-weight: 600;
+  font-size: 13px;
+  padding: 14px 12px !important;
+}
+
+.table :global(.ant-table-thead > tr > th .ant-table-column-title) {
+  font-weight: 600;
+}
+
+.table :global(.ant-table-tbody > tr > td) {
+  padding: 16px 12px !important;
+  border-bottom: 1px solid #f2f2f5;
+}
+
+.table :global(.ant-table-tbody > tr:last-child > td) {
+  border-bottom: none;
+}
+
+.table :global(.ant-table-tbody > tr > td:first-child) {
+  padding-left: 20px !important;
+}
+
+.table :global(.ant-table-tbody > tr > td:last-child) {
+  padding-right: 20px !important;
+}
+
+.table :global(.ant-table-tbody > tr:hover > td) {
+  background: #fafafb;
+}
+
+.table :global(.ant-pagination) {
+  margin: 24px 0 0;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.orderCell {
   font-size: 14px;
+  font-weight: 400;
+  color: rgba(43, 48, 67, 1);
 }
 
-.table thead th {
-  text-align: left;
-  font-weight: 500;
-  color: rgba(43, 48, 67, 0.5);
-  padding: 0 10px 16px;
-  white-space: nowrap;
-}
-
-.thWithIcon {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.searchIcon {
-  width: 13px;
-  height: 13px;
-  opacity: 0.5;
-  flex-shrink: 0;
-}
-
-.table tbody td {
-  padding: 14px 10px;
-  color: rgba(43, 48, 67, 0.9);
-  vertical-align: middle;
-  border-top: 1px solid #f1f2f6;
-}
-
-.productImg {
-  width: 42px;
-  height: 42px;
+.image {
+  width: 44px;
+  height: 44px;
   border-radius: 10px;
   object-fit: cover;
-  display: block;
 }
 
-.colOrder {
-  width: 40px;
-  color: rgba(43, 48, 67, 0.7);
+.imagePlaceholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  border: 1px solid #f0f0f0;
+  color: #bfbfbf;
 }
 
-.colImage {
-  width: 60px;
-}
-
-.colTitle {
+.titleCell {
+  font-size: 14px;
   font-weight: 600;
-  min-width: 130px;
+  color: rgba(43, 48, 67, 1);
 }
 
-.colDesc {
-  max-width: 220px;
-  color: rgba(43, 48, 67, 0.55);
-  font-size: 13.5px;
-  line-height: 1.45;
+.categoryCell {
+  font-size: 14px;
+  font-weight: 400;
+  color: rgba(43, 48, 67, 0.85);
 }
 
-.colPrice {
+.descriptionCell {
+  font-size: 13px;
+  font-weight: 400;
+  color: rgba(43, 48, 67, 0.65);
+}
+
+.priceCell {
+  font-size: 15px;
   font-weight: 700;
+  color: rgba(43, 48, 67, 1);
   white-space: nowrap;
 }
 
 .currency {
   font-size: 12px;
+  font-weight: 600;
+  color: rgba(43, 48, 67, 0.6);
   margin-left: 2px;
 }
 
@@ -134,92 +143,61 @@
   white-space: nowrap;
 }
 
-.colDate {
+.dateCell {
+  font-size: 13px;
+  font-weight: 400;
   color: rgba(43, 48, 67, 0.65);
-  white-space: nowrap;
 }
 
-.colAction {
-  text-align: right;
-}
-
-.actions {
+.actionsCell {
   display: flex;
-  gap: 18px;
-  justify-content: flex-end;
-  white-space: nowrap;
+  gap: 24px;
 }
 
-.editButton,
-.deleteButton {
-  border: none;
-  background: transparent;
-  padding: 0;
-  cursor: pointer;
-  font-size: 14px;
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
+.editAction {
+  padding: 0 !important;
+  height: auto !important;
+  font-size: 12px;
+  font-weight: 400;
+  color: rgba(43, 48, 67, 1);
 }
 
-.editButton {
-  color: rgba(43, 48, 67, 0.85);
+.editAction :global(.anticon) {
+  font-size: 10px;
 }
 
-.deleteButton {
-  color: #ff4444;
+.deleteAction {
+  padding: 0 !important;
+  height: auto !important;
+  font-size: 12px;
+  font-weight: 400;
+  color: rgba(255, 77, 79, 1);
 }
 
-.icon {
-  width: 14px;
-  height: 14px;
-  flex-shrink: 0;
+.deleteAction:hover {
+  color: rgba(255, 77, 79, 0.75) !important;
 }
 
-/* ---------- PAGINATION ---------- */
-.pagination {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 14px;
-  margin-top: 24px;
-  font-size: 14px;
-  color: rgba(43, 48, 67, 0.55);
+.deleteAction :global(.anticon) {
+  font-size: 10px;
 }
 
-.pageArrow {
-  border: none;
-  background: transparent;
-  cursor: pointer;
-  color: rgba(43, 48, 67, 0.4);
-  display: flex;
-  align-items: center;
-  font-size: 16px;
+/* ---------- COLUMN SEARCH DROPDOWN ---------- */
+.filterDropdown {
+  padding: 12px;
+  background: #ffffff;
+  border-radius: 10px;
 }
 
-.pageArrow:disabled {
-  opacity: 0.3;
-  cursor: default;
+.filterInput {
+  margin-bottom: 8px;
+  display: block;
 }
 
-.pageNumbers {
-  display: flex;
-  gap: 8px;
+.filterButton {
+  width: 90px;
 }
 
-.pageNumber {
-  width: 30px;
-  height: 30px;
-  border-radius: 8px;
-  border: 1px solid transparent;
-  background: transparent;
-  cursor: pointer;
-  font-size: 14px;
-  color: rgba(43, 48, 67, 0.55);
-}
-
-.pageNumberActive {
-  border-color: #8bc34a;
-  color: #8bc34a;
-  font-weight: 600;
+.filterIconActive {
+  color: rgba(146, 216, 113, 1);
 }
