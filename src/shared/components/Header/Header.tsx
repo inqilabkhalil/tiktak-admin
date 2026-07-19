@@ -1,7 +1,7 @@
 import { SearchInput } from "../SearchInput";
 import Title from "../Title";
 import styles from "./Header.module.css";
-
+import { UserOutlined } from "@ant-design/icons";
 type HeaderProps = {
   showSearch?: boolean;
 };
@@ -20,6 +20,9 @@ const Header = ({ showSearch = true }: HeaderProps) => {
             </div>
           </div>
         )}
+        <div className={styles.userIcon}>          
+        <UserOutlined/>
+      </div>
       </div>
     </header>
   );
