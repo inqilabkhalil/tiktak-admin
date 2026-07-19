@@ -128,6 +128,7 @@ export const ProductsPage = () => {
       title: 'Ad',
       dataIndex: 'title',
       key: 'title',
+      width: 130,
       ...getColumnSearchProps('title', 'name'),
       render: (title: string) => <span className={styles.titleCell}>{title}</span>,
     },
@@ -135,11 +136,10 @@ export const ProductsPage = () => {
       title: 'Açıqlama',
       dataIndex: 'description',
       key: 'description',
+      width: 260,
       ...getColumnSearchProps('description', 'description'),
       render: (description: string) => (
-        <span className={styles.descriptionCell}>
-          {description.length > 50 ? `${description.slice(0, 50)}...` : description}
-        </span>
+        <span className={styles.descriptionCell}>{description}</span>
       ),
     },
     {
