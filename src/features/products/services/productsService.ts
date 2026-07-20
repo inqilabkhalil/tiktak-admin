@@ -8,6 +8,14 @@ export const fetchProducts = (): Promise<Product[]> =>
     setTimeout(() => resolve(mockProducts), FAKE_DELAY);
   });
 
+export const createProduct = (product: Product): Promise<Product> =>
+  new Promise((resolve) => {
+    setTimeout(() => {
+      mockProducts.unshift(product);
+      resolve(product);
+    }, FAKE_DELAY);
+  });
+
 export const deleteProduct = (id: number): Promise<void> =>
   new Promise((resolve) => {
     setTimeout(() => {
