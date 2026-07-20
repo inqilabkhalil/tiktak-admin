@@ -4,18 +4,22 @@ import deleteIcon from '../../../assets/deleteicon.png';
 
 interface DeleteConfirmModalProps {
   open: boolean;
+  loading?: boolean;
   onConfirm: () => void;
   onCancel: () => void;
 }
 
-export const DeleteConfirmModal = ({ open, onConfirm, onCancel }: DeleteConfirmModalProps) => {
+export const DeleteConfirmModal = ({ open, loading, onConfirm, onCancel }: DeleteConfirmModalProps) => {
   return (
     <Modal
+    <Modal
       open={open}
-      onCancel={onCancel}
+      onCancel={loading ? undefined : onCancel}
       footer={null}
       centered
       width={420}
+      closable={!loading}
+      mask={{ closable: !loading }}
       styles={{
         body: {
           padding: 16,
@@ -39,18 +43,21 @@ export const DeleteConfirmModal = ({ open, onConfirm, onCancel }: DeleteConfirmM
         <div style={{ display: 'flex', gap: 12, justifyContent: 'center' }}>
           <Button
             style={{ flex: 1, backgroundColor: 'rgba(146, 216, 113, 1)', color: '#fff', border: 'none' }}
+            loading={loading}
             onClick={onConfirm}
           >
             Təsdiqlə
           </Button>
           <Button
             style={{ flex: 1, backgroundColor: '#fff', border: '1px solid #d9d9d9', color: '#8c8c8c' }}
+            disabled={loading}
             onClick={onCancel}
           >
             İndi yox
           </Button>
         </div>
       </div>
+    </Modal>
     </Modal>
   );
 };

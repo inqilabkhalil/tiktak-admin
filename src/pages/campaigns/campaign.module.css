@@ -90,3 +90,20 @@
   font-weight: 400;
   color: #ff4d4f;
 }
+
+.filterDropdown {
+  padding: 8px;
+}
+
+.filterInput {
+  margin-bottom: 8px;
+  display: block;
+}
+
+.filterButton {
+  width: 90px;
+}
+
+.filterIconActive {
+  color: #1677ff;
+}
