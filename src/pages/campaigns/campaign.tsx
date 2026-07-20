@@ -12,7 +12,7 @@ import { Table } from '../../shared/components/Table';
 import { DeleteConfirmModal } from '../../shared/components/DeleteConfirmModal';
 
 import { mockCampaigns } from '../../features/campaigns/utils/mockCampaigns';
-import type { Campaign } from '../../features/campaigns/types/campaign';
+import type { Campaign } from '../../features/campaigns/types/campaignType';
 
 import styles from './campaign.module.css';
 
