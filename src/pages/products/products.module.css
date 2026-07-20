@@ -27,6 +27,11 @@
   width: 100%;
 }
 
+/* card wrapper removed to avoid nested white panels */
+.headerRow {
+  margin-bottom: 18px;
+}
+
 .table :global(.ant-table-wrapper) {
   background: transparent;
 }
