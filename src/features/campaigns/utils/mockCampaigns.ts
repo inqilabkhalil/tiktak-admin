@@ -1,4 +1,4 @@
-import type { Campaign } from '../types/campaign';
+import type { Campaign } from '../types/campaignType';
 
 export const mockCampaigns: Campaign[] = [
   {

@@ -34,14 +34,14 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ### Shared component pattern
 
-Each component under `shared/components/` follows:
+Each component under `shared/components/` follows a flat layout — no nested `component/` or `styles/` subfolder, despite what you might expect from similar conventions elsewhere:
 ```
 ComponentName/
-  component/ComponentName.tsx
-  styles/ComponentName.module.css   (optional)
-  index.ts                          (barrel: `export * from './component/ComponentName'` or default re-export)
+  ComponentName.tsx
+  ComponentName.module.css   (optional)
+  index.ts                   (barrel: `export * from './ComponentName'`)
 ```
-Import from the barrel (`shared/components/Button`), not the inner `component/` file.
+Import from the barrel (`shared/components/Button`), not the inner file. (A couple of older components — `Sidebar`, `Layout` — do have a leftover `styles/` subfolder; don't copy that, it's not the pattern to follow for new components.)
 
 Shared components are thin wrappers around the matching `antd` component that fix house conventions (e.g. `Button` fixes `borderRadius`/`height` but deliberately does not hardcode color — callers pass color via the `style` prop depending on intent, e.g. green for add, red for delete; `Table` fixes default pagination behavior so it isn't repeated per feature). Follow this wrap-don't-fork approach when adding new shared components rather than styling `antd` components ad hoc in page code.
 

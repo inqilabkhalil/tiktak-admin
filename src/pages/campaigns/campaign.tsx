@@ -12,11 +12,12 @@ import { Table } from '../../shared/components/Table';
 import { DeleteConfirmModal } from '../../shared/components/DeleteConfirmModal';
 
 import { mockCampaigns } from '../../features/campaigns/utils/mockCampaigns';
-import type { Campaign } from '../../features/campaigns/types/campaign';
+import type { Campaign } from '../../features/campaigns/types/campaignType';
 
 import styles from './campaign.module.css';
 
 export const CampaignsPage = () => {
+  const [campaigns] = useState<Campaign[]>(mockCampaigns);
   const [deleteId, setDeleteId] = useState<number | null>(null);
 
   const columns: TableProps<Campaign>['columns'] = [
@@ -111,7 +112,6 @@ export const CampaignsPage = () => {
           type="primary"
           icon={<PlusOutlined />}
           className={styles.addButton}
-          onClick={() => console.log('new campaign')}
         >
           Yeni Kampaniya
         </Button>
@@ -121,7 +121,7 @@ export const CampaignsPage = () => {
         size="small"
         className={styles.table}
         columns={columns}
-        dataSource={mockCampaigns}
+        dataSource={campaigns}
         rowKey="id"
         pagination={{
           showSizeChanger: false,
