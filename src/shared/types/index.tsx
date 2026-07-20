@@ -1,4 +1,3 @@
-import type { UploadFile } from "antd/es/upload/interface";
 export interface FetchState<T> {
   data: T | null;
   loading: boolean;
@@ -14,35 +13,3 @@ export interface Category {
 }
 
 export type ModalMode = "add" | "edit";
-export type ManageModalType = "campaign" | "category" | "product";
-
-export interface ManageModalInitialData {
-  id?: string;
-  title?: string;
-  description?: string;
-  imageUrl?: string;
-  price?: number;
-  unit?: string;
-  categoryId?: string;
-}
-
-export interface ManageModalProps {
-  open: boolean;
-  mode: ModalMode;
-  type: ManageModalType;
-  hasPriceFields?: boolean;
-  initialData?: ManageModalInitialData;
-  categories?: Category[];
-  loading?: boolean;
-  onClose: () => void;
-  onSubmit: (formData: FormData, id?: string) => void;
-}
-
-export interface ManageModalFormValues {
-  title: string;
-  description: string;
-  price?: number;
-  unit?: string;
-  categoryId?: string;
-  fileList: UploadFile[];
-}

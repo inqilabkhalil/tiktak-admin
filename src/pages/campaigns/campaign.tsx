@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import type { TableProps } from 'antd';
-import dayjs from 'dayjs';
 import {
   EditOutlined,
   DeleteOutlined,
@@ -11,8 +10,6 @@ import {
 import { Button } from '../../shared/components/Button';
 import { Table } from '../../shared/components/Table';
 import { DeleteConfirmModal } from '../../shared/components/DeleteConfirmModal';
-import { ManageModal } from '../../shared/components/ManageModal';
-import type { ModalMode } from '../../shared/types';
 
 import { mockCampaigns } from '../../features/campaigns/utils/mockCampaigns';
 import type { Campaign } from '../../features/campaigns/types/campaign';
@@ -20,59 +17,8 @@ import type { Campaign } from '../../features/campaigns/types/campaign';
 import styles from './campaign.module.css';
 
 export const CampaignsPage = () => {
-  const [campaigns, setCampaigns] = useState<Campaign[]>(mockCampaigns);
+  const [campaigns] = useState<Campaign[]>(mockCampaigns);
   const [deleteId, setDeleteId] = useState<number | null>(null);
-  const [modalOpen, setModalOpen] = useState(false);
-  const [modalMode, setModalMode] = useState<ModalMode>('add');
-  const [editingCampaign, setEditingCampaign] = useState<Campaign | null>(null);
-
-  const openAddModal = () => {
-    setModalMode('add');
-    setEditingCampaign(null);
-    setModalOpen(true);
-  };
-
-  const openEditModal = (record: Campaign) => {
-    setModalMode('edit');
-    setEditingCampaign(record);
-    setModalOpen(true);
-  };
-
-  const handleModalSubmit = (formData: FormData, id?: string) => {
-    const title = String(formData.get('title') || '');
-    const description = String(formData.get('description') || '');
-    const imageFile = formData.get('image');
-    const imageUrl =
-      imageFile instanceof File ? URL.createObjectURL(imageFile) : undefined;
-
-    if (id) {
-      setCampaigns((prev) =>
-        prev.map((campaign) =>
-          String(campaign.id) === id
-            ? {
-                ...campaign,
-                title,
-                description,
-                image: imageUrl ?? campaign.image,
-              }
-            : campaign
-        )
-      );
-    } else {
-      setCampaigns((prev) => [
-        ...prev,
-        {
-          id: Math.max(0, ...prev.map((campaign) => campaign.id)) + 1,
-          image: imageUrl ?? '',
-          title,
-          description,
-          createdAt: dayjs().format('DD.MM.YYYY'),
-        },
-      ]);
-    }
-
-    setModalOpen(false);
-  };
 
   const columns: TableProps<Campaign>['columns'] = [
     {
@@ -140,7 +86,6 @@ export const CampaignsPage = () => {
             type="link"
             className={styles.editAction}
             icon={<EditOutlined />}
-            onClick={() => openEditModal(record)}
           >
             Düzəlt
           </Button>
@@ -167,7 +112,6 @@ export const CampaignsPage = () => {
           type="primary"
           icon={<PlusOutlined />}
           className={styles.addButton}
-          onClick={openAddModal}
         >
           Yeni Kampaniya
         </Button>
@@ -190,24 +134,6 @@ export const CampaignsPage = () => {
         open={deleteId !== null}
         onConfirm={() => setDeleteId(null)}
         onCancel={() => setDeleteId(null)}
-      />
-
-      <ManageModal
-        open={modalOpen}
-        mode={modalMode}
-        type="campaign"
-        initialData={
-          editingCampaign
-            ? {
-                id: String(editingCampaign.id),
-                title: editingCampaign.title,
-                description: editingCampaign.description,
-                imageUrl: editingCampaign.image || undefined,
-              }
-            : undefined
-        }
-        onClose={() => setModalOpen(false)}
-        onSubmit={handleModalSubmit}
       />
     </>
   );
