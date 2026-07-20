@@ -1,8 +1,7 @@
-import type { OrderState } from '@/features/orders/types/order.types';
 import { create } from 'zustand';
-import { createOrderSlice } from './slices/OrderSlice';
+import { createOrderSlice, type OrderSliceState } from './slices/OrderSlice';
 
 // Store-u yaradırıq və onun daxilindən hook-u ixrac edirik
-export const useStore = create<OrderState>()((set, get, store) => ({
+export const useStore = create<OrderSliceState>()((set, get, store) => ({
   ...createOrderSlice(set, get, store),
 }));
