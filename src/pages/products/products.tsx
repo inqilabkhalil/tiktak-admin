@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import type { Key } from 'react';
 import type { TableProps } from 'antd';
 import type { FilterDropdownProps } from 'antd/es/table/interface';
@@ -15,6 +15,7 @@ import { Button } from '../../shared/components/Button';
 import { Input } from '../../shared/components/Input';
 import { Table } from '../../shared/components/Table';
 import { DeleteConfirmModal } from '../../shared/components/DeleteConfirmModal';
+import { Loader } from '../../shared/components/Loader';
 
 import { deleteProduct, fetchProducts } from '../../features/products/services/productsService';
 import type { Product } from '../../features/products/types/products';
@@ -38,11 +39,10 @@ export const ProductsPage = () => {
     }
   };
 
-  useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
+  useState(() => {
     loadProducts();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    return null;
+  });
 
   const handleDelete = async () => {
     if (deleteId === null) return;
@@ -129,6 +129,7 @@ export const ProductsPage = () => {
       title: 'Ad',
       dataIndex: 'title',
       key: 'title',
+      width: 130,
       ...getColumnSearchProps('title', 'name'),
       render: (title: string) => <span className={styles.titleCell}>{title}</span>,
     },
@@ -136,11 +137,10 @@ export const ProductsPage = () => {
       title: 'Açıqlama',
       dataIndex: 'description',
       key: 'description',
+      width: 260,
       ...getColumnSearchProps('description', 'description'),
       render: (description: string) => (
-        <span className={styles.descriptionCell}>
-          {description.length > 50 ? `${description.slice(0, 50)}...` : description}
-        </span>
+        <span className={styles.descriptionCell}>{description}</span>
       ),
     },
     {
@@ -160,7 +160,7 @@ export const ProductsPage = () => {
       dataIndex: 'category',
       key: 'category',
       ...getColumnSearchProps('category', 'category'),
-      render: (category: string) => <span className={styles.badge}>{category}</span>,
+      render: (category: string) => <span className={styles.categoryCell}>{category}</span>,
     },
     {
       title: 'Növ',
@@ -198,6 +198,10 @@ export const ProductsPage = () => {
     },
   ];
 
+  if (loading) {
+    return <Loader />;
+  }
+
   return (
     <>
       <div className={styles.headerRow}>
@@ -214,7 +218,6 @@ export const ProductsPage = () => {
         columns={columns}
         dataSource={products}
         rowKey="id"
-        loading={loading}
         pagination={{
           showSizeChanger: false,
           showTotal: (total, range) => `${range[0]}-${range[1]} / ${total} nəticə`,
