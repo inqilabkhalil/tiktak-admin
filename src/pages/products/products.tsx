@@ -15,6 +15,7 @@ import { Button } from '../../shared/components/Button';
 import { Input } from '../../shared/components/Input';
 import { Table } from '../../shared/components/Table';
 import { DeleteConfirmModal } from '../../shared/components/DeleteConfirmModal';
+import { CreateProductModal } from '../../shared/components/CreateProductModal';
 import { Loader } from '../../shared/components/Loader';
 
 import { deleteProduct, fetchProducts } from '../../features/products/services/productsService';
@@ -26,6 +27,7 @@ export const ProductsPage = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [deleteId, setDeleteId] = useState<number | null>(null);
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
 
   const loadProducts = async () => {
     setLoading(true);
@@ -207,7 +209,12 @@ export const ProductsPage = () => {
       <div className={styles.headerRow}>
         <h1 className={styles.title}>Məhsullar</h1>
 
-        <Button type="primary" icon={<PlusOutlined />} className={styles.addButton}>
+        <Button
+          type="primary"
+          icon={<PlusOutlined />}
+          className={styles.addButton}
+          onClick={() => setIsCreateModalOpen(true)}
+        >
           Yeni Məhsul
         </Button>
       </div>
@@ -228,6 +235,15 @@ export const ProductsPage = () => {
         open={deleteId !== null}
         onConfirm={handleDelete}
         onCancel={() => setDeleteId(null)}
+      />
+
+      <CreateProductModal
+        open={isCreateModalOpen}
+        onCancel={() => setIsCreateModalOpen(false)}
+        onSuccess={() => {
+          setIsCreateModalOpen(false);
+          // TODO: loadProducts()
+        }}
       />
     </>
   );
