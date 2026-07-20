@@ -14,9 +14,9 @@ export interface Category {
 }
 
 export type ModalMode = "add" | "edit";
-export type EditModalType = "campaign" | "category" | "product";
+export type ManageModalType = "campaign" | "category" | "product";
 
-export interface EditModalInitialData {
+export interface ManageModalInitialData {
   id?: string;
   title?: string;
   description?: string;
@@ -26,19 +26,19 @@ export interface EditModalInitialData {
   categoryId?: string;
 }
 
-export interface EditModalProps {
+export interface ManageModalProps {
   open: boolean;
   mode: ModalMode;
-  type: EditModalType;
+  type: ManageModalType;
   hasPriceFields?: boolean;
-  initialData?: EditModalInitialData;
+  initialData?: ManageModalInitialData;
   categories?: Category[];
   loading?: boolean;
   onClose: () => void;
   onSubmit: (formData: FormData, id?: string) => void;
 }
 
-export interface EditModalFormValues {
+export interface ManageModalFormValues {
   title: string;
   description: string;
   price?: number;

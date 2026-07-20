@@ -11,7 +11,7 @@ import {
 import { Button } from '../../shared/components/Button';
 import { Table } from '../../shared/components/Table';
 import { DeleteConfirmModal } from '../../shared/components/DeleteConfirmModal';
-import { EditModal } from '../../shared/components/EditModal';
+import { ManageModal } from '../../shared/components/ManageModal';
 import type { ModalMode } from '../../shared/types';
 
 import { mockCampaigns } from '../../features/campaigns/utils/mockCampaigns';
@@ -192,7 +192,7 @@ export const CampaignsPage = () => {
         onCancel={() => setDeleteId(null)}
       />
 
-      <EditModal
+      <ManageModal
         open={modalOpen}
         mode={modalMode}
         type="campaign"

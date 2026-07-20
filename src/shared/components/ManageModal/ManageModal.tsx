@@ -8,8 +8,8 @@ import { Input } from "@/shared/components/Input";
 import { Textarea } from "@/shared/components/Textarea";
 import { Button } from "@/shared/components/Button";
 import { COLORS } from "@/shared/constants/colors";
-import type { EditModalProps, EditModalFormValues } from "@/shared/types";
-import styles from "./EditModal.module.css";
+import type { ManageModalProps, ManageModalFormValues } from "@/shared/types";
+import styles from "./ManageModal.module.css";
 
 const editTitles = {
   campaign: "Kampaniyanı Redaktə Et",
@@ -30,7 +30,7 @@ const validationSchema = (hasPriceFields: boolean) =>
       : Yup.string().notRequired(),
   });
 
-export const EditModal = ({
+export const ManageModal = ({
   open,
   mode,
   type,
@@ -40,8 +40,8 @@ export const EditModal = ({
   loading,
   onClose,
   onSubmit,
-}: EditModalProps) => {
-  const initialValues: EditModalFormValues = {
+}: ManageModalProps) => {
+  const initialValues: ManageModalFormValues = {
     title: initialData?.title || "",
     description: initialData?.description || "",
     price: initialData?.price,
@@ -59,7 +59,7 @@ export const EditModal = ({
       : [],
   };
 
-  const handleSubmit = (values: EditModalFormValues) => {
+  const handleSubmit = (values: ManageModalFormValues) => {
     const formData = new FormData();
     formData.append("title", values.title);
     formData.append("description", values.description || "");

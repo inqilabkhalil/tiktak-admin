@@ -1,1 +1,1 @@
-export * from './EditModal';
+export * from './ManageModal';
