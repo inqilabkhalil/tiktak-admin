@@ -1,0 +1,52 @@
+.tableScrollContainer {
+  width: 100%;
+  overflow-x: auto; /* Ekran kiçildikdə daşmanın qarşısını alır, daxili scroll yaradır */
+  background: #ffffff;
+  border-left: 1px solid #eaeaea;
+  border-right: 1px solid #eaeaea;
+}
+.tableWrapper {
+  min-width: 800px; /* Kiçik ekranlarda scroll aktivləşməsi üçün minimum genişlik */
+}
+.tableRow {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 2fr 1fr 1.5fr 1fr 1fr;
+  padding: 14px 16px;
+  border-bottom: 1px solid #f3f4f6;
+  align-items: center;
+  font-size: 14px;
+  color: #1f2937;
+}
+.tableRow:hover {
+  background-color: #fafafa;
+}
+.cell {
+  white-space: nowrap;
+}
+.freeText {
+  color: #10b981;
+  font-size: 12px;
+}
+.badge {
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+}
+.badgePending { background: #fffbeb; color: #d97706; border: 1px solid #fde68a; }
+.badgeApproved { background: #eff6ff; color: #2563eb; border: 1px solid #bfdbfe; }
+.badgeDelivered { background: #f0fdf4; color: #16a34a; border: 1px solid #bbf7d0; }
+
+.actionBtn {
+  background: transparent;
+  border: none;
+  color: #4b5563;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+}
+.actionBtn:hover {
+  color: #2563eb;
+}

@@ -1,0 +1,14 @@
+.pageContainer {
+  min-height: 100vh;
+
+}
+.pageTitle {
+  font-size: 30px;
+  font-weight: bold;
+  color: #111827;
+  margin-bottom: 20px;
+}
+.tableCardWrapper {
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  border-radius: 8px;
+}

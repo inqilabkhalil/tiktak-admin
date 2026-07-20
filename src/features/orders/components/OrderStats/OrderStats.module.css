@@ -1,0 +1,33 @@
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.card {
+  background: #ffffff;
+  border: 1px solid #eaeaea;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+}
+.title {
+  font-size: 13px;
+  color: #6b7280;
+  display: block;
+  margin-bottom: 8px;
+}
+.valueRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 18px;
+  color: #111827;
+}
+.arrowUp { color: #10b981; font-size: 14px; }
+.iconBlue { color: #3b82f6; }
+.iconGreen { color: #10b981; }
+.iconOrange { color: #f59e0b; }
+.iconPurple { color: #8b5cf6; }
+.iconGreenCheck { color: #10b981; }
+.iconRed { color: #ef4444; }
