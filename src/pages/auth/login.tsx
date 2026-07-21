@@ -7,7 +7,7 @@ import { Button } from '../../shared/components/Button';
 const Login = () => {
   return (
     <div className={styles.login}>
-      <Header showSearch={false} />
+      <Header showSearch={false} showUserIcon={false}/>
 
       <div className={styles.content}>
         <div className={styles.left}>

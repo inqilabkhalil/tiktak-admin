@@ -4,9 +4,13 @@ import styles from "./Header.module.css";
 import { UserOutlined } from "@ant-design/icons";
 type HeaderProps = {
   showSearch?: boolean;
+  showUserIcon?: boolean;
 };
 
-const Header = ({ showSearch = true }: HeaderProps) => {
+const Header = ({ 
+  showSearch = true,
+  showUserIcon = true
+ }: HeaderProps) => {
   return (
     <header className={styles.header}>
       <div className={styles.headerInner}>
@@ -20,9 +24,11 @@ const Header = ({ showSearch = true }: HeaderProps) => {
             </div>
           </div>
         )}
-        <div className={styles.userIcon}>          
-        <UserOutlined/>
-      </div>
+        {showUserIcon && (
+          <div className={styles.userIcon}>
+            <UserOutlined />
+          </div>
+        )}
       </div>
     </header>
   );

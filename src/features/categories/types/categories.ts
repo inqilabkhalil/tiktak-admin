@@ -1,9 +1,25 @@
 export interface Category {
     id: number;
-    image: string;
-    title: string;
+    name: string;
+    img_url: string;
     description: string;
     createdAt: string; 
+}
+
+export interface CategoryPayload {
+  name: string;
+  description: string;
+  img_url?: string;
+}
+
+export interface CategoryState {
+  categories: Category[];
+  loading: boolean;
+  error: string | null;
+  fetchAll: () => Promise<void>;
+  add: (data: CategoryPayload) => Promise<void>;
+  update: (id: number, data: CategoryPayload) => Promise<void>;
+  remove: (id: number) => Promise<void>
 }
 
 //Modal
@@ -15,9 +31,9 @@ export interface CategoryModalProps {
 }
 //Form 
 export interface CategoryFormValues {
-  title: string;
+  name: string;
   description: string;
-  image: string;
+  img_url: string;
 }
 //table
 export interface GetCategoryColumnsProps {
