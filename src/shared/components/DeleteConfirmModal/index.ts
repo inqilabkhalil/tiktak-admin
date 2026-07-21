@@ -1,1 +1,1 @@
-export * from './component/DeleteConfirmModal';
+export * from './DeleteConfirmModal';

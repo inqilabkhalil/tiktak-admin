@@ -1,137 +1,36 @@
-import { useState } from 'react';
-import type { TableProps } from 'antd';
-import { Space } from 'antd';
-import {
-  EditOutlined,
-  DeleteOutlined,
-  PlusOutlined,
-  PictureOutlined,
-  SearchOutlined,
-} from '@ant-design/icons';
-
-import { Button } from '../../shared/components/Button';
-import { Input } from '../../shared/components/Input';
-import { Table } from '../../shared/components/Table';
-import { DeleteConfirmModal } from '../../shared/components/DeleteConfirmModal';
-
-import { mockCategories } from '../../features/categories/utils/mockCategories';
-import type { Category } from '../../features/categories/types/categories';
-
-import styles from './categories.module.css';
+import { useEffect, useState } from "react";
+import { PlusOutlined } from "@ant-design/icons";
+import { Button } from "@/shared/components/Button";
+import { Table } from "@/shared/components/Table";
+import { DeleteConfirmModal } from "@/shared/components/DeleteConfirmModal";
+import { Loader } from "@/shared/components/Loader";
+import { mockCategories } from "@/features/categories/utils/mockCategories";
+import { getCategoryColumns } from "@/features/categories/utils/categoryColumns";
+import type { Category } from "@/features/categories/types/categories";
+import styles from "./categories.module.css";
+import tableStyles from "@/features/categories/styles/categoryTable.module.css";
+import CategoryModal from "@/features/categories/components/CategoryModal";
+import useColumnSearchProps from "@/features/categories/hooks/useColumnSearchProps";
 
 export const CategoriesPage = () => {
   const [deleteId, setDeleteId] = useState<number | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [addModalOpen, setAddModalOpen] = useState(false);
+  const [editData, setEditData] = useState<Category | null>(null);
 
-  const getColumnSearchProps = (dataIndex: keyof Category, placeholder: string) => ({
-    filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }: any) => (
-      <div className={styles.filterDropdown} onKeyDown={(e) => e.stopPropagation()}>
-        <Input
-          placeholder={`Axtar: ${placeholder}`}
-          value={selectedKeys[0]}
-          onChange={(e) => setSelectedKeys(e.target.value ? [e.target.value] : [])}
-          onPressEnter={() => confirm()}
-          className={styles.filterInput}
-        />
-        <Space>
-          <Button
-            type="primary"
-            onClick={() => confirm()}
-            icon={<SearchOutlined />}
-            size="small"
-            className={styles.filterButton}
-          >
-            Axtar
-          </Button>
-          <Button
-            onClick={() => {
-              clearFilters?.();
-              confirm();
-            }}
-            size="small"
-            className={styles.filterButton}
-          >
-            Sıfırla
-          </Button>
-        </Space>
-      </div>
-    ),
-    filterIcon: (filtered: boolean) => (
-      <SearchOutlined className={filtered ? styles.filterIconActive : ''} />
-    ),
-    onFilter: (value: any, record: Category) =>
-      record[dataIndex]
-        ?.toString()
-        .toLowerCase()
-        .includes((value as string).toLowerCase()),
+  const { getColumnSearchProps } = useColumnSearchProps<Category>();
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  const columns = getCategoryColumns({
+    onEdit: setEditData,
+    onDelete: setDeleteId,
+    getColumnSearchProps,
   });
-
-  const columns: TableProps<Category>['columns'] = [
-    {
-      title: 'Sıra',
-      key: 'order',
-      width: 70,
-      render: (_, __, index) => <span className={styles.orderCell}>{index + 1}</span>,
-    },
-    {
-      title: 'Şəkil',
-      dataIndex: 'image',
-      key: 'image',
-      width: 100,
-      render: (image: string, record) =>
-        image ? (
-          <img src={image} alt={record.title} className={styles.image} />
-        ) : (
-          <div className={styles.imagePlaceholder}>
-            <PictureOutlined />
-          </div>
-        ),
-    },
-    {
-      title: 'Ad',
-      dataIndex: 'title',
-      key: 'title',
-      ...getColumnSearchProps('title', 'name'),
-      render: (title: string) => <span className={styles.titleCell}>{title}</span>,
-    },
-    {
-      title: 'Açıqlama',
-      dataIndex: 'description',
-      key: 'description',
-      ...getColumnSearchProps('description', 'description'),
-      render: (description: string) => (
-        <span className={styles.descriptionCell}>
-          {description.length > 50 ? `${description.slice(0, 50)}...` : description}
-        </span>
-      ),
-    },
-    {
-      title: 'Tarix',
-      dataIndex: 'createdAt',
-      key: 'createdAt',
-      width: 120,
-      render: (createdAt: string) => <span className={styles.dateCell}>{createdAt}</span>,
-    },
-    {
-      title: 'Əməliyyat',
-      key: 'actions',
-      width: 170,
-      render: (_, record) => (
-        <div className={styles.actionsCell}>
-          <Button type="link" className={styles.editAction} icon={<EditOutlined />}>
-            Düzəlt
-          </Button>
-          <Button
-            type="link"
-            className={styles.deleteAction}
-            icon={<DeleteOutlined />}
-            onClick={() => setDeleteId(record.id)}
-          >
-            Sil
-          </Button>
-        </div>
-      ),
-    },
-  ];
 
   return (
     <>
@@ -142,22 +41,40 @@ export const CategoriesPage = () => {
           type="primary"
           icon={<PlusOutlined />}
           className={styles.addButton}
+          onClick={() => setAddModalOpen(true)}
         >
           Yeni Kateqoriya
         </Button>
       </div>
 
-      <Table<Category>
-        size="small"
-        className={styles.table}
-        columns={columns}
-        dataSource={mockCategories}
-        rowKey="id"
-        pagination={{
-          showSizeChanger: false,
-          showTotal: (total, range) =>
-            `${range[0]}-${range[1]} / ${total} nəticə`,
-        }}
+      {loading ? (
+        <Loader />
+      ) : (
+        <Table<Category>
+          size="small"
+          className={tableStyles.table}
+          columns={columns}
+          dataSource={mockCategories}
+          rowKey="id"
+          pagination={{
+            showSizeChanger: false,
+            showTotal: (total, range) =>
+              `${range[0]}-${range[1]} / ${total} nəticə`,
+          }}
+        />
+      )}
+
+      <CategoryModal
+        open={addModalOpen}
+        onClose={() => setAddModalOpen(false)}
+        mode="add"
+      />
+
+      <CategoryModal
+        open={editData !== null}
+        onClose={() => setEditData(null)}
+        mode="edit"
+        initialData={editData || undefined}
       />
 
       <DeleteConfirmModal

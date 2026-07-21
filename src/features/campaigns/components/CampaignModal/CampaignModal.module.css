@@ -1,0 +1,70 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding-top: 12px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.label {
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(43, 48, 67, 0.85);
+}
+
+.error {
+  color: #ff4d4f;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.uploadTrigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 32px;
+  padding: 0 10px;
+  border: 1px solid #e5e5ea;
+  border-radius: 8px;
+  cursor: pointer;
+  color: rgba(43, 48, 67, 0.4);
+  font-size: 13px;
+}
+
+.uploadTrigger:hover {
+  border-color: rgba(146, 216, 113, 1);
+}
+
+.uploadText {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.preview {
+  width: 64px;
+  height: 64px;
+  border-radius: 8px;
+  object-fit: cover;
+  margin-top: 8px;
+}
+
+.submitButton {
+  background-color: #8bc34a !important;
+  border: none !important;
+  height: 45px !important;
+  font-size: 15px !important;
+  font-weight: 500 !important;
+  margin-top: 12px;
+}
+
+.submitButton:hover {
+  background-color: #7cb342 !important;
+}
