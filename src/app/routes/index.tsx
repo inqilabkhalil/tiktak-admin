@@ -6,7 +6,9 @@ import ProductsPage from '@/pages/products/products';
 
 import UsersPage from '@/pages/users';
 import { Layout } from '@/shared/components/Layout';
+import Login from '@/pages/auth';
 import { OrdersPage } from '@/pages/orders/orders';
+
 
 export function AppRoutes() {
   return (

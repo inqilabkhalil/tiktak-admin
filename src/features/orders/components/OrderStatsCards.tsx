@@ -9,7 +9,6 @@ import {
 } from "@ant-design/icons";
 import type { OrderStats } from "../types";
 
-
 interface OrderStatsCardProps {
   stats: OrderStats | null;
 }
@@ -18,58 +17,93 @@ export const OrderStatsCard: React.FC<OrderStatsCardProps> = ({ stats }) => {
   return (
     <Row gutter={16} style={{ marginBottom: "24px" }}>
       <Col span={4}>
-        <Card variant="borderless" style={{ borderRadius: "8px" }}>
+        <Card variant="borderless" style={{ borderRadius: "8px", minHeight: "115px" }}>
           <Statistic
-            title="Ümumi sifarişlər"
+            title={<span style={{ fontSize: "13px" }}>Ümumi sifarişlər</span>}
             value={stats?.data?.totalOrders || 0}
-            prefix={<ShoppingCartOutlined style={{ color: "#1890ff" }} />}
+            valueStyle={{ fontSize: "20px", fontWeight: "600" }}
+            formatter={(value) => (
+              <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                <ShoppingCartOutlined style={{ color: "#1890ff", fontSize: "18px" }} />
+                <span>{value}</span>
+              </div>
+            )}
           />
         </Card>
       </Col>
       <Col span={4}>
-        <Card variant="borderless" style={{ borderRadius: "8px" }}>
+        <Card variant="borderless" style={{ borderRadius: "8px", minHeight: "115px" }}>
           <Statistic
-            title="Ümumi satış"
+            title={<span style={{ fontSize: "13px" }}>Ümumi satış</span>}
             value={0}
             precision={2}
-            prefix={<DollarOutlined style={{ color: "#52c41a" }} />}
-            suffix="₼"
+            valueStyle={{ fontSize: "20px", fontWeight: "600" }}
+            formatter={(value) => (
+              <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                <DollarOutlined style={{ color: "#52c41a", fontSize: "18px" }} />
+                <span>{value} ₼</span>
+              </div>
+            )}
           />
         </Card>
       </Col>
       <Col span={4}>
-        <Card variant="borderless" style={{ borderRadius: "8px" }}>
+        <Card variant="borderless" style={{ borderRadius: "8px", minHeight: "115px" }}>
           <Statistic
-            title="Gözləyən"
+            title={<span style={{ fontSize: "13px" }}>Gözləyən</span>}
             value={0}
-            prefix={<ClockCircleOutlined style={{ color: "#faad14" }} />}
+            valueStyle={{ fontSize: "20px", fontWeight: "600" }}
+            formatter={(value) => (
+              <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                <ClockCircleOutlined style={{ color: "#faad14", fontSize: "18px" }} />
+                <span>{value}</span>
+              </div>
+            )}
           />
         </Card>
       </Col>
       <Col span={4}>
-        <Card variant="borderless" style={{ borderRadius: "8px" }}>
+        <Card variant="borderless" style={{ borderRadius: "8px", minHeight: "115px" }}>
           <Statistic
-            title="Hazırlanır"
+            title={<span style={{ fontSize: "13px" }}>Hazırlanır</span>}
             value={0}
-            prefix={<ClockCircleOutlined style={{ color: "#722ed1" }} />}
+            valueStyle={{ fontSize: "20px", fontWeight: "600" }}
+            formatter={(value) => (
+              <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                <ClockCircleOutlined style={{ color: "#722ed1", fontSize: "18px" }} />
+                <span>{value}</span>
+              </div>
+            )}
           />
         </Card>
       </Col>
       <Col span={4}>
-        <Card variant="borderless" style={{ borderRadius: "8px" }}>
+        <Card variant="borderless" style={{ borderRadius: "8px", minHeight: "115px" }}>
           <Statistic
-            title="Çatdırılan"
+            title={<span style={{ fontSize: "13px" }}>Çatdırılan</span>}
             value={0}
-            prefix={<CheckCircleOutlined style={{ color: "#52c41a" }} />}
+            valueStyle={{ fontSize: "20px", fontWeight: "600" }}
+            formatter={(value) => (
+              <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                <CheckCircleOutlined style={{ color: "#52c41a", fontSize: "18px" }} />
+                <span>{value}</span>
+              </div>
+            )}
           />
         </Card>
       </Col>
       <Col span={4}>
-        <Card variant="borderless" style={{ borderRadius: "8px" }}>
+        <Card variant="borderless" style={{ borderRadius: "8px", minHeight: "115px" }}>
           <Statistic
-            title="Ləğv edilən"
+            title={<span style={{ fontSize: "13px" }}>Ləğv edilən</span>}
             value={0}
-            prefix={<CloseCircleOutlined style={{ color: "#ff4d4f" }} />}
+            valueStyle={{ fontSize: "20px", fontWeight: "600" }}
+            formatter={(value) => (
+              <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                <CloseCircleOutlined style={{ color: "#ff4d4f", fontSize: "18px" }} />
+                <span>{value}</span>
+              </div>
+            )}
           />
         </Card>
       </Col>
