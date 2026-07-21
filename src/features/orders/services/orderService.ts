@@ -1,24 +1,41 @@
 import axios from "axios";
-import type { OrdersResponse, OrderStats } from "../types";
 
-const API_URL =
-  import.meta.env.VITE_API_URL || "http://localhost:5000/api/tiktak";
+const API_URL = import.meta.env.VITE_API_URL 
 
-export const orderServices = {
-  getStats: async (): Promise<OrderStats> => {
-    const response = await axios.get<OrderStats>(`${API_URL}/orders/stats`, {});
+
+
+
+
+export const api = axios.create({
+  baseURL: API_URL,
+});
+
+// Request Interceptor - Tokeni hər sorğuya avtomatik əlavə edir
+api.interceptors.request.use(
+  (config) => {
+    // Postman-də işlətdiyiniz tokenin localStorage-dəki açar adı
+    const token = localStorage.getItem("ACCESS TOKEN");
+    
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
+export const orderService = {
+  getOrders: async (page = 1, limit = 5, status?: string) => {
+    const response = await api.get("/orders/admin", {
+      params: { page, limit, status },
+    });
     return response.data;
   },
 
-  getOrders: async (
-    page: number,
-    limit: number,
-    status?: string,
-  ): Promise<OrdersResponse> => {
-    const response = await axios.get<OrdersResponse>(`${API_URL}/orders`, {
-        params:{page,limit, status}
-    });
-
+getStats: async () => {
+    const response = await api.get("/orders/admin/stats"); // Sonda /stats mütləq olmalıdır!
     return response.data;
   },
 };
