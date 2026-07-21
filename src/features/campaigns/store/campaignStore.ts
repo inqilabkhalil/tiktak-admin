@@ -1,21 +1,11 @@
 import { create } from "zustand";
-import type { Campaign, CampaignPayload } from "../types/campaignType";
+import type { CampaignState } from "../types/campaignType";
 import {
   fetchCampaigns,
   createCampaign,
   updateCampaign,
   deleteCampaign,
 } from "../services/campaignService";
-
-interface CampaignState {
-  campaigns: Campaign[];
-  loading: boolean;
-  error: string | null;
-  fetchAll: () => Promise<void>;
-  add: (data: CampaignPayload) => Promise<void>;
-  update: (id: number, data: CampaignPayload) => Promise<void>;
-  remove: (id: number) => Promise<void>;
-}
 
 export const useCampaignStore = create<CampaignState>((set, get) => ({
   campaigns: [],
@@ -37,8 +27,8 @@ export const useCampaignStore = create<CampaignState>((set, get) => ({
   add: async (data) => {
     set({ loading: true, error: null });
     try {
-      const created = await createCampaign(data);
-      set({ campaigns: [...get().campaigns, created] });
+      await createCampaign(data);
+      await get().fetchAll();
     } catch {
       set({ error: "Əlavə etmək mümkün olmadı" });
     } finally {
@@ -49,10 +39,8 @@ export const useCampaignStore = create<CampaignState>((set, get) => ({
   update: async (id, data) => {
     set({ loading: true, error: null });
     try {
-      const updated = await updateCampaign(id, data);
-      set({
-        campaigns: get().campaigns.map((c) => (c.id === id ? updated : c)),
-      });
+      await updateCampaign(id, data);
+      await get().fetchAll(); // 👈 map əvəzinə, təzə siyahı çəkilir
     } catch {
       set({ error: "Yeniləmək mümkün olmadı" });
     } finally {
@@ -64,7 +52,7 @@ export const useCampaignStore = create<CampaignState>((set, get) => ({
     set({ loading: true, error: null });
     try {
       await deleteCampaign(id);
-      set({ campaigns: get().campaigns.filter((c) => c.id !== id) });
+      await get().fetchAll();
     } catch {
       set({ error: "Silmək mümkün olmadı" });
     } finally {

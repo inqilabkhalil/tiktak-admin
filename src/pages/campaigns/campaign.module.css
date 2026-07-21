@@ -187,3 +187,20 @@
 .deleteAction :global(.anticon) {
   font-size: 10px;
 }
+
+.filterDropdown {
+  padding: 8px;
+}
+
+.filterInput {
+  margin-bottom: 8px;
+  display: block;
+}
+
+.filterButton {
+  width: 90px;
+}
+
+.filterIconActive {
+  color: #1677ff;
+}
