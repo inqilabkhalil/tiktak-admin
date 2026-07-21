@@ -100,7 +100,9 @@ export const CampaignsPage = () => {
       title: 'Sıra',
       key: 'order',
       width: 70,
-      render: (_, __, index) => <span className={styles.orderCell}>{index + 1}</span>,
+      render: (_, __, index) => (
+        <span className={styles.orderCell}>{index + 1}</span>
+      ),
     },
     {
       title: 'Şəkil',
@@ -136,7 +138,9 @@ export const CampaignsPage = () => {
       ...getColumnSearchProps('description', 'açıqlama'),
       render: (description: string) => (
         <span className={styles.descriptionCell}>
-          {description.length > 38 ? `${description.slice(0, 38)}...` : description}
+          {description.length > 38
+            ? `${description.slice(0, 38)}...`
+            : description}
         </span>
       ),
     },
@@ -165,6 +169,7 @@ export const CampaignsPage = () => {
           >
             Düzəlt
           </Button>
+
           <Button
             type="link"
             className={styles.deleteAction}
@@ -179,9 +184,10 @@ export const CampaignsPage = () => {
   ];
 
   return (
-    <div className={styles.page}>
+    <>
       <div className={styles.headerRow}>
         <h1 className={styles.title}>Kampaniyalar</h1>
+
         <Button
           type="primary"
           icon={<PlusOutlined />}

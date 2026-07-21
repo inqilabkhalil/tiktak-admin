@@ -1,0 +1,20 @@
+:root {
+  --font-family: 'Roboto', sans-serif;
+  --sidebar-width: 15.625rem;
+  --content-gap: 1.5rem;
+  --content-max-width: 68.5rem;
+  --shell-gutter: 1.25rem;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #f5f5f7;
+}

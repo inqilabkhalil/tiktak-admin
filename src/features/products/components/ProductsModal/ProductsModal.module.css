@@ -1,0 +1,148 @@
+.modal :global(.ant-modal-content) {
+  border-radius: 16px;
+  padding: 32px;
+}
+
+.modal :global(.ant-modal-header) {
+  margin-bottom: 32px;
+  padding: 0;
+  background: transparent;
+  border: none;
+}
+
+.modal :global(.ant-modal-close) {
+  top: 32px;
+  right: 32px;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 700;
+  color: rgba(43, 48, 67, 1);
+}
+
+.form :global(.ant-form-item) {
+  margin-bottom: 24px;
+}
+
+.form :global(.ant-form-item-label) {
+  padding-bottom: 8px;
+}
+
+.form :global(.ant-form-item-label > label) {
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(43, 48, 67, 1);
+  height: auto;
+}
+
+.form :global(.ant-form-item-label > label::after) {
+  display: none;
+}
+
+.row {
+  display: flex;
+  gap: 24px;
+}
+
+.col {
+  flex: 1;
+  min-width: 0;
+}
+
+.input,
+.textarea,
+.numberInput,
+.select :global(.ant-select-selector) {
+  border-radius: 10px !important;
+  border: 1px solid #e5e5ea !important;
+  font-size: 14px;
+}
+
+.input,
+.textarea {
+  padding: 11px 14px;
+}
+
+.numberInput {
+  width: 100%;
+  padding: 3px 4px;
+}
+
+.numberInput :global(.ant-input-number-input) {
+  padding: 8px 10px;
+}
+
+.select :global(.ant-select-selector) {
+  height: 44px !important;
+  padding: 0 14px !important;
+  display: flex;
+  align-items: center;
+}
+
+.textarea {
+  resize: vertical;
+}
+
+.input::placeholder,
+.textarea::placeholder {
+  color: rgba(43, 48, 67, 0.4);
+}
+
+.input:hover,
+.textarea:hover,
+.numberInput:hover,
+.select:hover :global(.ant-select-selector) {
+  border-color: rgba(146, 216, 113, 1) !important;
+}
+
+.input:focus,
+.textarea:focus,
+.numberInput:global(.ant-input-number-focused),
+.select:global(.ant-select-focused) :global(.ant-select-selector) {
+  border-color: rgba(146, 216, 113, 1) !important;
+  box-shadow: 0 0 0 2px rgba(146, 216, 113, 0.15) !important;
+}
+
+.uploadTrigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 44px;
+  padding: 0 14px;
+  border: 1px solid #e5e5ea;
+  border-radius: 10px;
+  cursor: pointer;
+  color: rgba(43, 48, 67, 0.4);
+  font-size: 14px;
+}
+
+.uploadTrigger:hover {
+  border-color: rgba(146, 216, 113, 1);
+}
+
+.uploadText {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.submitButton {
+  height: 48px !important;
+  border-radius: 10px !important;
+  background-color: rgba(146, 216, 113, 1) !important;
+  border: none !important;
+  color: #ffffff !important;
+  font-size: 15px;
+  font-weight: 500;
+  margin-top: 8px;
+}
+
+.submitButton:disabled {
+  background-color: rgba(146, 216, 113, 0.5) !important;
+  color: #ffffff !important;
+}
+
+.submitButton:hover:not(:disabled) {
+  background-color: rgba(130, 200, 100, 1) !important;
+}
