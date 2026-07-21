@@ -15,9 +15,9 @@ const CategoryModal = ({
 }: CategoryModalProps) => {
     const formik = useFormik<CategoryFormValues>({
         initialValues: {
-            title: initialData?.title || '',
+            name: initialData?.name || '',
             description: initialData?.description || '',
-            image: initialData?.image || '',
+            img_url: initialData?.img_url || '',
         },
         validationSchema: categoryValidationSchema,
         enableReinitialize: true,
@@ -37,7 +37,7 @@ const CategoryModal = ({
                 <label className={styles.label}>Şəkil ünvanı</label>
                 <Input
                 name="title"
-                value={formik.values.image}
+                value={formik.values.img_url}
                 onChange={formik.handleChange}
                 />
             </div>
@@ -46,13 +46,13 @@ const CategoryModal = ({
                 <label className={styles.label}>Başlıq</label>
                 <Input
                 name="title"
-                value={formik.values.title}
+                value={formik.values.name}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                status={formik.touched.title && formik.errors.title ? 'error' : ''}
+                status={formik.touched.name && formik.errors.name ? 'error' : ''}
                 />
-                {formik.touched.title && formik.errors.title && (
-                    <span className={styles.error}>{formik.errors.title}</span>
+                {formik.touched.name && formik.errors.name && (
+                    <span className={styles.error}>{formik.errors.name}</span>
                 )}
             </div>
 

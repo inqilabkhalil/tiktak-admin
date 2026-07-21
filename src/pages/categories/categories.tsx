@@ -4,33 +4,42 @@ import { Button } from "@/shared/components/Button";
 import { Table } from "@/shared/components/Table";
 import { DeleteConfirmModal } from "@/shared/components/DeleteConfirmModal";
 import { Loader } from "@/shared/components/Loader";
-import { mockCategories } from "@/features/categories/utils/mockCategories";
 import { getCategoryColumns } from "@/features/categories/utils/categoryColumns";
 import type { Category } from "@/features/categories/types/categories";
 import styles from "./categories.module.css";
 import tableStyles from "@/features/categories/styles/categoryTable.module.css";
 import CategoryModal from "@/features/categories/components/CategoryModal";
 import useColumnSearchProps from "@/features/categories/hooks/useColumnSearchProps";
+import { useCategoryStore } from "@/features/categories/store/categoryStore";
 
 export const CategoriesPage = () => {
   const [deleteId, setDeleteId] = useState<number | null>(null);
-  const [loading, setLoading] = useState(true);
   const [addModalOpen, setAddModalOpen] = useState(false);
   const [editData, setEditData] = useState<Category | null>(null);
 
+  const categories = useCategoryStore((state) => state.categories);
+  const loading = useCategoryStore((state) => state.loading);
+  const fetchAll = useCategoryStore((state) => state.fetchAll);
+  const remove = useCategoryStore((state) =>state.remove);
+
   const { getColumnSearchProps } = useColumnSearchProps<Category>();
+
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 1000);
-    return () => clearTimeout(timer);
-  }, []);
+    fetchAll();
+  }, [fetchAll]);
 
   const columns = getCategoryColumns({
     onEdit: setEditData,
     onDelete: setDeleteId,
     getColumnSearchProps,
   });
+
+  const handleDeleteConfirim = async () => {
+    if (deleteId !== null) {
+      await remove(deleteId);
+      setDeleteId(null)
+    }
+  }
 
   return (
     <>
@@ -54,9 +63,10 @@ export const CategoriesPage = () => {
           size="small"
           className={tableStyles.table}
           columns={columns}
-          dataSource={mockCategories}
+          dataSource={categories}
           rowKey="id"
           pagination={{
+            pageSize: 5,
             showSizeChanger: false,
             showTotal: (total, range) =>
               `${range[0]}-${range[1]} / ${total} nəticə`,
@@ -79,7 +89,7 @@ export const CategoriesPage = () => {
 
       <DeleteConfirmModal
         open={deleteId !== null}
-        onConfirm={() => setDeleteId(null)}
+        onConfirm={handleDeleteConfirim}
         onCancel={() => setDeleteId(null)}
       />
     </>
