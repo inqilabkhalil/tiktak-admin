@@ -65,20 +65,27 @@
 }
 
 .userIcon {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  background-color: #F5F5F7;
   display: flex;
   align-items: center;
-  justify-content: center;
-  color: #92d871;
-  font-size: 20px;
-  cursor: pointer;
+  gap: 10px;
+  background: #f9fafb;
+  padding: 6px 16px 6px 6px;
+  border-radius: 999px;
+  border: 1px solid #e5e7eb;
   transition: all 0.2s ease;
+  cursor: pointer;
 }
 
 .userIcon:hover {
-  background-color: #EEEEF0;
-  transform: scale(1.05);
+  background: #f3f4f6;
+  border-color: #d1d5db;
+}
+
+.userRole {
+  font-size: 13px;
+  font-weight: 600;
+  color: #8bc34a;
+  font-family: var(--font-family);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }

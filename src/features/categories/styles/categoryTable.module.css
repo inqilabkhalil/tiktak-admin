@@ -148,37 +148,43 @@
   display: block;
 }
 
-/* Input focus - yaşıl */
-.filterInput :global(.ant-input):focus,
-.filterInput :global(.ant-input-focused),
-.filterInput :global(.ant-input):hover {
-  border-color:  #8bc34a !important;
-  box-shadow: 0 0 0 2px rgba(146, 216, 113, 0.2) !important;
+
+.filterDropdown :global(.ant-input) {
+  border-color: #d9d9d9 !important;
+  box-shadow: none !important;
+}
+
+
+.filterDropdown :global(.ant-input):hover {
+  border-color: #8bc34a !important;
+}
+
+.filterDropdown :global(.ant-input):focus,
+.filterDropdown :global(.ant-input-focused) {
+  border-color: #8bc34a !important;
+  box-shadow: 0 0 0 2px rgba(139, 195, 74, 0.2) !important;
+  outline: none !important;
 }
 
 .filterButton {
   width: 90px;
 }
 
-/* Axtar düyməsi (primary) - yaşıl fon */
 .filterButton:global(.ant-btn-primary) {
-  background-color:  #8bc34a !important;
-  border-color:  #8bc34a !important;
+  background-color: #8bc34a !important;
+  border-color: #8bc34a !important;
 }
 
 .filterButton:global(.ant-btn-primary):hover {
-  background-color: #7BC55E !important;
-  border-color: #7BC55E !important;
+  background-color: #7bc55e !important;
+  border-color: #7bc55e !important;
 }
 
-/* Sıfırla düyməsi (default) - hover/focus yaşıl */
 .filterButton:global(.ant-btn-default):hover,
 .filterButton:global(.ant-btn-default):focus {
-  color:  #8bc34a !important;
-  border-color:  #8bc34a !important;
+  color: #8bc34a !important;
+  border-color: #8bc34a !important;
 }
-
-/* Filter aktivdirsə yaşıl ikon */
 .filterIconActive {
-  color:  #8bc34a;
+  color: #8bc34a;
 }
