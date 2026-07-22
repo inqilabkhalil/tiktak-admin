@@ -4,6 +4,10 @@
   --content-gap: 1.5rem;
   --content-max-width: 68.5rem;
   --shell-gutter: 1.25rem;
+
+  --color-main-green: #8bc34a;
+  --color-main-blue: #71b2f6;
+  --color-main-red: #ff4d4f;
 }
 
 * {
