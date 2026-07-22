@@ -3,10 +3,11 @@ import { Navigate, Route, Routes } from 'react-router-dom';
 import { CampaignsPage } from '@/pages/campaigns/campaign';
 import CategoriesPage from '@/pages/categories/categories';
 import ProductsPage from '@/pages/products/products';
+
 import UsersPage from '@/pages/users';
 import { Layout } from '@/shared/components/Layout';
-import { OrdersPage } from '@/pages/Order/OrderPage';
 import Login from '@/pages/auth';
+import { OrdersPage } from '@/pages/orders/orders';
 
 
 export function AppRoutes() {
