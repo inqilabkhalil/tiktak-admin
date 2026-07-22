@@ -6,15 +6,8 @@
   gap: 16px;
 }
 
-.title {
-  margin: 0;
-  font-size: 28px;
-  font-weight: 700;
-  color: rgba(43, 48, 67, 1);
-}
-
 .addButton {
-  background-color: rgba(146, 216, 113, 1) !important;
+  background-color:#8bc34a !important;
   border: none !important;
   color: #ffffff !important;
   font-size: 14px;

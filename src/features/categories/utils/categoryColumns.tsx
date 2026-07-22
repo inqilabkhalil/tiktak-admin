@@ -7,6 +7,7 @@ import {
 import { Button } from "@/shared/components/Button";
 import type { Category, GetCategoryColumnsProps } from "../types/categories";
 import styles from "../styles/categoryTable.module.css";
+import dayjs from "dayjs";
 
 export const getCategoryColumns = ({
   onEdit,
@@ -63,7 +64,9 @@ export const getCategoryColumns = ({
     key: "created_at",
     width: 120,
     render: (created_at: string) => (
-      <span className={styles.dateCell}>{created_at}</span>
+      <span className={styles.dateCell}>
+        {dayjs(created_at).format("DD.MM.YYYY")}
+        </span>
     ),
   },
   {

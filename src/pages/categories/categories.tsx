@@ -11,6 +11,7 @@ import tableStyles from "@/features/categories/styles/categoryTable.module.css";
 import CategoryModal from "@/features/categories/components/CategoryModal";
 import useColumnSearchProps from "@/features/categories/hooks/useColumnSearchProps";
 import { useCategoryStore } from "@/features/categories/store/categoryStore";
+import { PageTitle } from "@/shared/components/PageTitle";
 
 export const CategoriesPage = () => {
   const [deleteId, setDeleteId] = useState<number | null>(null);
@@ -44,7 +45,7 @@ export const CategoriesPage = () => {
   return (
     <>
       <div className={styles.headerRow}>
-        <h1 className={styles.title}>Kateqoriyalar</h1>
+        <PageTitle>Kateqoriyalar</PageTitle>
 
         <Button
           type="primary"
