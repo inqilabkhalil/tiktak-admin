@@ -16,6 +16,7 @@ import { Input } from '../../shared/components/Input';
 import { Table } from '../../shared/components/Table';
 import { DeleteConfirmModal } from '../../shared/components/DeleteConfirmModal';
 import { Loader } from '../../shared/components/Loader';
+import { PageTitle } from '../../shared/components/PageTitle';
 
 import { CreateProductModal } from '../../features/products/components/ProductsModal/ProductsModal';
 import { deleteProduct, fetchProducts } from '../../features/products/services/productsService';
@@ -207,7 +208,7 @@ export const ProductsPage = () => {
   return (
     <>
       <div className={styles.headerRow}>
-        <h1 className={styles.title}>Məhsullar</h1>
+        <PageTitle>Məhsullar</PageTitle>
 
         <Button
           type="primary"

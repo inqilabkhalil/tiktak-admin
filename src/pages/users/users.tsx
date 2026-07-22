@@ -11,6 +11,7 @@ import type { TableProps } from 'antd';
 
 import { Table } from '../../shared/components/Table';
 import { Modal } from '../../shared/components/Modal';
+import { PageTitle } from '../../shared/components/PageTitle';
 
 import styles from './users.module.css';
 
@@ -132,7 +133,7 @@ const Users = () => {
   return (
     <>
       <div className={styles.page}>
-        <h1 className={styles.title}>İstifadəçilər</h1>
+        <PageTitle>İstifadəçilər</PageTitle>
 
         <Table<User>
           className={styles.table}
