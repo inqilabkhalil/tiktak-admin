@@ -6,13 +6,6 @@
   gap: 16px;
 }
 
-.title {
-  margin: 0;
-  font-size: 28px;
-  font-weight: 700;
-  color: rgba(43, 48, 67, 1);
-}
-
 .addButton {
   background-color: rgba(146, 216, 113, 1) !important;
   border: none !important;
@@ -25,6 +18,18 @@
 
 .table {
   width: 100%;
+}
+
+.table :global(.ant-table-placeholder) {
+  height: 400px;
+}
+
+.table :global(.ant-empty) {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
 }
 
 .table :global(.ant-table-wrapper) {
@@ -188,19 +193,3 @@
   font-size: 10px;
 }
 
-.filterDropdown {
-  padding: 8px;
-}
-
-.filterInput {
-  margin-bottom: 8px;
-  display: block;
-}
-
-.filterButton {
-  width: 90px;
-}
-
-.filterIconActive {
-  color: #1677ff;
-}
