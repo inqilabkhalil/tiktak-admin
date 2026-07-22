@@ -11,6 +11,15 @@
   width: 90px;
 }
 
+.filterButton:global(.ant-btn-primary) {
+  background-color: var(--color-main-green);
+  border-color: var(--color-main-green);
+}
+
+.filterButton:global(.ant-btn-primary):hover {
+  filter: brightness(0.92);
+}
+
 .filterIconActive {
   color: #1677ff;
 }

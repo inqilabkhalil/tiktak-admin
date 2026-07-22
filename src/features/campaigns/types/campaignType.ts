@@ -17,9 +17,9 @@ export interface CampaignState {
   loading: boolean;
   error: string | null;
   fetchAll: () => Promise<void>;
-  add: (data: CampaignPayload) => Promise<void>;
-  update: (id: number, data: CampaignPayload) => Promise<void>;
-  remove: (id: number) => Promise<void>;
+  add: (data: CampaignPayload) => Promise<boolean>;
+  update: (id: number, data: CampaignPayload) => Promise<boolean>;
+  remove: (id: number) => Promise<boolean>;
 }
 
 export interface CampaignModalProps {

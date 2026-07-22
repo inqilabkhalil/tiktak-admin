@@ -8,14 +8,14 @@ import { Loader } from '../../shared/components/Loader';
 import { PageTitle } from '../../shared/components/PageTitle';
 
 import { CampaignModal } from '../../features/campaigns/components/CampaignModal';
-import { useCampaignStore } from '../../features/campaigns/store/campaignStore';
+import { useCampaigns } from '../../features/campaigns/hooks/useCampaigns';
 import { getCampaignColumns } from '../../features/campaigns/utils/campaignColumns';
 import type { Campaign } from '../../features/campaigns/types/campaignType';
 
 import styles from './campaign.module.css';
 
 export const CampaignsPage = () => {
-  const { campaigns, loading, fetchAll, remove } = useCampaignStore();
+  const { campaigns, loading, fetchAll, deleteCampaign } = useCampaigns();
   const [deleteId, setDeleteId] = useState<number | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
   const [modalMode, setModalMode] = useState<'add' | 'edit'>('add');
@@ -78,7 +78,7 @@ export const CampaignsPage = () => {
         loading={loading}
         onConfirm={async () => {
           if (deleteId !== null) {
-            await remove(deleteId);
+            await deleteCampaign(deleteId);
           }
           setDeleteId(null);
         }}
