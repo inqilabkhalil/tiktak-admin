@@ -1,28 +1,24 @@
-import type { Product } from '../types/products';
-import { mockProducts } from '../utils/mockProducts';
+import api from "@/shared/services/api";
+import type { Product, ProductPayload } from "../types/products";
 
-const FAKE_DELAY = 500;
+export const fetchProducts = async (): Promise<Product[]> => {
+  const response = await api.get('/admin/products'); // cəm
+  return response.data.data;
+};
 
-export const fetchProducts = (): Promise<Product[]> =>
-  new Promise((resolve) => {
-    setTimeout(() => resolve(mockProducts), FAKE_DELAY);
-  });
+export const createProduct = async (data: ProductPayload): Promise<Product> => {
+  const response = await api.post('/admin/product', data); // TƏK!
+  return response.data.data;
+};
 
-export const createProduct = (product: Product): Promise<Product> =>
-  new Promise((resolve) => {
-    setTimeout(() => {
-      mockProducts.unshift(product);
-      resolve(product);
-    }, FAKE_DELAY);
-  });
+export const updateProduct = async (
+  id: number,
+  data: ProductPayload
+): Promise<Product> => {
+  const response = await api.put(`/admin/products/${id}`, data); // cəm
+  return response.data.data;
+};
 
-export const deleteProduct = (id: number): Promise<void> =>
-  new Promise((resolve) => {
-    setTimeout(() => {
-      const index = mockProducts.findIndex((product) => product.id === id);
-      if (index !== -1) {
-        mockProducts.splice(index, 1);
-      }
-      resolve();
-    }, FAKE_DELAY);
-  });
+export const deleteProduct = async (id: number): Promise<void> => {
+  await api.delete(`/admin/products/${id}`); // cəm
+};
