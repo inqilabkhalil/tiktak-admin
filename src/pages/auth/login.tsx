@@ -1,13 +1,38 @@
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import styles from './login.module.css';
 import { Header } from '../../shared/components/Header';
 import loginImage from '../../shared/assets/images/login.png';
 import { Input } from '../../shared/components/Input';
 import { Button } from '../../shared/components/Button';
 
+import { useAuthStore } from '@/features/auth/store/useAuthStore';
+
 const Login = () => {
+  const navigate = useNavigate();
+
+  const [phone, setPhone] = useState('');
+  const [password, setPassword] = useState('');
+
+  const login = useAuthStore((state) => state.login);
+  const loading = useAuthStore((state) => state.loading);
+  const error = useAuthStore((state) => state.error);
+
+  const handleLogin = async () => {
+    await login({
+      phone,
+      password,
+    });
+
+    if (localStorage.getItem('access_token')) {
+      navigate('/users');
+    }
+  };
+
   return (
     <div className={styles.login}>
-      <Header showSearch={false} showUserIcon={false}/>
+      <Header showSearch={false} showUserIcon={false} />
 
       <div className={styles.content}>
         <div className={styles.left}>
@@ -20,15 +45,44 @@ const Login = () => {
 
             <div className={styles.inputGroup}>
               <label>Telefon</label>
-              <Input placeholder="Telefon" />
+
+              <Input
+                placeholder="+994..."
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+              />
             </div>
 
             <div className={styles.inputGroup}>
               <label>Parol</label>
-              <Input isPassword placeholder="********" />
+
+              <Input
+                isPassword
+                placeholder="********"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
             </div>
 
-            <Button className={styles.loginButton}>Daxil ol</Button>
+            {error && (
+              <p
+                style={{
+                  color: 'red',
+                  fontSize: '14px',
+                  marginBottom: '12px',
+                }}
+              >
+                {error}
+              </p>
+            )}
+
+            <Button
+              className={styles.loginButton}
+              loading={loading}
+              onClick={handleLogin}
+            >
+              Daxil ol
+            </Button>
           </div>
         </div>
       </div>
