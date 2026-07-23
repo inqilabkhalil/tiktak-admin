@@ -10,19 +10,15 @@ import styles from "./categories.module.css";
 import tableStyles from "@/features/categories/styles/categoryTable.module.css";
 import CategoryModal from "@/features/categories/components/CategoryModal";
 import useColumnSearchProps from "@/features/categories/hooks/useColumnSearchProps";
-import { useCategoryStore } from "@/features/categories/store/categoryStore";
 import { PageTitle } from "@/shared/components/PageTitle";
+import { useCategories } from "@/features/categories/hooks/useCategories";
 
 export const CategoriesPage = () => {
   const [deleteId, setDeleteId] = useState<number | null>(null);
   const [addModalOpen, setAddModalOpen] = useState(false);
   const [editData, setEditData] = useState<Category | null>(null);
 
-  const categories = useCategoryStore((state) => state.categories);
-  const loading = useCategoryStore((state) => state.loading);
-  const fetchAll = useCategoryStore((state) => state.fetchAll);
-  const remove = useCategoryStore((state) =>state.remove);
-
+  const { categories, loading, fetchAll, deleteCategory } = useCategories();
   const { getColumnSearchProps } = useColumnSearchProps<Category>();
 
   useEffect(() => {
@@ -37,10 +33,10 @@ export const CategoriesPage = () => {
 
   const handleDeleteConfirim = async () => {
     if (deleteId !== null) {
-      await remove(deleteId);
-      setDeleteId(null)
+      await deleteCategory(deleteId);
+      setDeleteId(null);
     }
-  }
+  };
 
   return (
     <>

@@ -8,7 +8,6 @@ import type {
   CategoryModalProps,
 } from "../../types/categories";
 import { categoryValidationSchema } from "../../utils/categoryValidation";
-import { useCategoryStore } from "../../store/categoryStore";
 import { uploadFile } from "@/shared/services/uploadService";
 
 import { Modal } from "@/shared/components/Modal";
@@ -17,6 +16,7 @@ import { Textarea } from "@/shared/components/Textarea";
 import { Button } from "@/shared/components/Button";
 
 import styles from "./CategoryModal.module.css";
+import { useCategories } from "../../hooks/useCategories";
 
 const CategoryModal = ({
   open,
@@ -24,7 +24,7 @@ const CategoryModal = ({
   mode,
   initialData,
 }: CategoryModalProps) => {
-  const { add, update, loading } = useCategoryStore();
+  const { createCategory, updateCategory, loading } = useCategories();
   const [uploading, setUploading] = useState(false);
 
   const formik = useFormik<CategoryFormValues>({
@@ -36,13 +36,17 @@ const CategoryModal = ({
     validationSchema: categoryValidationSchema,
     enableReinitialize: true,
     onSubmit: async (values) => {
+      let success = false;
+
       if (mode === "add") {
-        await add(values);
+        success = await createCategory(values);
       } else if (initialData) {
-        await update(initialData.id, values);
+        success = await updateCategory(initialData.id, values);
       }
-      formik.resetForm();
-      onClose();
+      if (success) {
+        formik.resetForm();
+        onClose();
+      }
     },
   });
 
@@ -98,7 +102,6 @@ const CategoryModal = ({
           )}
         </div>
 
-        
         <div className={styles.field}>
           <label className={styles.label}>Başlıq</label>
           <Input
@@ -113,7 +116,6 @@ const CategoryModal = ({
           )}
         </div>
 
-       
         <div className={styles.field}>
           <label className={styles.label}>Açıqlama</label>
           <Textarea
