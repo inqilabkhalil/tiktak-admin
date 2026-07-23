@@ -20,33 +20,56 @@ export const OrdersTable: React.FC<OrdersTableProps> = ({
 }) => {
   // Ant Design Table sütunları - Daxili filter və sıralamalar ilə
   const columns: ColumnsType<Order> = [
-    {
-      title: "No",
-      dataIndex: "id",
-      key: "id",
-      sorter: (a: any, b: any) => a.id - b.id, // Rəqəmlərə görə sıralama (böyükdən kiçiyə / kiçikdən böyüyə)
+   {
+      title: "Order Nömrəsi",
+      dataIndex: "orderNumber", // 👈 Səhv yazılışı (orderorderNumber) düzəltdik
+      key: "orderNumber",
+      sorter: (a: any, b: any) => {
+        // Əgər nömrə rəqəmsdirsə və ya string-dirsə müqayisə edirik
+        return (a.orderNumber || 0) > (b.orderNumber || 0) ? 1 : -1;
+      },
     },
-    {
+  {
       title: "Tarix",
-      dataIndex: "createdAt", // Və ya backend-də tarix hansı sahəkdədirsə
+      dataIndex: "createdAt",
       key: "createdAt",
-      sorter: (a: any, b: any) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime(), // Tarix sıralaması
+      // 👇 Sırçalama üçün orijinal uzun tarixdən istifadə edirik
+      sorter: (a: any, b: any) =>
+        new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime(),
+      
+      // 👇 Ekranda yalnız tarixi (məsələn: 2026-07-14) göstərmək üçün render əlavə edirik
+      render: (createdAt: string) => {
+        // createdAt varsa ilk 10 simvolunu götürürük (YYYY-MM-DD)
+        const formattedDate = createdAt ? createdAt.slice(0, 10) : "";
+        return <span>{formattedDate}</span>;
+      },
     },
     {
       title: "Çatdırılma ünvanı",
       dataIndex: "address",
       key: "address",
     },
-    {
-      title: "Məhsul sayı",
-      dataIndex: "productCount", // Və ya uyğun field adı
-      key: "productCount",
-      sorter: (a: any, b: any) => a.productCount - b.productCount, // Məhsul sayına görə sıralama
+   {
+      title: "Məhsul Sayı",
+      key: "quantity",
+      // Burada items massivinin içindəki quantity-ləri cəmləyirik (və ya items.length yaza bilərsən)
+      render: (_, record: any) => {
+        const totalQuantity = record.items?.reduce(
+          (sum: number, item: any) => sum + (item.quantity || 0),
+          0
+        ) || 0;
+        return <span>{totalQuantity}</span>;
+      },
+      sorter: (a: any, b: any) => {
+        const totalA = a.items?.reduce((sum: number, i: any) => sum + i.quantity, 0) || 0;
+        const totalB = b.items?.reduce((sum: number, i: any) => sum + i.quantity, 0) || 0;
+        return totalA - totalB;
+      },
     },
     {
-      title: "Subtotal/Çatdırılma",
-      dataIndex: "totalAmount",
-      key: "totalAmount",
+      title: "Çatdırılma",
+      dataIndex: "total",
+      key: "total",
       sorter: (a: any, b: any) => a.totalAmount - b.totalAmount, // Məbləğə görə sıralama
     },
     {
@@ -64,9 +87,16 @@ export const OrdersTable: React.FC<OrdersTableProps> = ({
       render: (status: string) => {
         let color = "geekblue";
         let text = status;
-        if (status === "PENDING") { color = "gold"; text = "Gözləyir"; }
-        else if (status === "APPROVED") { color = "green"; text = "Təsdiqləndi"; }
-        else if (status === "CANCELLED") { color = "red"; text = "İmtina edildi"; }
+        if (status === "PENDING") {
+          color = "gold";
+          text = "Gözləyir";
+        } else if (status === "APPROVED") {
+          color = "green";
+          text = "Təsdiqləndi";
+        } else if (status === "CANCELLED") {
+          color = "red";
+          text = "İmtina edildi";
+        }
         return <Tag color={color}>{text}</Tag>;
       },
     },
@@ -74,12 +104,19 @@ export const OrdersTable: React.FC<OrdersTableProps> = ({
       title: "Əməliyyat",
       key: "action",
       render: (_, record) => (
-        <Button type="link" icon={<EyeOutlined />} onClick={() => onViewDetails(record)}>
+        <Button
+          type="link"
+          icon={<EyeOutlined />}
+          onClick={() => onViewDetails(record)}
+        >
           Bax
         </Button>
       ),
     },
+ 
   ];
+
+  
 
   return (
     <Table

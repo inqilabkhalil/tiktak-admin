@@ -9,7 +9,7 @@ interface OrderState {
   isLoading: boolean;
   error: string | null;
 
-  fetchOrders: (page?: number, limit?: number, status?: string) => Promise<void>;
+  fetchOrders: (page?: number, limit?: number, status?: string  ,items?: number | string) => Promise<void>;
   fetchOrderById: (id: number | string) => Promise<void>;
   fetchStats: () => Promise<void>;
 }
@@ -22,7 +22,7 @@ export const useOrderStore = create<OrderState>((set) => ({
   error: null,
 
   // Ümumi siyahını çəkmək üçün
-  fetchOrders: async (page, limit, status) => {
+  fetchOrders: async (page, limit, status,) => {
     set({ isLoading: true, error: null });
     try {
       const data = await orderService.getOrders(page, limit, status);
