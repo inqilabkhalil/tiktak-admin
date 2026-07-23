@@ -17,11 +17,10 @@ export interface CategoryState {
   loading: boolean;
   error: string | null;
   fetchAll: () => Promise<void>;
-  add: (data: CategoryPayload) => Promise<void>;
-  update: (id: number, data: CategoryPayload) => Promise<void>;
-  remove: (id: number) => Promise<void>
+  add: (data: CategoryPayload) => Promise<boolean>;
+  update: (id: number, data: CategoryPayload) => Promise<boolean>;
+  remove: (id: number) => Promise<boolean>;
 }
-
 //Modal
 export interface CategoryModalProps {
     open: boolean;
