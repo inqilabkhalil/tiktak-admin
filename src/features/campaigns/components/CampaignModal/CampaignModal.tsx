@@ -9,14 +9,14 @@ import { Textarea } from '@/shared/components/Textarea';
 import { Button } from '@/shared/components/Button';
 import { uploadFile } from '@/shared/services/uploadService';
 
-import { useCampaignStore } from '../../store/campaignStore';
+import { useCampaigns } from '../../hooks/useCampaigns';
 import { campaignValidationSchema } from '../../utils/campaignValidation';
 import type { CampaignFormValues, CampaignModalProps } from '../../types/campaignType';
 
 import styles from './CampaignModal.module.css';
 
 export const CampaignModal = ({ open, onClose, mode, initialData }: CampaignModalProps) => {
-  const { add, update, loading } = useCampaignStore();
+  const { createCampaign, updateCampaign, loading } = useCampaigns();
   const [uploading, setUploading] = useState(false);
 
   const formik = useFormik<CampaignFormValues>({
@@ -28,13 +28,17 @@ export const CampaignModal = ({ open, onClose, mode, initialData }: CampaignModa
     validationSchema: campaignValidationSchema,
     enableReinitialize: true,
     onSubmit: async (values) => {
-      if (mode === 'add') {
-        await add(values);
-      } else if (initialData) {
-        await update(initialData.id, values);
+      const success =
+        mode === 'add'
+          ? await createCampaign(values)
+          : initialData
+            ? await updateCampaign(initialData.id, values)
+            : false;
+
+      if (success) {
+        formik.resetForm();
+        onClose();
       }
-      formik.resetForm();
-      onClose();
     },
   });
 

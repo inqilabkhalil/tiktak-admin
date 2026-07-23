@@ -5,3 +5,5 @@ export interface Category {
 }
 
 export type ModalMode = "add" | "edit";
+
+export * from "./errorBoundary";

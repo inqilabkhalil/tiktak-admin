@@ -8,8 +8,6 @@ import {
   UserOutlined,
   LogoutOutlined,
 } from '@ant-design/icons';
-import { COLORS } from '../../constants/colors';
-
 const { Sider } = Layout;
 
 const menuItems = [
@@ -35,7 +33,7 @@ export const Sidebar = () => {
         theme={{
           components: {
             Menu: {
-              itemSelectedColor: COLORS.mainGreen,
+              itemSelectedColor: 'var(--color-main-green)',
               itemSelectedBg: 'transparent',
               itemActiveBg: 'transparent',
               itemHoverBg: 'transparent',

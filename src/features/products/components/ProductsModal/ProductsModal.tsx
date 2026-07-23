@@ -1,186 +1,236 @@
-import { useState } from 'react';
-import { Modal, Form, Input, InputNumber, Select, Upload, Button, message } from 'antd';
-import type { UploadFile } from 'antd/es/upload/interface';
-import { UploadOutlined } from '@ant-design/icons';
+import { useEffect, useState } from 'react';
+import { useFormik } from 'formik';
+import { Select, InputNumber, Upload, message } from 'antd';
+import { UploadOutlined, LoadingOutlined } from '@ant-design/icons';
 
-import { mockCategories } from '../../../categories/utils/mockCategories';
-import { createProduct } from '../../services/productsService';
-import type { Product } from '../../types/products';
+import { useProductStore } from '../../store/useProductStore';
+import { useCategoryStore } from '@/features/categories/store/categoryStore';
+import { uploadFile } from '@/shared/services/uploadService';
+import { productValidationSchema } from '../../utils/productValidation';
+import { PRODUCT_UNIT_OPTIONS } from '../../types/products';
+import type {
+  ProductFormValues,
+  ProductModalProps,
+  ProductUnit,
+} from '../../types/products';
+
+import { Modal } from '@/shared/components/Modal';
+import { Input } from '@/shared/components/Input';
+import { Textarea } from '@/shared/components/Textarea';
+import { Button } from '@/shared/components/Button';
 
 import styles from './ProductsModal.module.css';
 
-interface CreateProductModalProps {
-  open: boolean;
-  onCancel: () => void;
-  onSuccess: () => void;
-}
+const ProductsModal = ({
+  open,
+  onClose,
+  mode,
+  initialData,
+}: ProductModalProps) => {
+  const { add, update, loading } = useProductStore();
+  const categories = useCategoryStore((state) => state.categories);
+  const fetchCategories = useCategoryStore((state) => state.fetchAll);
+  const [uploading, setUploading] = useState(false);
 
-interface ProductFormValues {
-  name: string;
-  description: string;
-  price: number;
-  unit: string;
-  categoryId: number;
-}
+  useEffect(() => {
+    if (open) fetchCategories();
+  }, [open, fetchCategories]);
 
-const UNIT_OPTIONS = [
-  { value: 'eded', label: 'Ədəd' },
-  { value: 'kg', label: 'Kiloqram' },
-  { value: 'litr', label: 'Litr' },
-];
-
-export const CreateProductModal = ({ open, onCancel, onSuccess }: CreateProductModalProps) => {
-  const [form] = Form.useForm<ProductFormValues>();
-  const [loading, setLoading] = useState(false);
-  const [fileList, setFileList] = useState<UploadFile[]>([]);
-
-  const handleCancel = () => {
-    form.resetFields();
-    setFileList([]);
-    onCancel();
-  };
-
-  const handleSubmit = async (values: ProductFormValues) => {
-    setLoading(true);
-    try {
-      const categoryLabel =
-        mockCategories.find((category) => category.id === values.categoryId)?.title ?? 'Kateqoriya';
-      const unitLabel =
-        UNIT_OPTIONS.find((option) => option.value === values.unit)?.label ?? values.unit;
-
-      const productPayload: Product = {
-        id: Date.now(),
-        image: fileList[0]?.thumbUrl ?? fileList[0]?.url ?? '',
-        title: values.name,
+  const formik = useFormik<ProductFormValues>({
+    initialValues: {
+      title: initialData?.title || '',
+      description: initialData?.description || '',
+      price: initialData ? Number(initialData.price) : 0,
+      type: initialData?.type || ('' as ProductUnit),
+      category_id: initialData?.category?.id || 0,
+      img_url: initialData?.img_url || '',
+    },
+    validationSchema: productValidationSchema,
+    enableReinitialize: true,
+    onSubmit: async (values) => {
+      const payload = {
+        title: values.title,
         description: values.description,
-        price: String(values.price),
-        category: categoryLabel,
-        type: unitLabel,
-        createdAt: new Date().toLocaleDateString('az-AZ'),
+        price: String(values.price), // ✅ STRING!
+        type: values.type,
+        category_id: values.category_id, // ✅ category_id!
+        img_url: values.img_url,
       };
 
-      await createProduct(productPayload);
+      console.log('📤 Payload:', payload);
 
-      message.success('Məhsul uğurla əlavə olundu');
-      form.resetFields();
-      setFileList([]);
-      onSuccess();
-    } catch {
-      message.error('Məhsul yaradılarkən xəta baş verdi');
-    } finally {
-      setLoading(false);
-    }
+      if (mode === 'add') {
+        await add(payload);
+      } else if (initialData) {
+        await update(initialData.id, payload);
+      }
+
+      formik.resetForm();
+      onClose();
+    },
+  });
+
+  const getFileName = (url: string) => {
+    if (!url) return '';
+    return url.split('/').pop() || url;
   };
 
   return (
     <Modal
+      title={mode === 'add' ? 'Yeni Məhsul' : 'Məhsulu Düzəlt'}
       open={open}
-      onCancel={handleCancel}
+      onCancel={onClose}
       footer={null}
       width={760}
-      className={styles.modal}
-      title={<span className={styles.title}>Yeni Məhsul</span>}
-      centered
     >
-      <Form
-        form={form}
-        layout="vertical"
-        onFinish={handleSubmit}
-        className={styles.form}
-        requiredMark={false}
-      >
-        <Form.Item
-          name="name"
-          label="Məhsul Adı"
-          rules={[{ required: true, message: 'Məhsulun adını daxil edin' }]}
-        >
-          <Input placeholder="Məhsulun adını daxil edin" className={styles.input} />
-        </Form.Item>
-
-        <Form.Item
-          name="description"
-          label="Açıqlama"
-          rules={[{ required: true, message: 'Məhsulun açıqlamasını yazın' }]}
-        >
-          <Input.TextArea
-            placeholder="Məhsulun açıqlamasını yazın"
-            className={styles.textarea}
-            rows={4}
+      <form onSubmit={formik.handleSubmit} className={styles.form}>
+        {/* Məhsul Adı */}
+        <div className={styles.field}>
+          <label className={styles.label}>Məhsul Adı</label>
+          <Input
+            name="title"
+            placeholder="Məhsulun adını daxil edin"
+            value={formik.values.title}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            status={formik.touched.title && formik.errors.title ? 'error' : ''}
           />
-        </Form.Item>
+          {formik.touched.title && formik.errors.title && (
+            <span className={styles.error}>{formik.errors.title}</span>
+          )}
+        </div>
 
+        {/* Açıqlama */}
+        <div className={styles.field}>
+          <label className={styles.label}>Açıqlama</label>
+          <Textarea
+            name="description"
+            rows={4}
+            placeholder="Məhsulun açıqlamasını yazın"
+            value={formik.values.description}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            status={
+              formik.touched.description && formik.errors.description
+                ? 'error'
+                : ''
+            }
+          />
+          {formik.touched.description && formik.errors.description && (
+            <span className={styles.error}>{formik.errors.description}</span>
+          )}
+        </div>
+
+        {/* Qiymət & Ölçü Vahidi */}
         <div className={styles.row}>
-          <Form.Item
-            name="price"
-            label="Qiymət"
-            rules={[{ required: true, message: 'Qiyməti daxil edin' }]}
-            className={styles.col}
-          >
+          <div className={styles.col}>
+            <label className={styles.label}>Qiymət</label>
             <InputNumber
-              placeholder="Qiymət daxil edin"
               className={styles.numberInput}
+              placeholder="Qiymət daxil edin"
               min={0}
+              value={formik.values.price || undefined}
+              onChange={(value) => formik.setFieldValue('price', value ?? 0)}
+              onBlur={() => formik.setFieldTouched('price', true)}
+              style={{ width: '100%' }}
             />
-          </Form.Item>
+            {formik.touched.price && formik.errors.price && (
+              <span className={styles.error}>{formik.errors.price}</span>
+            )}
+          </div>
 
-          <Form.Item
-            name="unit"
-            label="Ölçü Vahidi"
-            rules={[{ required: true, message: 'Vahid seçin' }]}
-            className={styles.col}
-          >
+          <div className={styles.col}>
+            <label className={styles.label}>Ölçü Vahidi</label>
             <Select
+              className={styles.select}
               placeholder="Vahid"
-              className={styles.select}
-              options={UNIT_OPTIONS}
+              options={PRODUCT_UNIT_OPTIONS}
+              value={formik.values.type || undefined}
+              onChange={(value: ProductUnit) =>
+                formik.setFieldValue('type', value)
+              }
+              onBlur={() => formik.setFieldTouched('type', true)}
+              style={{ width: '100%' }}
             />
-          </Form.Item>
+            {formik.touched.type && formik.errors.type && (
+              <span className={styles.error}>{formik.errors.type}</span>
+            )}
+          </div>
         </div>
 
+        {/* Kateqoriya & Şəkil */}
         <div className={styles.row}>
-          <Form.Item
-            name="categoryId"
-            label="Kateqoriya"
-            rules={[{ required: true, message: 'Kateqoriya seçin' }]}
-            className={styles.col}
-          >
+          <div className={styles.col}>
+            <label className={styles.label}>Kateqoriya</label>
             <Select
-              placeholder="Kateqoriya seçin"
               className={styles.select}
-              options={mockCategories.map((c) => ({ value: c.id, label: c.title }))}
+              placeholder="Kateqoriya seçin"
+              options={categories.map((c) => ({
+                value: c.id,
+                label: c.name,
+              }))}
+              value={formik.values.category_id || undefined}
+              onChange={(value) => formik.setFieldValue('category_id', value)}
+              onBlur={() => formik.setFieldTouched('category_id', true)}
+              style={{ width: '100%' }}
             />
-          </Form.Item>
+            {formik.touched.category_id && formik.errors.category_id && (
+              <span className={styles.error}>{formik.errors.category_id}</span>
+            )}
+          </div>
 
-          <Form.Item label="Məhsul Şəkli" className={styles.col}>
+          <div className={styles.col}>
+            <label className={styles.label}>Məhsul Şəkli</label>
             <Upload
-              fileList={fileList}
-              onChange={({ fileList: newList }) => setFileList(newList)}
-              beforeUpload={() => false}
-              maxCount={1}
               showUploadList={false}
+              maxCount={1}
+              accept="image/*"
+              customRequest={async ({ file, onSuccess, onError }) => {
+                try {
+                  setUploading(true);
+                  const { url } = await uploadFile(file as File);
+                  formik.setFieldValue('img_url', url);
+                  onSuccess?.(url);
+                } catch (err) {
+                  message.error('Şəkil yüklənərkən xəta baş verdi');
+                  onError?.(err as Error);
+                } finally {
+                  setUploading(false);
+                }
+              }}
             >
-              <div className={styles.uploadTrigger}>
-                <span className={styles.uploadText}>
-                  {fileList[0]?.name ?? 'Şəkil seçin...'}
-                </span>
-                <UploadOutlined />
-              </div>
+              <Input
+                readOnly
+                value={getFileName(formik.values.img_url)}
+                placeholder="Şəkil seçin"
+                style={{ cursor: 'pointer' }}
+                suffix={uploading ? <LoadingOutlined /> : <UploadOutlined />}
+              />
             </Upload>
-          </Form.Item>
+          </div>
         </div>
+
+        {formik.values.img_url && (
+          <img
+            src={formik.values.img_url}
+            alt="preview"
+            className={styles.preview}
+          />
+        )}
 
         <Button
           type="primary"
           htmlType="submit"
-          loading={loading}
-          className={styles.submitButton}
           block
+          loading={loading}
+          disabled={uploading}
+          className={styles.submitButton}
         >
-          Mahsulu Yarat
+          {mode === 'add' ? 'Məhsulu Yarat' : 'Məlumatları yenilə'}
         </Button>
-      </Form>
+      </form>
     </Modal>
   );
 };
 
-export default CreateProductModal;
+export default ProductsModal;

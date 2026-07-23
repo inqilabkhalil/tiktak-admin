@@ -1,14 +1,6 @@
 /* ============ TABLE ============ */
-.table :global(.ant-table-placeholder) {
-  height: 400px;
-}
-
-.table :global(.ant-empty) {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
+.table {
+  width: 100%;
 }
 
 .table :global(.ant-table-wrapper) {
@@ -17,7 +9,7 @@
 
 .table :global(.ant-table) {
   background: transparent;
-  border-radius: 16px;
+  border-radius: 12px;
 }
 
 .table :global(.ant-table-thead > tr > th) {
@@ -25,17 +17,18 @@
   border-bottom: 1px solid #f2f2f5;
   color: rgba(43, 48, 67, 0.75);
   font-weight: 600;
-  font-size: 13px;
-  padding: 14px 16px !important;
+  font-size: 12px;
+  padding: 12px 10px !important;
 }
 
 .table :global(.ant-table-thead > tr > th .ant-table-column-title) {
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .table :global(.ant-table-tbody > tr > td) {
-  padding: 16px 12px !important;
+  padding: 16px 10px !important;
   border-bottom: 1px solid #f2f2f5;
+  vertical-align: middle;
 }
 
 .table :global(.ant-table-tbody > tr:last-child > td) {
@@ -43,11 +36,11 @@
 }
 
 .table :global(.ant-table-tbody > tr > td:first-child) {
-  padding-left: 20px !important;
+  padding-left: 16px !important;
 }
 
 .table :global(.ant-table-tbody > tr > td:last-child) {
-  padding-right: 20px !important;
+  padding-right: 16px !important;
 }
 
 .table :global(.ant-table-tbody > tr:hover > td) {
@@ -55,34 +48,72 @@
 }
 
 .table :global(.ant-pagination) {
-  margin: 24px 0 0;
+  margin: 16px 0 0;
   display: flex;
   justify-content: flex-end;
 }
 
 /* ============ CELLS ============ */
 .orderCell {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 400;
   color: rgba(43, 48, 67, 1);
 }
 
 .titleCell {
-  font-size: 14px;
-  font-weight: 500;
+  font-size: 13px;
+  font-weight: 600;
   color: rgba(43, 48, 67, 1);
 }
 
-.descriptionCell {
+.categoryCell {
   font-size: 13px;
   font-weight: 400;
+  color: rgba(43, 48, 67, 0.85);
+}
+
+.descriptionCell {
+  font-size: 12px;
+  font-weight: 400;
   color: rgba(43, 48, 67, 0.65);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  max-width: 240px;
+  line-height: 1.4;
+}
+
+.priceCell {
+  font-size: 13px;
+  font-weight: 700;
+  color: rgba(43, 48, 67, 1);
+  white-space: nowrap;
+}
+
+.currency {
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(43, 48, 67, 0.6);
+  margin-left: 2px;
+}
+
+.badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 16px;
+  font-size: 12px;
+  font-weight: 500;
+  background: rgba(139, 92, 246, 0.12);
+  color: #8b5cf6;
+  white-space: nowrap;
 }
 
 .dateCell {
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 400;
   color: rgba(43, 48, 67, 0.65);
+  white-space: nowrap;
 }
 
 /* ============ IMAGE ============ */
@@ -91,6 +122,7 @@
   height: 40px;
   border-radius: 8px;
   object-fit: cover;
+  display: block;
 }
 
 .imagePlaceholder {
@@ -107,25 +139,26 @@
 /* ============ ACTIONS ============ */
 .actionsCell {
   display: flex;
-  gap: 24px;
+  gap: 16px;
+  white-space: nowrap;
 }
 
 .editAction {
   padding: 0 !important;
   height: auto !important;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 400;
   color: rgba(43, 48, 67, 1);
 }
 
 .editAction :global(.anticon) {
-  font-size: 10px;
+  font-size: 9px;
 }
 
 .deleteAction {
   padding: 0 !important;
   height: auto !important;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 400;
   color: rgba(255, 77, 79, 1);
 }
@@ -135,12 +168,14 @@
 }
 
 .deleteAction :global(.anticon) {
-  font-size: 10px;
+  font-size: 9px;
 }
 
 /* ============ FILTER DROPDOWN ============ */
 .filterDropdown {
-  padding: 8px;
+  padding: 10px;
+  background: #ffffff;
+  border-radius: 8px;
 }
 
 .filterInput {
@@ -148,43 +183,19 @@
   display: block;
 }
 
-
-.filterDropdown :global(.ant-input) {
-  border-color: #d9d9d9 !important;
-  box-shadow: none !important;
-}
-
-
-.filterDropdown :global(.ant-input):hover {
-  border-color: #8bc34a !important;
-}
-
-.filterDropdown :global(.ant-input):focus,
-.filterDropdown :global(.ant-input-focused) {
-  border-color: #8bc34a !important;
-  box-shadow: 0 0 0 2px rgba(139, 195, 74, 0.2) !important;
-  outline: none !important;
-}
-
 .filterButton {
-  width: 90px;
+  width: 80px;
 }
 
 .filterButton:global(.ant-btn-primary) {
-  background-color: #8bc34a !important;
-  border-color: #8bc34a !important;
+  background-color: var(--color-main-green);
+  border-color: var(--color-main-green);
 }
 
 .filterButton:global(.ant-btn-primary):hover {
-  background-color: #7bc55e !important;
-  border-color: #7bc55e !important;
+  filter: brightness(0.92);
 }
 
-.filterButton:global(.ant-btn-default):hover,
-.filterButton:global(.ant-btn-default):focus {
-  color: #8bc34a !important;
-  border-color: #8bc34a !important;
-}
 .filterIconActive {
-  color: #8bc34a;
+  color: rgba(146, 216, 113, 1);
 }

@@ -7,6 +7,7 @@ import {
 import { Button } from "@/shared/components/Button";
 import type { Category, GetCategoryColumnsProps } from "../types/categories";
 import styles from "../styles/categoryTable.module.css";
+import dayjs from "dayjs";
 
 export const getCategoryColumns = ({
   onEdit,
@@ -23,12 +24,12 @@ export const getCategoryColumns = ({
   },
   {
     title: "Şəkil",
-    dataIndex: "image",
-    key: "image",
+    dataIndex: "img_url",
+    key: "img_url",
     width: 100,
     render: (image: string, record) =>
       image ? (
-        <img src={image} alt={record.title} className={styles.image} />
+        <img src={image} alt={record.name} className={styles.image} />
       ) : (
         <div className={styles.imagePlaceholder}>
           <PictureOutlined />
@@ -37,9 +38,9 @@ export const getCategoryColumns = ({
   },
   {
     title: "Ad",
-    dataIndex: "title",
-    key: "title",
-    ...getColumnSearchProps("title", "name"),
+    dataIndex: "name",
+    key: "name",
+    ...getColumnSearchProps("name", "name"),
     render: (title: string) => (
       <span className={styles.titleCell}>{title}</span>
     ),
@@ -59,11 +60,13 @@ export const getCategoryColumns = ({
   },
   {
     title: "Tarix",
-    dataIndex: "createdAt",
-    key: "createdAt",
+    dataIndex: "created_at",
+    key: "created_at",
     width: 120,
-    render: (createdAt: string) => (
-      <span className={styles.dateCell}>{createdAt}</span>
+    render: (created_at: string) => (
+      <span className={styles.dateCell}>
+        {dayjs(created_at).format("DD.MM.YYYY")}
+        </span>
     ),
   },
   {

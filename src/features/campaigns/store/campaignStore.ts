@@ -29,8 +29,10 @@ export const useCampaignStore = create<CampaignState>((set, get) => ({
     try {
       await createCampaign(data);
       await get().fetchAll();
+      return true;
     } catch {
       set({ error: "Əlavə etmək mümkün olmadı" });
+      return false;
     } finally {
       set({ loading: false });
     }
@@ -41,8 +43,10 @@ export const useCampaignStore = create<CampaignState>((set, get) => ({
     try {
       await updateCampaign(id, data);
       await get().fetchAll(); // 👈 map əvəzinə, təzə siyahı çəkilir
+      return true;
     } catch {
       set({ error: "Yeniləmək mümkün olmadı" });
+      return false;
     } finally {
       set({ loading: false });
     }
@@ -53,8 +57,10 @@ export const useCampaignStore = create<CampaignState>((set, get) => ({
     try {
       await deleteCampaign(id);
       await get().fetchAll();
+      return true;
     } catch {
       set({ error: "Silmək mümkün olmadı" });
+      return false;
     } finally {
       set({ loading: false });
     }
