@@ -1,112 +1,96 @@
 import React from "react";
-import { Table, Tag, Button, Card } from "antd";
+import { Table, Tag, Button } from "antd";
+import type { ColumnsType } from "antd/es/table";
+import type { Order } from "../types";
 import { EyeOutlined } from "@ant-design/icons";
-import type { Order, OrdersResponse } from "../types";
-
 
 interface OrdersTableProps {
-  orders: OrdersResponse | null;
+  orders: any;
   isLoading: boolean;
   page: number;
   limit: number;
-  onPageChange: (page: number, pageSize: number) => void;
+  onPageChange: (page: number, limit: number) => void;
   onViewDetails: (order: Order) => void;
 }
 
 export const OrdersTable: React.FC<OrdersTableProps> = ({
   orders,
   isLoading,
-  page,
-  limit,
-  onPageChange,
   onViewDetails,
 }) => {
-  const renderStatusTag = (status: string) => {
-    switch (status) {
-      case "gozleyir":
-        return <Tag color="gold">Gözləyir</Tag>;
-      case "tesdiqlenedi":
-        return <Tag color="blue">Təsdiqləndi</Tag>;
-      case "hazirlanir":
-        return <Tag color="purple">Hazırlanır</Tag>;
-      case "imtina":
-        return <Tag color="red">İmtina</Tag>;
-      default:
-        return <Tag color="default">{status}</Tag>;
-    }
-  };
-
-  const columns = [
+  // Ant Design Table sütunları - Daxili filter və sıralamalar ilə
+  const columns: ColumnsType<Order> = [
     {
       title: "No",
       dataIndex: "id",
       key: "id",
-      render: (id: number) => `ORD-${id}`,
+      sorter: (a: any, b: any) => a.id - b.id, // Rəqəmlərə görə sıralama (böyükdən kiçiyə / kiçikdən böyüyə)
     },
     {
       title: "Tarix",
-      dataIndex: "created_at",
-      key: "created_at",
-      render: (date: string) => new Date(date).toLocaleDateString(),
+      dataIndex: "createdAt", // Və ya backend-də tarix hansı sahəkdədirsə
+      key: "createdAt",
+      sorter: (a: any, b: any) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime(), // Tarix sıralaması
     },
     {
       title: "Çatdırılma ünvanı",
+      dataIndex: "address",
       key: "address",
-      render: () => "Xətai rayonu",
     },
     {
       title: "Məhsul sayı",
-      dataIndex: "items",
-      key: "items",
-      render: (items: any[]) => items?.reduce((acc, item) => acc + item.quantity, 0) || 0,
+      dataIndex: "productCount", // Və ya uyğun field adı
+      key: "productCount",
+      sorter: (a: any, b: any) => a.productCount - b.productCount, // Məhsul sayına görə sıralama
     },
     {
       title: "Subtotal/Çatdırılma",
-      dataIndex: "total_price",
-      key: "total_price",
-      render: (price: string) => (
-        <span>
-          {price} ₼ · <span style={{ color: "green" }}>Pulsuz</span>
-        </span>
-      ),
+      dataIndex: "totalAmount",
+      key: "totalAmount",
+      sorter: (a: any, b: any) => a.totalAmount - b.totalAmount, // Məbləğə görə sıralama
     },
     {
       title: "Status",
       dataIndex: "status",
       key: "status",
-      render: (status: string) => renderStatusTag(status),
+      // Status sütunu üçün daxili filter siyahısı
+      filters: [
+        { text: "Gözləyir", value: "PENDING" },
+        { text: "Təsdiqləndi", value: "APPROVED" },
+        { text: "Çatdırıldı", value: "DELIVERED" },
+        { text: "İmtina edildi / Ləğv", value: "CANCELLED" },
+      ],
+      onFilter: (value: any, record: any) => record.status === value,
+      render: (status: string) => {
+        let color = "geekblue";
+        let text = status;
+        if (status === "PENDING") { color = "gold"; text = "Gözləyir"; }
+        else if (status === "APPROVED") { color = "green"; text = "Təsdiqləndi"; }
+        else if (status === "CANCELLED") { color = "red"; text = "İmtina edildi"; }
+        return <Tag color={color}>{text}</Tag>;
+      },
     },
     {
       title: "Əməliyyat",
       key: "action",
-      render: (_: any, record: Order) => (
-        <Button 
-          type="link" 
-          icon={<EyeOutlined />} 
-          onClick={() => onViewDetails(record)}
-        >
-          Göstər
+      render: (_, record) => (
+        <Button type="link" icon={<EyeOutlined />} onClick={() => onViewDetails(record)}>
+          Bax
         </Button>
       ),
     },
   ];
 
   return (
-    <Card variant="borderless" style={{ borderRadius: "8px" }}>
-      <Table
-        dataSource={Array.isArray(orders) ? orders : []}
-        columns={columns}
-        rowKey="id"
-        loading={isLoading}
-        pagination={{
-          current: page,
-          pageSize: limit,
-          total: orders?.data?.total || 0,
-          onChange: onPageChange,
-          showSizeChanger: true,
-          pageSizeOptions: ["5", "10", "20", "50"],
-        }}
-      />
-    </Card>
+    <Table
+      dataSource={orders?.data || []}
+      columns={columns}
+      loading={isLoading}
+      rowKey="id"
+      pagination={{
+        pageSize: 5,
+        total: orders?.total || 0,
+      }}
+    />
   );
 };

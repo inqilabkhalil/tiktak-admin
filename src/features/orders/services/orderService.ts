@@ -1,30 +1,7 @@
-import axios from "axios";
-
-const API_URL = import.meta.env.VITE_API_URL || 'Məlumatları yükləmək mümkün olmadı'
-
-
-
-export const api = axios.create({
-  baseURL: API_URL,
-});
-
-// Request Interceptor - Tokeni hər sorğuya avtomatik əlavə edir
-api.interceptors.request.use(
-  (config) => {
-    // Postman-də işlətdiyiniz tokenin localStorage-dəki açar adı
-    const token = localStorage.getItem("ACCESS TOKEN");
-    
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
-    return config;
-  },
-  (error) => {
-    return Promise.reject(error);
-  }
-);
+import api from "@/shared/services/api";
 
 export const orderService = {
+  // 1. Ümumi sifarişlərin siyahısı (səhifələmə və s. ilə)
   getOrders: async (page = 1, limit = 5, status?: string) => {
     const response = await api.get("/orders/admin", {
       params: { page, limit, status },
@@ -32,8 +9,15 @@ export const orderService = {
     return response.data;
   },
 
-getStats: async () => {
-    const response = await api.get("/orders/admin/stats"); // Sonda /stats mütləq olmalıdır!
+  // 2. ID-yə görə tək bir sifarişin detalları
+  getOrderById: async (id: number | string) => {
+    const response = await api.get(`/orders/admin/${id}`);
+    return response.data;
+  },
+
+  // 3. Statistika üçün
+  getStats: async () => {
+    const response = await api.get("/orders/admin/stats");
     return response.data;
   },
 };
