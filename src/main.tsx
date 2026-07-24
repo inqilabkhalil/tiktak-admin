@@ -7,10 +7,10 @@ import { ErrorBoundary } from './shared/components/ErrorBoundary'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <ErrorBoundary>
     <BrowserRouter>
+    <ErrorBoundary>
       <App />
-    </BrowserRouter>
     </ErrorBoundary>
+    </BrowserRouter>
   </StrictMode>,
 )
