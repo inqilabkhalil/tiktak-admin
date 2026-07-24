@@ -1,112 +1,133 @@
 import React from "react";
-import { Table, Tag, Button, Card } from "antd";
+import { Table, Tag, Button } from "antd";
+import type { ColumnsType } from "antd/es/table";
+import type { Order } from "../types";
 import { EyeOutlined } from "@ant-design/icons";
-import type { Order, OrdersResponse } from "../types";
-
 
 interface OrdersTableProps {
-  orders: OrdersResponse | null;
+  orders: any;
   isLoading: boolean;
   page: number;
   limit: number;
-  onPageChange: (page: number, pageSize: number) => void;
+  onPageChange: (page: number, limit: number) => void;
   onViewDetails: (order: Order) => void;
 }
 
 export const OrdersTable: React.FC<OrdersTableProps> = ({
   orders,
   isLoading,
-  page,
-  limit,
-  onPageChange,
   onViewDetails,
 }) => {
-  const renderStatusTag = (status: string) => {
-    switch (status) {
-      case "gozleyir":
-        return <Tag color="gold">Gözləyir</Tag>;
-      case "tesdiqlenedi":
-        return <Tag color="blue">Təsdiqləndi</Tag>;
-      case "hazirlanir":
-        return <Tag color="purple">Hazırlanır</Tag>;
-      case "imtina":
-        return <Tag color="red">İmtina</Tag>;
-      default:
-        return <Tag color="default">{status}</Tag>;
-    }
-  };
-
-  const columns = [
-    {
-      title: "No",
-      dataIndex: "id",
-      key: "id",
-      render: (id: number) => `ORD-${id}`,
+  // Ant Design Table sütunları - Daxili filter və sıralamalar ilə
+  const columns: ColumnsType<Order> = [
+   {
+      title: "Order Nömrəsi",
+      dataIndex: "orderNumber", // 👈 Səhv yazılışı (orderorderNumber) düzəltdik
+      key: "orderNumber",
+      sorter: (a: any, b: any) => {
+        // Əgər nömrə rəqəmsdirsə və ya string-dirsə müqayisə edirik
+        return (a.orderNumber || 0) > (b.orderNumber || 0) ? 1 : -1;
+      },
     },
-    {
+  {
       title: "Tarix",
-      dataIndex: "created_at",
-      key: "created_at",
-      render: (date: string) => new Date(date).toLocaleDateString(),
+      dataIndex: "createdAt",
+      key: "createdAt",
+      // 👇 Sırçalama üçün orijinal uzun tarixdən istifadə edirik
+      sorter: (a: any, b: any) =>
+        new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime(),
+      
+      // 👇 Ekranda yalnız tarixi (məsələn: 2026-07-14) göstərmək üçün render əlavə edirik
+      render: (createdAt: string) => {
+        // createdAt varsa ilk 10 simvolunu götürürük (YYYY-MM-DD)
+        const formattedDate = createdAt ? createdAt.slice(0, 10) : "";
+        return <span>{formattedDate}</span>;
+      },
     },
     {
       title: "Çatdırılma ünvanı",
+      dataIndex: "address",
       key: "address",
-      render: () => "Xətai rayonu",
+    },
+   {
+      title: "Məhsul Sayı",
+      key: "quantity",
+      // Burada items massivinin içindəki quantity-ləri cəmləyirik (və ya items.length yaza bilərsən)
+      render: (_, record: any) => {
+        const totalQuantity = record.items?.reduce(
+          (sum: number, item: any) => sum + (item.quantity || 0),
+          0
+        ) || 0;
+        return <span>{totalQuantity}</span>;
+      },
+      sorter: (a: any, b: any) => {
+        const totalA = a.items?.reduce((sum: number, i: any) => sum + i.quantity, 0) || 0;
+        const totalB = b.items?.reduce((sum: number, i: any) => sum + i.quantity, 0) || 0;
+        return totalA - totalB;
+      },
     },
     {
-      title: "Məhsul sayı",
-      dataIndex: "items",
-      key: "items",
-      render: (items: any[]) => items?.reduce((acc, item) => acc + item.quantity, 0) || 0,
-    },
-    {
-      title: "Subtotal/Çatdırılma",
-      dataIndex: "total_price",
-      key: "total_price",
-      render: (price: string) => (
-        <span>
-          {price} ₼ · <span style={{ color: "green" }}>Pulsuz</span>
-        </span>
-      ),
+      title: "Çatdırılma",
+      dataIndex: "total",
+      key: "total",
+      sorter: (a: any, b: any) => a.totalAmount - b.totalAmount, // Məbləğə görə sıralama
     },
     {
       title: "Status",
       dataIndex: "status",
       key: "status",
-      render: (status: string) => renderStatusTag(status),
+      // Status sütunu üçün daxili filter siyahısı
+      filters: [
+        { text: "Gözləyir", value: "PENDING" },
+        { text: "Təsdiqləndi", value: "APPROVED" },
+        { text: "Çatdırıldı", value: "DELIVERED" },
+        { text: "İmtina edildi / Ləğv", value: "CANCELLED" },
+      ],
+      onFilter: (value: any, record: any) => record.status === value,
+      render: (status: string) => {
+        let color = "geekblue";
+        let text = status;
+        if (status === "PENDING") {
+          color = "gold";
+          text = "Gözləyir";
+        } else if (status === "APPROVED") {
+          color = "green";
+          text = "Təsdiqləndi";
+        } else if (status === "CANCELLED") {
+          color = "red";
+          text = "İmtina edildi";
+        }
+        return <Tag color={color}>{text}</Tag>;
+      },
     },
     {
       title: "Əməliyyat",
       key: "action",
-      render: (_: any, record: Order) => (
-        <Button 
-          type="link" 
-          icon={<EyeOutlined />} 
+      render: (_, record) => (
+        <Button
+          type="link"
+          icon={<EyeOutlined />}
           onClick={() => onViewDetails(record)}
         >
-          Göstər
+          Bax
         </Button>
       ),
     },
+ 
   ];
 
+  
+
   return (
-    <Card variant="borderless" style={{ borderRadius: "8px" }}>
-      <Table
-        dataSource={Array.isArray(orders) ? orders : []}
-        columns={columns}
-        rowKey="id"
-        loading={isLoading}
-        pagination={{
-          current: page,
-          pageSize: limit,
-          total: orders?.data?.total || 0,
-          onChange: onPageChange,
-          showSizeChanger: true,
-          pageSizeOptions: ["5", "10", "20", "50"],
-        }}
-      />
-    </Card>
+    <Table
+      dataSource={orders?.data || []}
+      columns={columns}
+      loading={isLoading}
+      rowKey="id"
+      pagination={{
+        pageSize: 5,
+        total: orders?.total || 0,
+      }}
+    />
   );
 };
