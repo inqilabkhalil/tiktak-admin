@@ -8,6 +8,7 @@ import {
   UserOutlined,
   LogoutOutlined,
 } from '@ant-design/icons';
+
 const { Sider } = Layout;
 
 const menuItems = [
@@ -23,11 +24,27 @@ export const Sidebar = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
+  const handleMenuClick = ({ key }: { key: string }) => {
+    if (key === '/logout') {
+      localStorage.removeItem('access_token');
+      localStorage.removeItem('refresh_token'); // varsa siləcək, yoxdursa problem yaratmır
+
+      navigate('/auth', { replace: true });
+      return;
+    }
+
+    navigate(key);
+  };
+
   return (
     <Sider
-      width={250} /* must match --sidebar-width in index.css */
+      width={250}
       theme="light"
-      style={{ background: '#fff', borderTop: '1px solid #f0f0f0', height: '100%' }}
+      style={{
+        background: '#fff',
+        borderTop: '1px solid #f0f0f0',
+        height: '100%',
+      }}
     >
       <ConfigProvider
         theme={{
@@ -51,7 +68,7 @@ export const Sidebar = () => {
           mode="inline"
           selectedKeys={[location.pathname]}
           items={menuItems}
-          onClick={({ key }) => navigate(key)}
+          onClick={handleMenuClick}
           style={{
             height: '100%',
             borderRight: 0,
