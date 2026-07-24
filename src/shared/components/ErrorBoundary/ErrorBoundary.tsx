@@ -1,12 +1,21 @@
 import type { ErrorBoundaryProps, ErrorBoundaryState } from "@/shared/types";
 import { Component, type ErrorInfo } from "react";
+import {
+  useNavigate,
+  useLocation,
+  type NavigateFunction,
+  type Location,
+} from "react-router-dom";
 import styles from "./ErrorBoundary.module.css";
 import { Button } from "../Button";
-export class ErrorBoundary extends Component<
-  ErrorBoundaryProps,
-  ErrorBoundaryState
-> {
-  constructor(props: ErrorBoundaryProps) {
+
+interface Props extends ErrorBoundaryProps {
+  navigate: NavigateFunction;
+  location: Location;
+}
+
+class ErrorBoundaryClass extends Component<Props, ErrorBoundaryState> {
+  constructor(props: Props) {
     super(props);
     this.state = { hasError: false, error: null };
   }
@@ -14,11 +23,26 @@ export class ErrorBoundary extends Component<
   static getDerivedStateFromError(error: Error): ErrorBoundaryState {
     return { hasError: true, error };
   }
+
   componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
-    console.error("ErrorBoundary cought an error:", error, errorInfo);
+    console.error("ErrorBoundary caught an error:", error, errorInfo);
   }
+
+  componentDidUpdate(prevProps: Props) {
+    if (
+      this.state.hasError &&
+      prevProps.location.pathname !== this.props.location.pathname
+    ) {
+      this.setState({ hasError: false, error: null });
+    }
+  }
+
   handleReset = () => {
     window.location.reload();
+  };
+
+  handleBack = () => {
+    this.props.navigate(-1);
   };
 
   render() {
@@ -35,13 +59,20 @@ export class ErrorBoundary extends Component<
               Bu səhifəni göstərərkən problem yarandı. Zəhmət olmasa yenidən
               cəhd edin.
             </p>
-            <Button 
-            type= "primary" 
-            onClick={this.handleReset}
-            className={styles.resetButton}
-            >
+
+            <div className={styles.buttonGroup}>
+              <Button onClick={this.handleBack} className={styles.backButton}>
+                ← Geri
+              </Button>
+
+              <Button
+                type="primary"
+                onClick={this.handleReset}
+                className={styles.resetButton}
+              >
                 Yenidən cəhd et
-            </Button>
+              </Button>
+            </div>
           </div>
         </div>
       );
@@ -49,3 +80,11 @@ export class ErrorBoundary extends Component<
     return this.props.children;
   }
 }
+
+export const ErrorBoundary = (props: ErrorBoundaryProps) => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  return (
+    <ErrorBoundaryClass {...props} navigate={navigate} location={location} />
+  );
+};

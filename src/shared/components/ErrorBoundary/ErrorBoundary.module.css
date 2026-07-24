@@ -74,3 +74,34 @@
   transform: translateY(0);
   box-shadow: 0 2px 8px rgba(139, 195, 74, 0.25);
 }
+.buttonGroup {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.backButton {
+  padding: 0 24px !important;
+  height: 42px !important;
+  font-weight: 500;
+  transition: all 0.25s ease !important;
+}
+
+.backButton:hover {
+  color: var(--color-main-green) !important;
+  border-color: var(--color-main-green) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(139, 195, 74, 0.2);
+}
+
+.backButton:focus {
+  color: var(--color-main-green) !important;
+  border-color: var(--color-main-green) !important;
+}
+
+.backButton:active {
+  color: var(--color-main-green) !important;
+  border-color: var(--color-main-green) !important;
+  transform: translateY(0);
+}
