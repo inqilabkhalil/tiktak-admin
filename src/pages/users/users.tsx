@@ -126,6 +126,7 @@ const Users = () => {
         <PageTitle>İstifadəçilər</PageTitle>
 
         <Table<User>
+          size="small"
           className={styles.table}
           columns={columns}
           dataSource={users}
