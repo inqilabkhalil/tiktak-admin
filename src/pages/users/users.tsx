@@ -6,11 +6,11 @@ import {
   EnvironmentOutlined,
   CalendarOutlined,
 } from '@ant-design/icons';
+import { Spin } from 'antd';
 import type { TableProps } from 'antd';
 
 import { Table } from '@/shared/components/Table';
 import { Modal } from '@/shared/components/Modal';
-import { Loader } from '@/shared/components/Loader';
 import { PageTitle } from '@/shared/components/PageTitle';
 
 import { useUserStore } from '@/features/users/store/useUserStore';
@@ -106,7 +106,18 @@ const Users = () => {
   ];
 
   if (loading) {
-    return <Loader />;
+    return (
+      <div
+        style={{
+          height: '70vh',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <Spin size="large" />
+      </div>
+    );
   }
 
   return (
