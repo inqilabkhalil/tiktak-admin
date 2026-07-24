@@ -6,48 +6,31 @@ import {
   EnvironmentOutlined,
   CalendarOutlined,
 } from '@ant-design/icons';
-import { Spin } from 'antd';
 import type { TableProps } from 'antd';
 
-import { Table } from '../../shared/components/Table';
-import { Modal } from '../../shared/components/Modal';
-import { PageTitle } from '../../shared/components/PageTitle';
+import { Table } from '@/shared/components/Table';
+import { Modal } from '@/shared/components/Modal';
+import { Loader } from '@/shared/components/Loader';
+import { PageTitle } from '@/shared/components/PageTitle';
+
+import { useUserStore } from '@/features/users/store/useUserStore';
+import type { User } from '@/features/users/types/users';
 
 import styles from './users.module.css';
 
-interface User {
-  id: number;
-  avatar: string;
-  fullName: string;
-  phone: string;
-  address: string;
-  role: string;
-}
-
-const data: User[] = [
-  {
-    id: 1,
-    avatar: 'J',
-    fullName: 'Johnnn',
-    phone: '+994105554434',
-    address: 'Qeyd olunmayıb',
-    role: 'COMMERCE',
-  },
-];
-
 const Users = () => {
-  const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
 
+  const users = useUserStore((state) => state.users);
+  console.log(users);
+  const loading = useUserStore((state) => state.loading);
+  const fetchAll = useUserStore((state) => state.fetchAll);
+
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 1000);
-
-    return () => clearTimeout(timer);
-  }, []);
-
+    console.log('fetchAll başladı');
+    fetchAll();
+  }, [fetchAll]);
   const columns: TableProps<User>['columns'] = [
     {
       title: 'Sıra',
@@ -57,15 +40,23 @@ const Users = () => {
     },
     {
       title: 'Avatar',
-      dataIndex: 'avatar',
-      key: 'avatar',
-      render: (text) => <div className={styles.avatar}>{text}</div>,
+      dataIndex: 'img_url',
+      key: 'img_url',
+      render: (_, record) => (
+        <div className={styles.avatar}>
+          {record.img_url ? (
+            <img src={record.img_url} alt={record.full_name} />
+          ) : (
+            record.full_name.charAt(0)
+          )}
+        </div>
+      ),
     },
     {
       title: 'Ad Soyad',
-      dataIndex: 'fullName',
-      key: 'fullName',
-      sorter: (a, b) => a.fullName.localeCompare(b.fullName),
+      dataIndex: 'full_name',
+      key: 'full_name',
+      sorter: (a, b) => a.full_name.localeCompare(b.full_name),
     },
     {
       title: 'Telefon',
@@ -83,13 +74,12 @@ const Users = () => {
       title: 'Ünvan',
       dataIndex: 'address',
       key: 'address',
-      sorter: (a, b) => a.address.localeCompare(b.address),
+      render: (address) => address || 'Qeyd olunmayıb',
     },
     {
       title: 'Rol',
       dataIndex: 'role',
       key: 'role',
-      sorter: (a, b) => a.role.localeCompare(b.role),
       render: (role) => (
         <span className={styles.role}>
           <IdcardOutlined />
@@ -116,18 +106,7 @@ const Users = () => {
   ];
 
   if (loading) {
-    return (
-      <div
-        style={{
-          height: '70vh',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-      >
-        <Spin size="large" />
-      </div>
-    );
+    return <Loader />;
   }
 
   return (
@@ -138,7 +117,7 @@ const Users = () => {
         <Table<User>
           className={styles.table}
           columns={columns}
-          dataSource={data}
+          dataSource={users}
           rowKey="id"
         />
       </div>
@@ -165,9 +144,18 @@ const Users = () => {
             </div>
 
             <div className={styles.modalBody}>
-              <div className={styles.modalAvatar}>{selectedUser.avatar}</div>
+              <div className={styles.modalAvatar}>
+                {selectedUser.img_url ? (
+                  <img
+                    src={selectedUser.img_url}
+                    alt={selectedUser.full_name}
+                  />
+                ) : (
+                  selectedUser.full_name.charAt(0)
+                )}
+              </div>
 
-              <h2 className={styles.modalName}>{selectedUser.fullName}</h2>
+              <h2 className={styles.modalName}>{selectedUser.full_name}</h2>
 
               <div className={styles.modalRole}>
                 <IdcardOutlined className={styles.roleIcon} />
@@ -193,7 +181,9 @@ const Users = () => {
 
                   <div>
                     <div className={styles.label}>Ünvan</div>
-                    <div className={styles.value}>{selectedUser.address}</div>
+                    <div className={styles.value}>
+                      {selectedUser.address || 'Qeyd olunmayıb'}
+                    </div>
                   </div>
                 </div>
 
@@ -204,7 +194,11 @@ const Users = () => {
 
                   <div>
                     <div className={styles.label}>Yaradılma tarixi</div>
-                    <div className={styles.value}>17.07.2026</div>
+                    <div className={styles.value}>
+                      {new Date(selectedUser.created_at).toLocaleDateString(
+                        'az-AZ',
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>
