@@ -6,11 +6,15 @@ import {
   EnvironmentOutlined,
   CalendarOutlined,
 } from '@ant-design/icons';
+import { Spin } from 'antd';
 import type { TableProps } from 'antd';
 
-import { Table } from '../../shared/components/Table';
-import { Modal } from '../../shared/components/Modal';
-import { PageTitle } from '../../shared/components/PageTitle';
+import { Table } from '@/shared/components/Table';
+import { Modal } from '@/shared/components/Modal';
+import { PageTitle } from '@/shared/components/PageTitle';
+
+import { useUserStore } from '@/features/users/store/useUserStore';
+import type { User } from '@/features/users/types/users';
 
 import styles from './users.module.css';
 
