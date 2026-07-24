@@ -1,11 +1,11 @@
-import { ConfigProvider, Spin } from 'antd';
+import { Spin } from 'antd';
+
+import styles from './Loader.module.css';
 
 export const Loader = () => {
   return (
     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '200px' }}>
-      <ConfigProvider theme={{ token: { colorPrimary: 'var(--color-main-green)' } }}>
-        <Spin size="large" />
-      </ConfigProvider>
+      <Spin size="large" className={styles.spin} />
     </div>
   );
 };
