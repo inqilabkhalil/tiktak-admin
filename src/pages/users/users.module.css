@@ -208,3 +208,11 @@
 .phoneIcon {
   font-size: 14px;
 }
+.action {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+}
+.action svg {
+  margin-right: 6px;
+}
