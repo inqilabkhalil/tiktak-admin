@@ -7,7 +7,7 @@ export const fetchProducts = async (): Promise<Product[]> => {
 };
 
 export const createProduct = async (data: ProductPayload): Promise<Product> => {
-  const response = await api.post('/admin/product', data); // TƏK!
+  const response = await api.post('/admin/product', data);
   return response.data.data;
 };
 

@@ -37,9 +37,9 @@ export interface ProductState {
   loading: boolean;
   error: string | null;
   fetchAll: () => Promise<void>;
-  add: (data: ProductPayload) => Promise<void>;
-  update: (id: number, data: ProductPayload) => Promise<void>;
-  remove: (id: number) => Promise<void>;
+  add: (data: ProductPayload) => Promise<boolean>;
+  update: (id: number, data: ProductPayload) => Promise<boolean>;
+  remove: (id: number) => Promise<boolean>;
 }
 
 //Modal
