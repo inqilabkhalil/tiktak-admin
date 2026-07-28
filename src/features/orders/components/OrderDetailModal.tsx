@@ -1,6 +1,6 @@
 import React from "react";
 import { Modal, Descriptions, List, Avatar, Tag } from "antd";
-import type { Order } from "../types";
+import type { Order, OrderItem } from "../types";
 
 interface OrderModalProps {
   visible: boolean;
@@ -53,7 +53,7 @@ export const OrderModal: React.FC<OrderModalProps> = ({ visible, order, onClose 
       <List
         itemLayout="horizontal"
         dataSource={order.items || []}
-        renderItem={(item: any) => (
+        renderItem={(item: OrderItem) => (
           <List.Item>
             <List.Item.Meta
               avatar={<Avatar src={item.product?.img_url} shape="square" size={50} />}

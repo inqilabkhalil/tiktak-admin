@@ -24,17 +24,14 @@ export const OrdersTable: React.FC<OrdersTableProps> = ({
       title: "Order Nömrəsi",
       dataIndex: "orderNumber", // 👈 Səhv yazılışı (orderorderNumber) düzəltdik
       key: "orderNumber",
-      sorter: (a: any, b: any) => {
-        // Əgər nömrə rəqəmsdirsə və ya string-dirsə müqayisə edirik
-        return (a.orderNumber || 0) > (b.orderNumber || 0) ? 1 : -1;
-      },
+      sorter: (a, b) => (a.orderNumber > b.orderNumber ? 1 : -1),
     },
   {
       title: "Tarix",
       dataIndex: "createdAt",
       key: "createdAt",
       // 👇 Sırçalama üçün orijinal uzun tarixdən istifadə edirik
-      sorter: (a: any, b: any) =>
+      sorter: (a, b) =>
         new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime(),
       
       // 👇 Ekranda yalnız tarixi (məsələn: 2026-07-14) göstərmək üçün render əlavə edirik
@@ -53,16 +50,16 @@ export const OrdersTable: React.FC<OrdersTableProps> = ({
       title: "Məhsul Sayı",
       key: "quantity",
       // Burada items massivinin içindəki quantity-ləri cəmləyirik (və ya items.length yaza bilərsən)
-      render: (_, record: any) => {
+      render: (_, record) => {
         const totalQuantity = record.items?.reduce(
-          (sum: number, item: any) => sum + (item.quantity || 0),
+          (sum, item) => sum + (item.quantity || 0),
           0
         ) || 0;
         return <span>{totalQuantity}</span>;
       },
-      sorter: (a: any, b: any) => {
-        const totalA = a.items?.reduce((sum: number, i: any) => sum + i.quantity, 0) || 0;
-        const totalB = b.items?.reduce((sum: number, i: any) => sum + i.quantity, 0) || 0;
+      sorter: (a, b) => {
+        const totalA = a.items?.reduce((sum, i) => sum + i.quantity, 0) || 0;
+        const totalB = b.items?.reduce((sum, i) => sum + i.quantity, 0) || 0;
         return totalA - totalB;
       },
     },
@@ -70,7 +67,7 @@ export const OrdersTable: React.FC<OrdersTableProps> = ({
       title: "Çatdırılma",
       dataIndex: "total",
       key: "total",
-      sorter: (a: any, b: any) => a.totalAmount - b.totalAmount, // Məbləğə görə sıralama
+      sorter: (a, b) => Number(a.total) - Number(b.total), // Məbləğə görə sıralama
     },
     {
       title: "Status",
@@ -83,7 +80,7 @@ export const OrdersTable: React.FC<OrdersTableProps> = ({
         { text: "Çatdırıldı", value: "DELIVERED" },
         { text: "İmtina edildi / Ləğv", value: "CANCELLED" },
       ],
-      onFilter: (value: any, record: any) => record.status === value,
+      onFilter: (value, record) => record.status === value,
       render: (status: string) => {
         let color = "geekblue";
         let text = status;

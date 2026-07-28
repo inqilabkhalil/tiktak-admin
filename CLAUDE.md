@@ -8,7 +8,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - `npm run build` — typecheck (`tsc -b`) then production build (`vite build`)
 - `npm run lint` — run ESLint over the project
 - `npm run preview` — preview the production build
-- Typecheck only: `npx tsc --noEmit` (fast way to check for compile errors without a full build)
+- Typecheck only: `npx tsc -b --noEmit` (fast way to check for compile errors without a full build). Do NOT use bare `npx tsc --noEmit` — the root `tsconfig.json` has `"files": []` and only project references, so that command silently checks nothing and always exits 0.
 - There is no test runner configured in this repo (no `test` script, no test files/framework installed).
 
 ## Stack

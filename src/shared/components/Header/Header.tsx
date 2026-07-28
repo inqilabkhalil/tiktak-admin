@@ -15,8 +15,8 @@ const Header = ({ showSearch = true, showUserIcon = true }: HeaderProps) => {
   const fetchProfile = useProfileStore((state) => state.fetchProfile);
 
   useEffect(() => {
-    if (!profile) fetchProfile();
-  }, [profile, fetchProfile]);
+    if (showUserIcon && !profile) fetchProfile();
+  }, [showUserIcon, profile, fetchProfile]);
   return (
     <header className={styles.header}>
       <div className={styles.headerInner}>

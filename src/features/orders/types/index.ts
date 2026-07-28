@@ -30,10 +30,16 @@ export interface OrderUser {
 
 export interface Order {
   id: number;
+  orderNumber: string;
   status: OrderStatus; // Burada yuxarıdakı status tipini istifadə edirik
-  total_price: string;
-  created_at: string;
-  updated_at: string;
+  total: string;
+  deliveryFee: string;
+  paymentMethod: string;
+  note: string;
+  address: string;
+  phone: string;
+  createdAt: string;
+  updatedAt: string;
   user: OrderUser;
   items: OrderItem[];
 }
@@ -49,12 +55,9 @@ export interface OrdersResponse {
 }
 
 export interface OrderStats {
-  statusCode: number;
-  message: string;
-  result: boolean;
-  data?: {
-    totalOrders?: number;
-    pendingOrders?: number;
-    completedOrders?: number;
-  };
+  TOTAL: number;
+  TOTAL_REVENUE: number;
+  PENDING: number;
+  PREPARING: number;
+  DELIVERED: number;
 }

@@ -14,13 +14,7 @@ interface OrderStatsCardProps {
 }
 
 export const OrderStatsCard: React.FC<OrderStatsCardProps> = ({ stats }) => {
-  // Backend-dən gələn datanı asan oxumaq üçün birbaşa dəyişkənə çıxarırıq (null olsa boş obyekt veririk)
-  
-
-  
-  const data = stats || {};
-
-    console.log(data)
+  const data = stats || ({} as Partial<OrderStats>);
 
   return (
     <Row gutter={10 } style={{ marginBottom: "24px" }}>
@@ -46,7 +40,7 @@ export const OrderStatsCard: React.FC<OrderStatsCardProps> = ({ stats }) => {
         <Card variant="borderless" style={{ borderRadius: "8px", minHeight: "115px" }}>
           <Statistic
             title={<span style={{ fontSize: "13px" }}>Ümumi satış</span>}
-            value={data.TOTAL_REVENUE || data.TOTAL_REVENUE || 0} // 👈 Backend-dən gələn uyğun açar söz
+            value={data.TOTAL_REVENUE || 0}
             precision={2}
             valueStyle={{ fontSize: "14px", fontWeight: "600" }}
             formatter={(value) => (
@@ -64,7 +58,7 @@ export const OrderStatsCard: React.FC<OrderStatsCardProps> = ({ stats }) => {
         <Card variant="borderless" style={{ borderRadius: "8px", minHeight: "115px" }}>
           <Statistic
             title={<span style={{ fontSize: "13px" }}>Gözləyən</span>}
-            value={data.PENDING || data.PENDING || 0} // 👈 Gözləyən sifarişlərin sayı
+            value={data.PENDING || 0}
             valueStyle={{ fontSize: "14px", fontWeight: "600" }}
             formatter={(value) => (
               <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
@@ -81,7 +75,7 @@ export const OrderStatsCard: React.FC<OrderStatsCardProps> = ({ stats }) => {
         <Card variant="borderless" style={{ borderRadius: "8px", minHeight: "115px" }}>
           <Statistic
             title={<span style={{ fontSize: "13px" }}>Hazırlanır</span>}
-            value={data.PREPARING || data.PREPARING || 0} // 👈 Hazırlanan sifarişlərin sayı
+            value={data.PREPARING || 0}
             valueStyle={{ fontSize: "14px", fontWeight: "600" }}
             formatter={(value) => (
               <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
@@ -98,7 +92,7 @@ export const OrderStatsCard: React.FC<OrderStatsCardProps> = ({ stats }) => {
         <Card variant="borderless" style={{ borderRadius: "8px", minHeight: "115px" }}>
           <Statistic
             title={<span style={{ fontSize: "13px" }}>Çatdırılan</span>}
-            value={data.DELIVERED || data.DELIVERED || 0} // 👈 Çatdırılan sifarişlərin sayı
+            value={data.DELIVERED || 0}
             valueStyle={{ fontSize: "14px", fontWeight: "600" }}
             formatter={(value) => (
               <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
@@ -115,7 +109,7 @@ export const OrderStatsCard: React.FC<OrderStatsCardProps> = ({ stats }) => {
         <Card variant="borderless" style={{ borderRadius: "8px", minHeight: "115px" }}>
           <Statistic
             title={<span style={{ fontSize: "13px" }}>Ləğv edilən</span>}
-            value={data.cancelledOrders || data.cancelled || 12} // 👈 Ləğv edilən sifarişlərin sayı
+            value={0} // Backend hazırda ləğv edilmiş sifariş sayını qaytarmır
             valueStyle={{ fontSize: "14px", fontWeight: "600" }}
             formatter={(value) => (
               <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>

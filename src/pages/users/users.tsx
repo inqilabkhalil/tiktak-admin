@@ -23,12 +23,10 @@ const Users = () => {
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
 
   const users = useUserStore((state) => state.users);
-  console.log(users);
   const loading = useUserStore((state) => state.loading);
   const fetchAll = useUserStore((state) => state.fetchAll);
 
   useEffect(() => {
-    console.log('fetchAll başladı');
     fetchAll();
   }, [fetchAll]);
   const columns: TableProps<User>['columns'] = [
