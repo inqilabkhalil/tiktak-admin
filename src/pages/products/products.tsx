@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { message } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { Button } from '@/shared/components/Button';
 import { Table } from '@/shared/components/Table';
@@ -37,7 +38,12 @@ export const ProductsPage = () => {
 
   const handleDeleteConfirim = async () => {
     if (deleteId !== null) {
-      await remove(deleteId);
+      const success = await remove(deleteId);
+      if (success) {
+        message.success('Məhsul uğurla silindi');
+      } else {
+        message.error('Məhsulu silmək mümkün olmadı');
+      }
       setDeleteId(null);
     }
   };
@@ -85,6 +91,7 @@ export const ProductsPage = () => {
 
       <DeleteConfirmModal
         open={deleteId !== null}
+        loading={loading}
         onConfirm={handleDeleteConfirim}
         onCancel={() => setDeleteId(null)}
       />

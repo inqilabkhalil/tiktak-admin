@@ -51,22 +51,32 @@ const ProductsModal = ({
       const payload = {
         title: values.title,
         description: values.description,
-        price: String(values.price), // ✅ STRING!
+        price: String(values.price),
         type: values.type,
-        category_id: values.category_id, // ✅ category_id!
+        category_id: values.category_id,
         img_url: values.img_url,
       };
 
-      console.log('📤 Payload:', payload);
+      const success =
+        mode === 'add'
+          ? await add(payload)
+          : initialData
+            ? await update(initialData.id, payload)
+            : false;
 
-      if (mode === 'add') {
-        await add(payload);
-      } else if (initialData) {
-        await update(initialData.id, payload);
+      if (success) {
+        message.success(
+          mode === 'add' ? 'Məhsul uğurla yaradıldı' : 'Məhsul uğurla yeniləndi',
+        );
+        formik.resetForm();
+        onClose();
+      } else {
+        message.error(
+          mode === 'add'
+            ? 'Məhsulu yaratmaq mümkün olmadı'
+            : 'Məhsulu yeniləmək mümkün olmadı',
+        );
       }
-
-      formik.resetForm();
-      onClose();
     },
   });
 

@@ -22,8 +22,10 @@ export const useProductStore = create<ProductState>((set, get) => ({
     try {
       await createProduct(data);
       await get().fetchAll();
+      return true;
     } catch {
       set({ error: 'Əlavə etmək mümkün olmadı' });
+      return false;
     } finally {
       set({ loading: false });
     }
@@ -33,8 +35,10 @@ export const useProductStore = create<ProductState>((set, get) => ({
     try {
       await updateProduct(id, data);
       await get().fetchAll();
+      return true;
     } catch {
       set({ error: 'Yeniləmək mümkün olmadı' });
+      return false;
     } finally {
       set({ loading: false });
     }
@@ -44,8 +48,10 @@ export const useProductStore = create<ProductState>((set, get) => ({
     try {
       await deleteProduct(id);
       await get().fetchAll();
+      return true;
     } catch {
       set({ error: 'Silmək mümkün olmadı' });
+      return false;
     } finally {
       set({ loading: false });
     }

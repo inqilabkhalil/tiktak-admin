@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 
 import styles from './login.module.css';
 import { Header } from '../../shared/components/Header';
@@ -31,7 +32,12 @@ const Login = () => {
   };
 
   return (
-    <div className={styles.login}>
+    <motion.div
+      className={styles.login}
+      initial={{ opacity: 0, y: 8 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.25, ease: 'easeOut' }}
+    >
       <Header showSearch={false} showUserIcon={false} />
 
       <div className={styles.content}>
@@ -86,7 +92,7 @@ const Login = () => {
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
