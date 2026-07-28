@@ -27,8 +27,8 @@ export const useOrderStore = create<OrderState>((set) => ({
     try {
       const data = await orderService.getOrders(page, limit, status);
       set({ orders: data, isLoading: false });
-    } catch (err: any) {
-      set({ error: err.message, isLoading: false });
+    } catch {
+      set({ error: 'Sifarişləri yükləmək mümkün olmadı', isLoading: false });
     }
   },
 
@@ -38,8 +38,8 @@ export const useOrderStore = create<OrderState>((set) => ({
     try {
       const data = await orderService.getOrderById(id);
       set({ selectedOrder: data, isLoading: false });
-    } catch (err: any) {
-      set({ error: err.message, isLoading: false });
+    } catch {
+      set({ error: 'Sifariş detallarını yükləmək mümkün olmadı', isLoading: false });
     }
   },
 
@@ -48,7 +48,7 @@ export const useOrderStore = create<OrderState>((set) => ({
     try {
       const data = await orderService.getStats();
       set({ stats: data });
-    } catch (err: any) {
+    } catch (err) {
       console.error("Statistika xətası:", err);
     }
   },

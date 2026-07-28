@@ -3,8 +3,12 @@ import { useCategoryStore } from "../store/categoryStore";
 import type { CategoryPayload } from "../types/categories";
 
 export const useCategories = () => {
-  const { categories, loading, fetchAll, add, update, remove } =
-    useCategoryStore();
+  const categories = useCategoryStore((state) => state.categories);
+  const loading = useCategoryStore((state) => state.loading);
+  const fetchAll = useCategoryStore((state) => state.fetchAll);
+  const add = useCategoryStore((state) => state.add);
+  const update = useCategoryStore((state) => state.update);
+  const remove = useCategoryStore((state) => state.remove);
 
   const createCategory = async (values: CategoryPayload) => {
     const success = await add(values);

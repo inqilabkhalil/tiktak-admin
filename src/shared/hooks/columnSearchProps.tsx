@@ -51,9 +51,11 @@ export function getColumnSearchProps<T>(dataIndex: keyof T, placeholder: string)
       <SearchOutlined className={filtered ? styles.filterIconActive : ''} />
     ),
     onFilter: (value: Key | boolean, record: T) =>
-      record[dataIndex]
-        ?.toString()
-        .toLowerCase()
-        .includes(String(value).toLowerCase()),
+      Boolean(
+        record[dataIndex]
+          ?.toString()
+          .toLowerCase()
+          .includes(String(value).toLowerCase()),
+      ),
   };
 }

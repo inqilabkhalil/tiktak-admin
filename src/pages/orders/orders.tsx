@@ -4,18 +4,19 @@ import { OrdersTable } from "@/features/orders/components/OrderTable";
 import { useOrderStore } from "@/features/orders/store/orderStore";
 import type { Order } from "@/features/orders/types";
 import React, { useEffect, useState } from "react";
-// import { Select, Space, Button, DatePicker } from "antd";
-
-// const { RangePicker } = DatePicker;
 
 export const OrdersPage: React.FC = () => {
-  const { orders, stats, isLoading, fetchOrders, fetchStats } = useOrderStore();
+  const orders = useOrderStore((state) => state.orders);
+  const stats = useOrderStore((state) => state.stats);
+  const isLoading = useOrderStore((state) => state.isLoading);
+  const fetchOrders = useOrderStore((state) => state.fetchOrders);
+  const fetchStats = useOrderStore((state) => state.fetchStats);
+
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(5);
-  
-  // Filter state-ləri
-   const [status, setStatus] = useState<string | undefined>(undefined);
-  // const [dateRange, setDateRange] = useState<any>(null);
+
+  // Filter UI hələ tətbiq olunmayıb, status filtri həmişə undefined-dır
+  const [status] = useState<string | undefined>(undefined);
 
   // Modal üçün state-lər
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
@@ -23,22 +24,11 @@ export const OrdersPage: React.FC = () => {
 
   useEffect(() => {
     fetchOrders(page, limit, status);
+  }, [page, limit, status, fetchOrders]);
+
+  useEffect(() => {
     fetchStats();
-  }, [page, limit, status]);
-
-  // Filteri tətbiq etmək üçün
-  // const handleApplyFilters = () => {
-  //   setPage(1); // Filter dəyişəndə 1-ci səhifəyə qayıdır
-  //   fetchOrders(1, limit, status);
-  // };
-
-  // Filterləri sıfırlamaq üçün
-  // const handleResetFilters = () => {
-  //   setStatus(undefined);
-  //   setDateRange(null);
-  //   setPage(1);
-  //   fetchOrders(1, limit, undefined);
-  // };
+  }, [fetchStats]);
 
   const handleViewDetails = (order: Order) => {
     setSelectedOrder(order);
