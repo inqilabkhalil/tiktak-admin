@@ -28,7 +28,7 @@ const ProductsModal = ({
   initialData,
 }: ProductModalProps) => {
   const { add, update, loading } = useProductStore();
-  const categories = useCategoryStore((state) => state.categories);
+  const categories = useCategoryStore((state) => state.categories) ?? [];
   const fetchCategories = useCategoryStore((state) => state.fetchAll);
   const [uploading, setUploading] = useState(false);
 
@@ -175,6 +175,7 @@ const ProductsModal = ({
             <Select
               className={styles.select}
               placeholder="Kateqoriya seçin"
+              loading={categories.length === 0}
               options={categories.map((c) => ({
                 value: c.id,
                 label: c.name,
