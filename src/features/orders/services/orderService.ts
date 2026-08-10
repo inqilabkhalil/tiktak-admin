@@ -5,7 +5,9 @@ export const orderService = {
   getOrders: async (page = 1, limit = 5, status?: string) => {
     const response = await api.get("/orders/admin", {
       params: { page, limit, status, },
+      
     });
+  
     return response.data;
   },
 
@@ -23,4 +25,16 @@ export const orderService = {
     const response = await api.get("/orders/admin/stats");
     return response.data;
   },
+
+
+updateOrderStatus: async (id: number | string, status: string) => {
+  const response = await api.put(
+    `/orders/admin/${id}/status`,
+    {
+      status,
+    }
+  );
+
+  return response.data;
+},
 };
