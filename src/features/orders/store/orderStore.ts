@@ -12,6 +12,7 @@ interface OrderState {
   fetchOrders: (page?: number, limit?: number, status?: string  ,items?: number | string) => Promise<void>;
   fetchOrderById: (id: number | string) => Promise<void>;
   fetchStats: () => Promise<void>;
+  updateOrderStatus: (id:number |string , status:string) => Promise<void>;
 }
 
 export const useOrderStore = create<OrderState>((set) => ({
@@ -52,4 +53,25 @@ export const useOrderStore = create<OrderState>((set) => ({
       console.error("Statistika xətası:", err);
     }
   },
+
+updateOrderStatus: async (id, status) => {
+  try {
+    await orderService.updateOrderStatus(id, status);
+
+    // Status dəyişdikdən sonra siyahını yenidən çəkirik
+    const data = await orderService.getOrders(1, 5);
+
+    set({
+      orders: data,
+      error: null,
+    });
+  } catch (error) {
+    console.error("Status dəyişdirilə bilmədi:", error);
+
+    set({
+      error: "Status dəyişdirilə bilmədi",
+    });
+  }
+},
+
 }));

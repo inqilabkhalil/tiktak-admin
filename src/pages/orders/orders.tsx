@@ -11,7 +11,9 @@ export const OrdersPage: React.FC = () => {
   const isLoading = useOrderStore((state) => state.isLoading);
   const fetchOrders = useOrderStore((state) => state.fetchOrders);
   const fetchStats = useOrderStore((state) => state.fetchStats);
-
+const updateOrderStatus = useOrderStore(
+  (state) => state.updateOrderStatus
+);
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(5);
 
@@ -45,17 +47,18 @@ export const OrdersPage: React.FC = () => {
     
 
       {/* 3. Cədvəl Komponenti */}
-      <OrdersTable
-        orders={orders}
-        isLoading={isLoading}
-        page={page}
-        limit={limit}
-        onPageChange={(p, l) => {
-          setPage(p);
-          setLimit(l);
-        }}
-        onViewDetails={handleViewDetails}
-      />
+<OrdersTable
+  orders={orders}
+  isLoading={isLoading}
+  page={page}
+  limit={limit}
+  onPageChange={(p, l) => {
+    setPage(p);
+    setLimit(l);
+  }}
+  onViewDetails={handleViewDetails}
+  onStatusChange={updateOrderStatus}
+/>
 
       {/* 4. Detal Modalı Komponenti */}
       <OrderModal
