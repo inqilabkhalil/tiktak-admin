@@ -66,6 +66,7 @@ export const CampaignsPage = () => {
           dataSource={campaigns}
           rowKey="id"
           pagination={{
+            pageSize: 5,
             showSizeChanger: false,
             showTotal: (total, range) =>
               `${range[0]}-${range[1]} / ${total} nəticə`,
