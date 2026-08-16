@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import {
   EyeOutlined,
   PhoneOutlined,
@@ -6,7 +6,6 @@ import {
   EnvironmentOutlined,
   CalendarOutlined,
 } from '@ant-design/icons';
-import { Spin } from 'antd';
 import type { TableProps } from 'antd';
 
 import { Table } from '@/shared/components/Table';
@@ -17,6 +16,8 @@ import { useUserStore } from '@/features/users/store/useUserStore';
 import type { User } from '@/features/users/types/users';
 
 import styles from './users.module.css';
+import { Loader } from '@/shared/components/Loader';
+import { useSearchStore } from '@/shared/store/useSearchStore';
 
 const Users = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -25,6 +26,8 @@ const Users = () => {
   const users = useUserStore((state) => state.users);
   const loading = useUserStore((state) => state.loading);
   const fetchAll = useUserStore((state) => state.fetchAll);
+
+  const searchTerm = useSearchStore((s) => s.searchTerm);
 
   useEffect(() => {
     fetchAll();
@@ -103,33 +106,34 @@ const Users = () => {
     },
   ];
 
-  if (loading) {
-    return (
-      <div
-        style={{
-          height: '70vh',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-      >
-        <Spin size="large" />
-      </div>
-    );
-  }
+  const filteredUsers = useMemo(() => {
+  if (!searchTerm.trim()) return users;
+  const lower = searchTerm.toLowerCase();
+  return users.filter((u) =>
+    u.full_name?.toLowerCase().includes(lower) ||
+    u.phone?.toLowerCase().includes(lower) ||
+    u.email?.toLowerCase().includes(lower) ||
+    u.address?.toLowerCase().includes(lower) ||
+    u.role?.toLowerCase().includes(lower)
+  );
+}, [users, searchTerm]);
 
   return (
     <>
       <div className={styles.page}>
         <PageTitle>İstifadəçilər</PageTitle>
 
-        <Table<User>
+        {loading ? (
+          <Loader/>
+        ) : (
+          <Table<User>
           size="small"
           className={styles.table}
           columns={columns}
-          dataSource={users}
+          dataSource={filteredUsers}
           rowKey="id"
         />
+        )}
       </div>
 
       <Modal

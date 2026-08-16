@@ -8,3 +8,8 @@ export interface Profile {
   role: string;
   created_at: string;
 }
+
+export interface HeaderProps {
+  showSearch?: boolean;
+  showUserIcon?: boolean;
+};

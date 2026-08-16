@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { message } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { Button } from '@/shared/components/Button';
@@ -13,6 +13,7 @@ import useColumnSearchProps from '@/features/products/hooks/useColumnSearchProps
 import { useProductStore } from '@/features/products/store/useProductStore';
 import styles from './products.module.css';
 import tableStyles from '@/features/products/styles/productsTable.module.css';
+import { useSearchStore } from '@/shared/store/useSearchStore';
 
 export const ProductsPage = () => {
   const [deleteId, setDeleteId] = useState<number | null>(null);
@@ -26,6 +27,8 @@ export const ProductsPage = () => {
 
   const { getColumnSearchProps } = useColumnSearchProps<Product>();
 
+  const searchTerm = useSearchStore((s) => s.searchTerm);
+
   useEffect(() => {
     fetchAll();
   }, [fetchAll]);
@@ -35,6 +38,17 @@ export const ProductsPage = () => {
     onDelete: setDeleteId,
     getColumnSearchProps,
   });
+
+  const filteredProducts = useMemo(() => {
+  if (!searchTerm.trim()) return products;
+  const lower = searchTerm.toLowerCase();
+  return products.filter((p) =>  
+    p.title?.toLowerCase().includes(lower) ||
+    p.description?.toLowerCase().includes(lower) ||
+    p.price?.toLowerCase().includes(lower) ||
+    p.category?.name?.toLowerCase().includes(lower)
+  );
+}, [products, searchTerm]);
 
   const handleDeleteConfirim = async () => {
     if (deleteId !== null) {
@@ -70,7 +84,7 @@ export const ProductsPage = () => {
           size="small"
           className={tableStyles.table}
           columns={columns}
-          dataSource={products}
+          dataSource={filteredProducts}
           rowKey="id"
           pagination={{
             pageSize: 5,
