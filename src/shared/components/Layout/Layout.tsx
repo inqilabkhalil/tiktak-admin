@@ -4,9 +4,16 @@ import Header from '../Header';
 import { Sidebar } from '../Sidebar';
 import styles from './styles/Layout.module.css';
 import '../../../App.css';
+import { useSearchStore } from '@/shared/store/useSearchStore';
+import { useEffect } from 'react';
 
 export const Layout = () => {
   const location = useLocation();
+  const setSearchTerm = useSearchStore((s) => s.setSearchTerm);
+
+  useEffect(() => {
+    setSearchTerm('');
+  }, [location.pathname, setSearchTerm]);
 
   return (
     <>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { PlusOutlined } from "@ant-design/icons";
 import { Button } from "@/shared/components/Button";
 import { Table } from "@/shared/components/Table";
@@ -12,6 +12,7 @@ import CategoryModal from "@/features/categories/components/CategoryModal";
 import useColumnSearchProps from "@/features/categories/hooks/useColumnSearchProps";
 import { PageTitle } from "@/shared/components/PageTitle";
 import { useCategories } from "@/features/categories/hooks/useCategories";
+import { useSearchStore } from "@/shared/store/useSearchStore";
 
 export const CategoriesPage = () => {
   const [deleteId, setDeleteId] = useState<number | null>(null);
@@ -20,6 +21,9 @@ export const CategoriesPage = () => {
 
   const { categories, loading, fetchAll, deleteCategory } = useCategories();
   const { getColumnSearchProps } = useColumnSearchProps<Category>();
+
+   const searchTerm = useSearchStore((s) => s.searchTerm);
+
 
   useEffect(() => {
     fetchAll();
@@ -30,6 +34,15 @@ export const CategoriesPage = () => {
     onDelete: setDeleteId,
     getColumnSearchProps,
   });
+
+const filteredCategories = useMemo(() => {
+  if (!searchTerm.trim()) return categories;
+  const lower = searchTerm.toLowerCase();
+  return categories.filter((c) =>
+    c.name?.toLowerCase().includes(lower) ||
+    c.description?.toLowerCase().includes(lower)
+  );
+}, [categories, searchTerm]);
 
   const handleDeleteConfirim = async () => {
     if (deleteId !== null) {
@@ -60,7 +73,7 @@ export const CategoriesPage = () => {
           size="small"
           className={tableStyles.table}
           columns={columns}
-          dataSource={categories}
+          dataSource={filteredCategories}
           rowKey="id"
           pagination={{
             pageSize: 5,
