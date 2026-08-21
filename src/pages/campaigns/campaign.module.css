@@ -7,7 +7,7 @@
 }
 
 .addButton {
-  background-color: rgba(146, 216, 113, 1) !important;
+  background-color: var(--color-main-green) !important;
   border: none !important;
   color: #ffffff !important;
   font-size: 14px;

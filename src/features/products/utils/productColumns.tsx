@@ -115,7 +115,6 @@ export const getProductColumns = ({
           icon={<EditOutlined />}
           onClick={() => onEdit(record)}
         >
-          Düzəlt
         </Button>
         <Button
           type="link"
@@ -123,7 +122,6 @@ export const getProductColumns = ({
           icon={<DeleteOutlined />}
           onClick={() => onDelete(record.id)}
         >
-          Sil
         </Button>
       </div>
     ),

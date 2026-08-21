@@ -2,7 +2,6 @@ import { useEffect, useMemo, useState } from 'react';
 import {
   EyeOutlined,
   PhoneOutlined,
-  IdcardOutlined,
   EnvironmentOutlined,
   CalendarOutlined,
 } from '@ant-design/icons';
@@ -78,17 +77,6 @@ const Users = () => {
       render: (address) => address || 'Qeyd olunmayıb',
     },
     {
-      title: 'Rol',
-      dataIndex: 'role',
-      key: 'role',
-      render: (role) => (
-        <span className={styles.role}>
-          <IdcardOutlined />
-          {role}
-        </span>
-      ),
-    },
-    {
       title: 'Əməliyyat',
       key: 'action',
       render: (_, record) => (
@@ -100,7 +88,6 @@ const Users = () => {
           }}
         >
           <EyeOutlined className={styles.eyeIcon} />
-          <span className={styles.actionText}>Göstər</span>
         </span>
       ),
     },
@@ -113,8 +100,7 @@ const Users = () => {
     u.full_name?.toLowerCase().includes(lower) ||
     u.phone?.toLowerCase().includes(lower) ||
     u.email?.toLowerCase().includes(lower) ||
-    u.address?.toLowerCase().includes(lower) ||
-    u.role?.toLowerCase().includes(lower)
+    u.address?.toLowerCase().includes(lower)
   );
 }, [users, searchTerm]);
 
@@ -170,11 +156,6 @@ const Users = () => {
               </div>
 
               <h2 className={styles.modalName}>{selectedUser.full_name}</h2>
-
-              <div className={styles.modalRole}>
-                <IdcardOutlined className={styles.roleIcon} />
-                <span>{selectedUser.role}</span>
-              </div>
 
               <div className={styles.infoCard}>
                 <div className={styles.infoRow}>

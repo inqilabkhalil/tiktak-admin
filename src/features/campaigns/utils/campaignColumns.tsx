@@ -89,7 +89,6 @@ export function getCampaignColumns({
             icon={<EditOutlined />}
             onClick={() => onEdit(record)}
           >
-            Düzəlt
           </Button>
 
           <Button
@@ -98,7 +97,6 @@ export function getCampaignColumns({
             icon={<DeleteOutlined />}
             onClick={() => onDelete(record.id)}
           >
-            Sil
           </Button>
         </div>
       ),

@@ -18,7 +18,9 @@ export const useCategoryStore = create<CategoryState>((set, get) => ({
     set({ loading: true, error: null });
     try {
       const data = await fetchCategories();
-      set({ categories: data });
+      const sorted = [...data].sort(
+        (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime() || b.id - a.id);
+      set({ categories: sorted });
     } catch {
       set({ error: 'Məlumatları yükləmək mümkün olmadı' });
     } finally {

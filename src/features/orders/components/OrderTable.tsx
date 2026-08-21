@@ -149,11 +149,11 @@ export const OrdersTable: React.FC<OrdersTableProps> = ({
 
       render: (_, record) => (
         <Button
+        style={{paddingLeft: '24px'}}
           type="link"
           icon={<EyeOutlined />}
           onClick={() => onViewDetails(record)}
         >
-          Bax
         </Button>
       ),
     },

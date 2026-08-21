@@ -13,7 +13,7 @@ export const OrderModal: React.FC<OrderModalProps> = ({ visible, order, onClose 
 
   return (
     <Modal
-      title={`Sifariş Detalı: ${order.orderNumber}`} // 👈 Real orderNumber-i göstəririk
+      title={`Sifariş Detalı: ${order.orderNumber}`} 
       open={visible}
       onCancel={onClose}
       footer={null}
