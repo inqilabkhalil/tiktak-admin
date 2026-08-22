@@ -81,7 +81,6 @@ export const getCategoryColumns = ({
           icon={<EditOutlined />}
           onClick={() => onEdit(record)}
         >
-          Düzəlt
         </Button>
         <Button
           type="link"
@@ -89,7 +88,6 @@ export const getCategoryColumns = ({
           icon={<DeleteOutlined />}
           onClick={() => onDelete(record.id)}
         >
-          Sil
         </Button>
       </div>
     ),

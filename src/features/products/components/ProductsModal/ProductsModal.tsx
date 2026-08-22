@@ -139,9 +139,18 @@ const ProductsModal = ({
               className={styles.numberInput}
               placeholder="Qiymət daxil edin"
               min={0}
+              step={0.01}
               value={formik.values.price || undefined}
               onChange={(value) => formik.setFieldValue('price', value ?? 0)}
               onBlur={() => formik.setFieldTouched('price', true)}
+              onKeyDown={(event)=>{
+                if (['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab'].includes(event.key)) {
+                  return;
+                }
+                if (!/[0-9]/.test(event.key)) {
+                  event.preventDefault();
+                }
+              }}
               style={{ width: '100%' }}
             />
             {formik.touched.price && formik.errors.price && (

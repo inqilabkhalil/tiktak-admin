@@ -16,7 +16,12 @@ export const useCampaignStore = create<CampaignState>((set, get) => ({
     set({ loading: true, error: null });
     try {
       const data = await fetchCampaigns();
-      set({ campaigns: data });
+      const sorted = [...data].sort(
+        (a, b) =>
+          new Date(b.created_at).getTime() - new Date(a.created_at).getTime() ||
+          b.id - a.id,
+      );
+      set({ campaigns: sorted });
     } catch {
       set({ error: "Məlumatları yükləmək mümkün olmadı" });
     } finally {
