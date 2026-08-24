@@ -1,5 +1,14 @@
-// Sifariş statusları üçün xüsusi tip (Union type)
-export type OrderStatus = 'gozleyir' | 'tesdiqlenedi' | 'hazirlanir' | 'imtina' | string;
+// Sifariş statusları üçün enum (erasableSyntaxOnly `enum` açarına icazə vermir, ona görə const-obyekt istifadə olunur)
+export const OrderStatus = {
+  GOZLEYIR: 'gözləyir',
+  TESDIQLENDI: 'təsdiqləndi',
+  HAZIRLANIR: 'hazırlanır',
+  HAZIRDIR: 'hazırdır',
+  CATDIRILDI: 'çatdırıldı',
+  LEGV_EDILDI: 'ləğv edildi',
+} as const;
+
+export type OrderStatus = (typeof OrderStatus)[keyof typeof OrderStatus];
 
 export interface Product {
   id: number;
@@ -31,7 +40,7 @@ export interface OrderUser {
 export interface Order {
   id: number;
   orderNumber: string;
-  status: OrderStatus; // Burada yuxarıdakı status tipini istifadə edirik
+  status: OrderStatus | string; // Burada yuxarıdakı status tipini istifadə edirik
   total: string;
   deliveryFee: string;
   paymentMethod: string;
