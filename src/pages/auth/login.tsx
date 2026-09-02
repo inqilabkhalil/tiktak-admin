@@ -53,7 +53,7 @@ const Login = () => {
               <label>Telefon</label>
 
               <Input
-                type="number"
+                type="tel"
                 placeholder="+994..."
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
