@@ -20,7 +20,7 @@ export const useAuthStore = create<AuthState>((set) => ({
       localStorage.setItem('refresh_token', data.tokens.refresh_token);
     } catch {
       set({
-        error: 'Telefon və ya parol yanlışdır',
+        error: 'Uğursuz giriş: nömrə və ya parol səhvdir',
       });
     } finally {
       set({

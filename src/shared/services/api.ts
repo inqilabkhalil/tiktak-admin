@@ -17,10 +17,15 @@ api.interceptors.request.use((config) => {
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response?.status === 401) {
+    const isLoginRequest = error.config?.url?.includes('/auth/admin/login');
+
+    if (error.response?.status === 401 && !isLoginRequest) {
       localStorage.removeItem('access_token');
       localStorage.removeItem('refresh_token');
-      window.location.href = '/auth';
+
+      if (window.location.pathname !== '/auth') {
+        window.location.href = '/auth';
+      }
     }
     return Promise.reject(error);
   },
